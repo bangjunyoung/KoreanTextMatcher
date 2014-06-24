@@ -203,11 +203,6 @@ public final class KoreanTextMatcher {
      * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때. 
      */
     public static KoreanTextMatch match(String text, String pattern) {
-        if (text == null)
-            throw new IllegalArgumentException("text: null");
-        if (pattern == null)
-            throw new IllegalArgumentException("pattern: null");
-
         return new KoreanTextMatcher(pattern).match(text);
     }
 
