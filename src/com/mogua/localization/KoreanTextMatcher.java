@@ -247,12 +247,12 @@ public final class KoreanTextMatcher {
     }
 
     private static boolean choseongMatches(char a, char b) {
-        if (KoreanChar.isCompatibilityChoseong(a) || KoreanChar.isChoseong(a))
+        if (KoreanChar.isCompatChoseong(a) || KoreanChar.isChoseong(a))
             return a == b;
 
         char c;
-        if (KoreanChar.isCompatibilityChoseong(b))
-            c = KoreanChar.getCompatibilityChoseong(a);
+        if (KoreanChar.isCompatChoseong(b))
+            c = KoreanChar.getCompatChoseong(a);
         else if (KoreanChar.isChoseong(b))
             c = KoreanChar.getChoseong(a);
         else
