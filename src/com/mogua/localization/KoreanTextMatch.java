@@ -46,6 +46,22 @@ public final class KoreanTextMatch {
     private final int _index;
     private final boolean _success;
 
+    private KoreanTextMatch() {
+        _matcher = null;
+        _text = null;
+        _value = "";
+        _index = 0;
+        _success = false;
+    }
+
+    KoreanTextMatch(KoreanTextMatcher matcher, String text, int startIndex, int length) {
+        _matcher = matcher;
+        _text = text;
+        _value = text.substring(startIndex, startIndex + length);
+        _index = startIndex;
+        _success = true;
+    }
+
     /**
      * 매치가 성공했는지 여부를 조사한다.
      * 
@@ -80,22 +96,6 @@ public final class KoreanTextMatch {
      */
     public String value() {
         return _value;
-    }
-
-    private KoreanTextMatch() {
-        _matcher = null;
-        _text = null;
-        _value = "";
-        _index = 0;
-        _success = false;
-    }
-
-    KoreanTextMatch(KoreanTextMatcher matcher, String text, int startIndex, int length) {
-        _matcher = matcher;
-        _text = text;
-        _value = text.substring(startIndex, startIndex + length);
-        _index = startIndex;
-        _success = true;
     }
 
     /**
