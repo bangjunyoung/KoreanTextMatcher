@@ -78,6 +78,13 @@ public class KoreanTextMatcherTest {
         matcher.match(text, text.length() + 1);
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void matches_ThrowsExceptionOnCallingRemove() {
+        String pattern = "", text = "";
+        Iterable<KoreanTextMatch> matches = KoreanTextMatcher.matches(text, pattern);
+        matches.iterator().remove();
+    }
+
     @Test
     public void nextMatch_ReturnsEMPTYIfCurrentMatchIsEMPTY() {
         assertThat(KoreanTextMatch.EMPTY.nextMatch(), is(equalTo(KoreanTextMatch.EMPTY)));

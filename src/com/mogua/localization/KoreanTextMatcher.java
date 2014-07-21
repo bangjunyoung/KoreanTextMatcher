@@ -25,8 +25,7 @@
 
 package com.mogua.localization;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * 한글 초성 매칭 검색 클래스
@@ -129,7 +128,7 @@ public final class KoreanTextMatcher {
      *         없으면 빈 리스트를 리턴한다. 
      * @throws IllegalArgumentException text가 <code>null</code>일 때.
      */
-    public List<KoreanTextMatch> matches(String text) {
+    public Iterable<KoreanTextMatch> matches(String text) {
         return matches(text, 0);
     }
 
@@ -144,11 +143,31 @@ public final class KoreanTextMatcher {
      * @throws IllegalArgumentException text가 <code>null</code>일 때, 또는 startIndex가
      *         0보다 작거나 text.length()보다 클 때.
      */
-    public List<KoreanTextMatch> matches(String text, int startIndex) {
-        ArrayList<KoreanTextMatch> matches = new ArrayList<KoreanTextMatch>();
-        for (KoreanTextMatch match = match(text, startIndex); match.success(); match = match.nextMatch())
-            matches.add(match);
-        return matches;
+    public Iterable<KoreanTextMatch> matches(final String text, final int startIndex) {
+        return new Iterable<KoreanTextMatch>() {
+            public Iterator<KoreanTextMatch> iterator() {
+                return new Iterator<KoreanTextMatch>() {
+                    KoreanTextMatch _match = match(text, startIndex);
+
+                    @Override
+                    public boolean hasNext() {
+                        return _match.success();
+                    }
+
+                    @Override
+                    public KoreanTextMatch next() {
+                        KoreanTextMatch result = _match;
+                        _match = _match.nextMatch();
+                        return result;
+                    }
+
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
+            }
+        };
     }
 
     private KoreanTextMatch match(String text, int startIndex, int length, String pattern) {
@@ -223,7 +242,7 @@ public final class KoreanTextMatcher {
      *         없으면 빈 리스트를 리턴한다.
      * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때. 
      */
-    public static List<KoreanTextMatch> matches(String text, String pattern) {
+    public static Iterable<KoreanTextMatch> matches(String text, String pattern) {
         return new KoreanTextMatcher(pattern).matches(text);
     }
 

@@ -66,9 +66,11 @@ public class KoreanTextMatcher_matchesTest {
     public void nextMatch_ReturnsExpectedResult() {
         String message = String.format("text: %s, pattern: %s", _text, _pattern);
 
-        List<KoreanTextMatch> matches = KoreanTextMatcher.matches(_text, _pattern);
-        for (KoreanTextMatch match : matches)
+        int count = 0;
+        for (KoreanTextMatch match : KoreanTextMatcher.matches(_text, _pattern)) {
+            count++;
             assertTrue(message, _text.contains(match.value()));
-        assertThat(message, matches.size(), is(equalTo(_expectedMatchCount)));
+        }
+        assertThat(message, count, is(equalTo(_expectedMatchCount)));
     }
 }
