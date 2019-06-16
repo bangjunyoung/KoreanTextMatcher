@@ -18,11 +18,11 @@ KoreanTextMatcher는 자바/안드로이드에서 한글 초성 매칭 검색을
 사용법
 ------
 
-KoreanTextMatcher는 KoreanChar, KoreanTextMatcher, KoreanTextMatch 세 클래스로 이루어져 있다.
+`KoreanTextMatcher`는 `KoreanChar`, `KoreanTextMatcher`, `KoreanTextMatch` 세 클래스로 이루어져 있다.
 
 ### KoreanChar
 
-KoreanChar는 한글 문자에서 초성을 추출하는 데 쓰는 클래스다. `isSyllable()`은 입력 문자가
+`KoreanChar`는 한글 문자에서 초성을 추출하는 데 쓰는 클래스다. `isSyllable()`은 입력 문자가
 한글 음절인지, `isCompatChoseong()`/`isChoseong()`은 입력 문자가 초성인지 여부를
 알려준다. `getCompatChoseong()`/`getChoseong()`은 한글 음절에서 초성을 추출한다.
 사용예는 다음과 같다:
@@ -44,8 +44,8 @@ Hangul Jamo가 있지만 최소한 Windows와 Android에서는 쓰는 경우가 
 
 ### KoreanTextMatcher/KoreanTextMatch
 
-한글 초성 매칭 검색을 수행하는 클래스다. KoreanTextMatcher에 매칭 API가 들어 있고
-매칭 결과가 KoreanTextMatch 인스턴스로 리턴된다. 사용예는 다음과 같다:
+한글 초성 매칭 검색을 수행하는 클래스다. `KoreanTextMatcher`에 매칭 API가 들어 있고
+매칭 결과가 `KoreanTextMatch` 인스턴스로 리턴된다. 사용예는 다음과 같다:
 
 ``` java
 KoreanTextMatcher matcher = new KoreanTextMatcher("ㅊㅅ");
