@@ -69,12 +69,12 @@ public final class KoreanTextMatcher {
      * 주어진 text에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
      * pattern의 첫번째 출현을 찾는다.
      * <p>
-     * text 내 검색 시작 위치를 명시하려면 {@link #match(String, int)}를 사용한다.
+     * text 내 검색 시작 위치를 지정하려면 {@link #match(String, int)}를 사용한다.
      *
      * @param text 검색 대상 문자열
-     * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스. success()
-     *         가 <code>true</code>일 때만 유효하며, 검색이 실패하면
-     *         {@link KoreanTextMatch#EMPTY}가 리턴된다.
+     * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
+     *         {@link KoreanTextMatch#success()}가 <code>true</code>일 때만 유효하다.
+     *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
      * @throws IllegalArgumentException text가 <code>null</code>일 때.
      */
     public KoreanTextMatch match(String text) {
@@ -87,11 +87,11 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param startIndex 검색을 시작할 text 내 위치
-     * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스. success()가
-     *         <code>true</code>일 때만 유효하다. 검색이 실패하면
-     *         {@link KoreanTextMatch#EMPTY}가 리턴된다.
-     * @throws IllegalArgumentException text가 <code>null</code>일 때, 또는 startIndex가
-     *         0보다 작거나 text.length()보다 클 때.
+     * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
+     *         {@link KoreanTextMatch#success()}가 <code>true</code>일 때만 유효하다.
+     *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
+     * @throws IllegalArgumentException text가 <code>null</code>일 때,
+     *         또는 startIndex가 0보다 작거나 text.length()보다 클 때.
      */
     public KoreanTextMatch match(String text, int startIndex) {
         if (text == null)
@@ -121,11 +121,11 @@ public final class KoreanTextMatcher {
      * 주어진 text에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
      * pattern의 모든 출현을 찾는다.
      * <p>
-     * text 내 검색 시작 위치를 명시하려면 {@link #matches(String, int)}를 사용한다.
+     * text 내 검색 시작 위치를 지정하려면 {@link #matches(String, int)}를 사용한다.
      *
      * @param text 검색 대상 문자열
-     * @return 검색 결과를 담은 <code>List&lt;KoreanTextMatch&gt;</code> 인스턴스. 찾은 것이
-     *         없으면 빈 리스트를 리턴한다. 
+     * @return 검색 결과를 담은 <code>Iterable&lt;KoreanTextMatch&gt;</code> 인스턴스.
+     *         찾은 것이 없으면 빈 리스트를 리턴한다. 
      * @throws IllegalArgumentException text가 <code>null</code>일 때.
      */
     public Iterable<KoreanTextMatch> matches(String text) {
@@ -138,10 +138,9 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param startIndex 검색을 시작할 text 내 위치
-     * @return 검색 결과를 담은 <code>List&lt;KoreanTextMatch&gt;</code> 인스턴스. 찾은 것이
-     *         없으면 빈 리스트를 리턴한다. 
-     * @throws IllegalArgumentException text가 <code>null</code>일 때, 또는 startIndex가
-     *         0보다 작거나 text.length()보다 클 때.
+     * @return 검색 결과를 담은 <code>Iterable&lt;KoreanTextMatch&gt;</code> 인스턴스.
+     * @throws IllegalArgumentException text가 <code>null</code>일 때,
+     *         또는 startIndex가 0보다 작거나 text.length()보다 클 때.
      */
     public Iterable<KoreanTextMatch> matches(final String text, final int startIndex) {
         return new Iterable<KoreanTextMatch>() {
@@ -217,8 +216,9 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
-     * @return 검색 결과를 담은 <code>List&lt;KoreanTextMatch&gt;</code> 인스턴스. 찾은 것이
-     *         없으면 빈 리스트를 리턴한다.
+     * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
+     *         {@link KoreanTextMatch#success()}가 <code>true</code>일 때만 유효하다.
+     *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
      * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때. 
      */
     public static KoreanTextMatch match(String text, String pattern) {
@@ -238,8 +238,7 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
-     * @return 검색 결과를 담은 <code>List&lt;KoreanTextMatch&gt;</code> 인스턴스. 찾은 것이
-     *         없으면 빈 리스트를 리턴한다.
+     * @return 검색 결과를 담은 <code>Iterable&lt;KoreanTextMatch&gt;</code> 인스턴스.
      * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때. 
      */
     public static Iterable<KoreanTextMatch> matches(String text, String pattern) {
