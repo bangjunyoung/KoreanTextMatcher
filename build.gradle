@@ -36,3 +36,7 @@ jar {
                    'Implementation-Version': project.version)
     }
 }
+
+javadoc {
+    options.encoding = 'UTF-8'
+}
