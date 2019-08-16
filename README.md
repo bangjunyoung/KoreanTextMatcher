@@ -1,5 +1,7 @@
 # KoreanTextMatcher 3.0
 
+[![Build Status](https://travis-ci.org/bangjunyoung/KoreanTextMatcher.svg?branch=master)](https://travis-ci.org/bangjunyoung/KoreanTextMatcher)
+
 KoreanTextMatcher는 자바/안드로이드에서 한글 초성 매칭 검색을 가능하게 해주는 라이브러리다.
 주요 기능과 특징은 다음과 같다:
 
