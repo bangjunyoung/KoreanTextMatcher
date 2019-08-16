@@ -1,5 +1,4 @@
-KoreanTextMatcher 3.0
-=====================
+# KoreanTextMatcher 3.0
 
 KoreanTextMatcher는 자바/안드로이드에서 한글 초성 매칭 검색을 가능하게 해주는 라이브러리다.
 주요 기능과 특징은 다음과 같다:
@@ -15,10 +14,9 @@ KoreanTextMatcher는 자바/안드로이드에서 한글 초성 매칭 검색을
 - 오픈 소스: 수정, 배포, 2차 저작 등 어떤 프로그램에도 자유롭게 사용 가능한 BSD 라이선스.
   상용 프로그램에도 물론 아무 제약없이 사용할 수 있다(저작권 문구는 절대 지우지 마세요!).
 
-사용법
-------
+## 사용법
 
-`KoreanTextMatcher`는 `KoreanChar`, `KoreanTextMatcher`, `KoreanTextMatch` 세 클래스로 이루어져 있다.
+KoreanTextMatcher는 `KoreanChar`, `KoreanTextMatcher`, `KoreanTextMatch` 세 클래스로 이루어져 있다.
 
 ### KoreanChar
 
@@ -72,10 +70,17 @@ if (match.success()) {
 ``` java
 KoreanTextMatcher.isMatch("하늘", "^ㅎㄴ");  // true
 KoreanTextMatcher.isMatch(" 하늘", "^ㅎㄴ"); // false
+KoreanTextMatcher.isMatch("하늘", "ㅎㄴ$");  // true
+KoreanTextMatcher.isMatch("하늘 ", "ㅎㄴ$"); // false
 ```
 
 `^`와 `$`는 각각 `String.startsWith()`와 `String.endsWith()`를 대체하는 목적으로 쓸 수 있다.
-둘을 한꺼번에 쓰면 `String.equals()`를 쓴 것과 동일한 효과를 얻을 수 있다.
+둘을 한꺼번에 쓰면 `String.equals()`를 쓴 것과 동일한 효과를 얻을 수 있다:
+
+``` java
+KoreanTextMatcher.isMatch("하늘", "^ㅎㄴ$");  // true
+KoreanTextMatcher.isMatch(" 하늘 ", "^ㅎㄴ$"); // false
+```
 
 `KoreanTextMatcher.matches()`는 문자열 내에서 매칭되는 패턴을 모두 찾아
 `Iterable<KoreanTextMatch>`로 돌려준다. 검색 결과에서 검색어만 하일라이트할 필요가 있을 때 쓰면
