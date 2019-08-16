@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.mogua.localization;
+package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -39,56 +39,48 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class KoreanTextMatcher_matchTest {
+public class KoreanTextMatcher_nextMatchTest {
 
     private String _text;
     private String _pattern;
-    private boolean _expectedSuccess;
-    private int _expectedIndex;
-    private int _expectedLength;
+    private int _expectedMatchCount;
 
-    public KoreanTextMatcher_matchTest(String text, String pattern, boolean expectedSuccess, int expectedIndex, int expectedLength) {
+    public KoreanTextMatcher_nextMatchTest(String text, String pattern, int expectedMatchCount) {
         _text = text;
         _pattern = pattern;
-        _expectedSuccess = expectedSuccess;
-        _expectedIndex = expectedIndex;
-        _expectedLength = expectedLength;
+        _expectedMatchCount = expectedMatchCount;
     }
 
     @Parameters
     public static Collection<Object[]> getTestParameters() {
         return Arrays.asList(new Object[][] {
-            { "", "", true, 0, 0 },
-            { "", "^$", true, 0, 0 },
-            { "하늘", "", true, 0, 0 },
-            { "하늘", "^", true, 0, 0 },
-            { "하늘", "$", true, 0, 0 },
-            { "하늘", "하", true, 0, 1 },
-            { "하늘", "늘", true, 1, 1 },
-            { "하늘", "하늘", true, 0, 2 },
-            { "하늘", "ㅎㄴ", true, 0, 2 },
-            { "하늘", "ㅎ", true, 0, 1 },
-            { "하늘", "ㄴ", true, 1, 1 },
-            { "푸른 하늘", "하늘", true, 3, 2 },
-            { "푸른 하늘", "ㅎㄴ", true, 3, 2 },
-            { "하늘", "^$", false, 0, 0 },
-            { "푸른 하늘", "^ㅎㄴ", false, 0, 0 },
-            { "푸른 하늘", "푸른$", false, 0, 0 },
-            { "푸른 하늘", "ㅎㄹ", false, 0, 0 },
+            { "", "파란", 0 },
+            { "파란", "파란", 1 },
+            { "파란", "^파란$", 1 },
+            { " 파란", "^파란$", 0 },
+            { "파란 하늘 파란 나라", "^파란", 1 },
+            { "파란 하늘 파란 나라", "파란", 2 },
+            { "하얀 나라 파란 나라", "나라$", 1 },
+            { "하늘 별 하늘", "하늘", 2 },
+            { "하늘 별 하늘 달", "하늘", 2 },
+            { "하늘하늘하늘", "ㅎㄴ", 3 },
         });
     }
 
     @Test
-    public void match_ReturnsExpectedResult() {
+    public void nextMatch_ReturnsExpectedResult() {
         String message = String.format("text: %s, pattern: %s", _text, _pattern);
         KoreanTextMatcher matcher = new KoreanTextMatcher(_pattern);
         KoreanTextMatch match = matcher.match(_text);
-        assertThat(message, match.success(), is(equalTo(_expectedSuccess)));
-        if (match.success()) {
-            assertThat(message, match.index(), is(equalTo(_expectedIndex)));
-            assertThat(message, match.length(), is(equalTo(_expectedLength)));
-            assertThat(message, match.length(), is(equalTo(match.value().length())));
-            assertTrue(message, _text.contains(match.value()));
+        int matchCount = 0;
+        while (match.success()) {
+            matchCount++;
+            int index = match.index();
+            int length = match.length();
+            String value = match.value();
+            assertTrue(message, _text.substring(index, index + length).equals(value));
+            match = match.nextMatch();
         }
+        assertThat(message, matchCount, is(equalTo(_expectedMatchCount)));
     }
 }

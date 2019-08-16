@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2014 Bang Jun-young
  * All rights reserved.
  *
@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.mogua.localization;
+package io.github.bangjunyoung;
 
 import java.util.Iterator;
 
@@ -32,7 +32,7 @@ import java.util.Iterator;
  * <p>
  * Unicode Hangul Jamo와 Hangul Compatibility Jamo를 모두 지원한다.
  *
- * @author 방준영 &lt;junyoung@mogua.com&gt;
+ * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
 public final class KoreanTextMatcher {
 

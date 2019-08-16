@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2014 Bang Jun-young
  * All rights reserved.
  *
@@ -23,12 +23,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.mogua.localization;
+package io.github.bangjunyoung;
 
 /**
  * {@link KoreanTextMatcher} 매칭 결과를 담고 있는 클래스
  * 
- * @author 방준영 &lt;junyoung@mogua.com&gt;
+ * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
 public final class KoreanTextMatch {
 

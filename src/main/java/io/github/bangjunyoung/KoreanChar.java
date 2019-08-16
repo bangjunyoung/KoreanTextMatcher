@@ -23,7 +23,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.mogua.localization;
+package io.github.bangjunyoung;
 
 /**
  * 한글 초성 추출을 위한 클래스
@@ -32,7 +32,7 @@ package com.mogua.localization;
  * <p>
  * 이 클래스는 인스턴스 생성이 불가능하다.
  *
- * @author 방준영 &lt;junyoung@mogua.com&gt;
+ * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
 public final class KoreanChar {
 
