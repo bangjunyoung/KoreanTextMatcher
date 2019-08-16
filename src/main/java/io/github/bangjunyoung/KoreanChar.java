@@ -89,12 +89,11 @@ public final class KoreanChar {
      * @return Unicode Hangul Jamo 초성.
      *         {@param value}가 한글 음절이 아니면 <code>'\0'</code>.
      */
-    public static char getChoseong(char value) {
-        if (!isSyllable(value))
+    public static char getChoseong(char syllable) {
+        if (!isSyllable(syllable))
             return '\0';
 
-        final int choseongIndex = getChoseongIndex(value);
-        return (char)(0x1100 + choseongIndex);
+        return (char)(0x1100 + getChoseongIndex(syllable));
     }
 
     /**
@@ -104,12 +103,11 @@ public final class KoreanChar {
      * @return Unicode Hangul Compatibility Jamo 초성.
      *         {@param value}가 한글 음절이 아니면 <code>'\0'</code>.
      */
-    public static char getCompatChoseong(char value) {
-        if (!isSyllable(value))
+    public static char getCompatChoseong(char syllable) {
+        if (!isSyllable(syllable))
             return '\0';
 
-        final int choseongIndex = getChoseongIndex(value);
-        return (char)COMPAT_CHOSEONG_MAP[choseongIndex];
+        return (char)COMPAT_CHOSEONG_MAP[getChoseongIndex(syllable)];
     }
 
     private static int getChoseongIndex(char syllable) {
