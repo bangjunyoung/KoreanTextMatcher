@@ -56,7 +56,8 @@ public final class KoreanChar {
      * 주어진 문자가 Unicode Hangul Jamo 초성인지 검사한다.
      * 
      * @param c 검사할 문자
-     * @return Unicode Hangul Jamo 초성이면 <code>true</code>, 아니면 <code>false</code>.
+     * @return {@code c}가 Unicode Hangul Jamo 초성이면 {@code true},
+     *         아니면 {@code false}.
      */
     public static boolean isChoseong(char c) {
         return 0x1100 <= c && c <= 0x1112;
@@ -66,7 +67,8 @@ public final class KoreanChar {
      * 주어진 문자가 Unicode Hangul Compatibility Jamo 초성인지 검사한다.
      * 
      * @param c 검사할 문자
-     * @return Unicode Hangul Compatibility Jamo 초성이면 <code>true</code>, 아니면 <code>false</code>.
+     * @return {@code c}가 Unicode Hangul Compatibility Jamo 초성이면
+     *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatChoseong(char c) {
         return 0x3131 <= c && c <= 0x314E;
@@ -76,7 +78,7 @@ public final class KoreanChar {
      * 주어진 문자가 한글 음절인지 검사한다.
      * 
      * @param c 검사할 문자
-     * @return 한글 음절이면 <code>true</code>, 아니면 <code>false</code>.
+     * @return {@code c}가 한글 음절이면 {@code true}, 아니면 {@code false}.
      */
     public static boolean isSyllable(char c) {
         return HANGUL_SYLLABLES_BASE <= c && c < HANGUL_SYLLABLES_END;
@@ -85,9 +87,9 @@ public final class KoreanChar {
     /**
      * 주어진 한글 음절로부터 Unicode Hangul Jamo 초성을 추출한다.
      * 
-     * @param value 초성을 추출할 한글 음절
+     * @param syllable 초성을 추출할 한글 음절
      * @return Unicode Hangul Jamo 초성.
-     *         {@param value}가 한글 음절이 아니면 <code>'\0'</code>.
+     *         {@code syllable}이 한글 음절이 아니면 {@code '\0'}.
      */
     public static char getChoseong(char syllable) {
         if (!isSyllable(syllable))
@@ -99,9 +101,9 @@ public final class KoreanChar {
     /**
      * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 초성을 추출한다.
      * 
-     * @param value 초성을 추출할 한글 음절
+     * @param syllable 초성을 추출할 한글 음절
      * @return Unicode Hangul Compatibility Jamo 초성.
-     *         {@param value}가 한글 음절이 아니면 <code>'\0'</code>.
+     *         {@code syllable}이 한글 음절이 아니면 {@code '\0'}.
      */
     public static char getCompatChoseong(char syllable) {
         if (!isSyllable(syllable))

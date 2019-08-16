@@ -35,7 +35,7 @@ public final class KoreanTextMatch {
     /**
      * 검색이 실패했을 때 결과로 리턴되는 인스턴스.
      * <p>
-     * 이 인스턴스의 {@link #success()}는 항상 <code>false</code>다. {@link #index()},
+     * 이 인스턴스의 {@link #success()}는 항상 {@code false}다. {@link #index()},
      * {@link #length()}, {@link #value()} 등 다른 프로퍼티들의 값은 미정이다.
      */
     public static final KoreanTextMatch EMPTY = new KoreanTextMatch();
@@ -65,7 +65,7 @@ public final class KoreanTextMatch {
     /**
      * 매치가 성공했는지 여부를 조사한다.
      * 
-     * @return 성공했으면 <code>true</code>, 아니면 <code>false</code>.
+     * @return 성공했으면 {@code true}, 아니면 {@code false}.
      */
     public boolean success() {
         return _success;
@@ -102,7 +102,7 @@ public final class KoreanTextMatch {
      * 마지막 매치가 끝나는 위치의 뒷문자부터 시작해서 다음 매치를 찾는다.
      *
      * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
-     *         {@link #success()}가 <code>true</code>일 때만 유효하다.
+     *         {@link #success()}가 {@code true}일 때만 유효하다.
      *         검색이 실패하면 {@link #EMPTY}를 리턴한다.
      */
     public KoreanTextMatch nextMatch() {

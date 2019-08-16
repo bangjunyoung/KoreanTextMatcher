@@ -40,16 +40,16 @@ public final class KoreanTextMatcher {
     private final boolean _foundStartAnchor, _foundEndAnchor;
 
     /**
-     * KoreanTextMatcher 클래스의 새 인스턴스를 초기화한다.
+     * {@link KoreanTextMatcher} 클래스의 새 인스턴스를 초기화한다.
      * <p>
-     * pattern에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의 문자와
-     * 초성만 대조한다.
+     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의
+     * 문자와 초성만 대조한다.
      * <p>
-     * 정규식 앵커 ^와 $를 사용하여 pattern의 위치를 검색 대상 문자열의 시작과 끝으로
-     * 한정할 수 있다.
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
      * @param pattern 검색할 패턴
-     * @throws IllegalArgumentException pattern이 <code>null</code>일 때.
+     * @throws IllegalArgumentException {@code pattern}이 {@code null}일 때.
      */
     public KoreanTextMatcher(String pattern) {
         if (pattern == null)
@@ -66,32 +66,33 @@ public final class KoreanTextMatcher {
     }
 
     /**
-     * 주어진 text에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
-     * pattern의 첫번째 출현을 찾는다.
+     * 주어진 {@code text}에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
+     * {@code pattern}의 첫번째 출현을 찾는다.
      * <p>
-     * text 내 검색 시작 위치를 지정하려면 {@link #match(String, int)}를 사용한다.
+     * {@code text} 내 검색 시작 위치를 지정하려면 {@link #match(String, int)}를 사용한다.
      *
      * @param text 검색 대상 문자열
      * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
-     *         {@link KoreanTextMatch#success()}가 <code>true</code>일 때만 유효하다.
+     *         {@link KoreanTextMatch#success()}가 {@code true}일 때만 유효하다.
      *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
-     * @throws IllegalArgumentException text가 <code>null</code>일 때.
+     * @throws IllegalArgumentException {@code text}가 {@code null}일 때.
      */
     public KoreanTextMatch match(String text) {
         return match(text, 0);
     }
 
     /**
-     * 주어진 text에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
-     * pattern의 첫번째 출현을 찾는다.
+     * 주어진 {@code text}에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
+     * {@code pattern}의 첫번째 출현을 찾는다.
      *
      * @param text 검색 대상 문자열
-     * @param startIndex 검색을 시작할 text 내 위치
+     * @param startIndex 검색을 시작할 {@code text} 내 위치
      * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
-     *         {@link KoreanTextMatch#success()}가 <code>true</code>일 때만 유효하다.
+     *         {@link KoreanTextMatch#success()}가 {@code true}일 때만 유효하다.
      *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
-     * @throws IllegalArgumentException text가 <code>null</code>일 때,
-     *         또는 startIndex가 0보다 작거나 text.length()보다 클 때.
+     * @throws IllegalArgumentException {@code text}가 {@code null}일 때,
+     *         또는 {@code startIndex}가 {@code 0}보다 작거나
+     *         {@link KoreanTextMatch#length() text.length()}보다 클 때.
      */
     public KoreanTextMatch match(String text, int startIndex) {
         if (text == null)
@@ -118,29 +119,31 @@ public final class KoreanTextMatcher {
     }
 
     /**
-     * 주어진 text에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
-     * pattern의 모든 출현을 찾는다.
+     * 주어진 {@code text}에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
+     * {@code pattern}의 모든 출현을 찾는다.
      * <p>
-     * text 내 검색 시작 위치를 지정하려면 {@link #matches(String, int)}를 사용한다.
+     * {@code text} 내 검색 시작 위치를 지정하려면 {@link #matches(String, int)}를
+     * 사용한다.
      *
      * @param text 검색 대상 문자열
-     * @return 검색 결과를 담은 <code>Iterable&lt;KoreanTextMatch&gt;</code> 인스턴스.
+     * @return 검색 결과를 담은 {@code Iterable<KoreanTextMatch>} 인스턴스.
      *         찾은 것이 없으면 빈 리스트를 리턴한다. 
-     * @throws IllegalArgumentException text가 <code>null</code>일 때.
+     * @throws IllegalArgumentException {@code text}가 {@code null}일 때.
      */
     public Iterable<KoreanTextMatch> matches(String text) {
         return matches(text, 0);
     }
 
     /**
-     * 주어진 text에 대해 {@link #KoreanTextMatcher(String)}에 지정해 둔
-     * pattern의 모든 출현을 찾는다.
+     * 주어진 {@code text}에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
+     * {@code pattern}의 모든 출현을 찾는다.
      *
      * @param text 검색 대상 문자열
-     * @param startIndex 검색을 시작할 text 내 위치
-     * @return 검색 결과를 담은 <code>Iterable&lt;KoreanTextMatch&gt;</code> 인스턴스.
-     * @throws IllegalArgumentException text가 <code>null</code>일 때,
-     *         또는 startIndex가 0보다 작거나 text.length()보다 클 때.
+     * @param startIndex 검색을 시작할 {@code text} 내 위치
+     * @return 검색 결과를 담은 {@code Iterable<KoreanTextMatch>} 인스턴스.
+     * @throws IllegalArgumentException {@code text}가 {@code null}일 때,
+     *         또는 {@code startIndex}가 {@code 0}보다 작거나
+     *         {@link KoreanTextMatch#length() text.length()}보다 클 때.
      */
     public Iterable<KoreanTextMatch> matches(final String text, final int startIndex) {
         return new Iterable<KoreanTextMatch>() {
@@ -186,60 +189,64 @@ public final class KoreanTextMatcher {
     }
 
     /**
-     * 주어진 text 내에 주어진 pattern이 존재하는지 여부를 조사한다. 
+     * 주어진 {@code text} 내에 주어진 {@code pattern}이 존재하는지 여부를 조사한다.
      * <p>
-     * pattern에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의 문자와
-     * 초성만 대조한다.
+     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의
+     * 문자와 초성만 대조한다.
      * <p>
-     * 정규식 앵커 ^와 $를 사용하여 pattern의 위치를 검색 대상 문자열의 시작과 끝으로
-     * 한정할 수 있다.
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
-     * @return text 내에 pattern이 존재하면 <code>true</code>, 그렇지 않으면 <code>false</code>.
-     * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때.
+     * @return {@code text} 내에 {@code pattern}이 존재하면 {@code true},
+     *         그렇지 않으면 {@code false}.
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이
+     *         {@code null}일 때.
      */
     public static boolean isMatch(String text, String pattern) {
         return match(text, pattern).success();
     }
 
     /**
-     * 주어진 text 내에서 주어진 pattern의 첫번째 출현을 찾는다.
+     * 주어진 {@code text} 내에서 주어진 {@code pattern}의 첫번째 출현을 찾는다.
      * <p>
      * 모든 출현을 찾으려면 {@link #matches(String, String)}를 사용한다.
      * <p>
-     * pattern에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의 문자와
-     * 초성만 대조한다.
+     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의
+     * 문자와 초성만 대조한다.
      * <p>
-     * 정규식 앵커 ^와 $를 사용하여 pattern의 위치를 검색 대상 문자열의 시작과 끝으로
-     * 한정할 수 있다.
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
      * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
-     *         {@link KoreanTextMatch#success()}가 <code>true</code>일 때만 유효하다.
+     *         {@link KoreanTextMatch#success()}가 {@code true}일 때만 유효하다.
      *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
-     * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때. 
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이
+     *         {@code null}일 때.
      */
     public static KoreanTextMatch match(String text, String pattern) {
         return new KoreanTextMatcher(pattern).match(text);
     }
 
     /**
-     * 주어진 text 내에서 주어진 pattern의 모든 출현을 찾는다.
+     * 주어진 {@code text} 내에서 주어진 {@code pattern}의 모든 출현을 찾는다.
      * <p>
      * 첫번째 출현만 찾으려면 {@link #match(String, String)}를 사용한다.
      * <p>
-     * pattern에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의 문자와
+     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의 문자와
      * 초성만 대조한다.
      * <p>
-     * 정규식 앵커 ^와 $를 사용하여 pattern의 위치를 검색 대상 문자열의 시작과 끝으로
-     * 한정할 수 있다.
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
-     * @return 검색 결과를 담은 <code>Iterable&lt;KoreanTextMatch&gt;</code> 인스턴스.
-     * @throws IllegalArgumentException text 또는 pattern이 <code>null</code>일 때. 
+     * @return 검색 결과를 담은 {@code Iterable<KoreanTextMatch>} 인스턴스.
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이
+     *         {@code null}일 때.
      */
     public static Iterable<KoreanTextMatch> matches(String text, String pattern) {
         return new KoreanTextMatcher(pattern).matches(text);
