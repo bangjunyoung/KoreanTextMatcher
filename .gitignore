@@ -23,3 +23,7 @@ build
 # Android Studio/IntelliJ IDEA
 .idea/
 *.iml
+
+# Visual Studio & Code
+.vs/
+.vscode/
