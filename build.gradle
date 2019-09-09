@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'jacoco'
 }
 
 repositories {
@@ -31,4 +32,11 @@ javadoc {
 
 tasks.withType(JavaCompile) {
     options.encoding 'utf-8'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }
