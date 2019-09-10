@@ -40,10 +40,14 @@ class KoreanTextMatcher_matchesTest {
 
     static Stream<Arguments> getTestParameters() {
         return Stream.of(
+            // Hangul Compatibility Jamo
             arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄹ", 0),
             arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "하늘", 1),
             arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎ늘", 2),
-            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄴ", 4)
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄴ", 4),
+            // Hangul Jamo
+            arguments("하늘 ᄒ늘 하ᄂ ᄒᄂ", "ᄒ늘", 2),
+            arguments("하늘 ᄒ늘 하ᄂ ᄒᄂ", "ᄒᄂ", 4)
         );
     }
 
