@@ -62,7 +62,7 @@ class KoreanTextMatcher_matchTest {
 
     @ParameterizedTest
     @MethodSource("getTestParameters")
-    @DisplayName("match() with valid arguments")
+    @DisplayName("new KoreanTextMatcher(pattern).match(text) with valid arguments")
     void match_withValidArguments(String text, String pattern,
              boolean expectedSuccess, int expectedIndex, int expectedLength) {
         String message = String.format("text: %s, pattern: %s", text, pattern);

@@ -42,7 +42,7 @@ class KoreanTextMatcherTest {
     }
 
     @Test
-    @DisplayName("new KoreanTextMatcher(null, \"\") throws IllegalArgumentException")
+    @DisplayName("static isMatch(null, \"\") throws IllegalArgumentException")
     void isMatch_throwsExceptionOnNullTextArgument() {
         Assertions.assertThrows(IllegalArgumentException.class, () ->
             KoreanTextMatcher.isMatch(null, ""));
@@ -63,7 +63,7 @@ class KoreanTextMatcherTest {
     }
 
     @Test
-    @DisplayName("match(\"\", null) throws IllegalArgumentException")
+    @DisplayName("static match(\"\", null) throws IllegalArgumentException")
     void static_match_throwsExceptionOnNullPatternArgument() {
         Assertions.assertThrows(IllegalArgumentException.class, () ->
             KoreanTextMatcher.match("", null));
