@@ -26,69 +26,54 @@
 package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class KoreanTextMatcher_matchTest {
+class KoreanTextMatcher_matchTest {
 
-    private String _text;
-    private String _pattern;
-    private boolean _expectedSuccess;
-    private int _expectedIndex;
-    private int _expectedLength;
-
-    public KoreanTextMatcher_matchTest(String text, String pattern, boolean expectedSuccess, int expectedIndex, int expectedLength) {
-        _text = text;
-        _pattern = pattern;
-        _expectedSuccess = expectedSuccess;
-        _expectedIndex = expectedIndex;
-        _expectedLength = expectedLength;
+    static Stream<Arguments> getTestParameters() {
+        return Stream.of(
+            arguments("", "", true, 0, 0),
+            arguments("", "^$", true, 0, 0),
+            arguments("하늘", "", true, 0, 0),
+            arguments("하늘", "^", true, 0, 0),
+            arguments("하늘", "$", true, 0, 0),
+            arguments("하늘", "하", true, 0, 1),
+            arguments("하늘", "늘", true, 1, 1),
+            arguments("하늘", "하늘", true, 0, 2),
+            arguments("하늘", "ㅎㄴ", true, 0, 2),
+            arguments("하늘", "ㅎ", true, 0, 1),
+            arguments("하늘", "ㄴ", true, 1, 1),
+            arguments("푸른 하늘", "하늘", true, 3, 2),
+            arguments("푸른 하늘", "ㅎㄴ", true, 3, 2),
+            arguments("하늘", "^$", false, 0, 0),
+            arguments("푸른 하늘", "^ㅎㄴ", false, 0, 0),
+            arguments("푸른 하늘", "푸른$", false, 0, 0),
+            arguments("푸른 하늘", "ㅎㄹ", false, 0, 0)
+        );
     }
 
-    @Parameters
-    public static Collection<Object[]> getTestParameters() {
-        return Arrays.asList(new Object[][] {
-            { "", "", true, 0, 0 },
-            { "", "^$", true, 0, 0 },
-            { "하늘", "", true, 0, 0 },
-            { "하늘", "^", true, 0, 0 },
-            { "하늘", "$", true, 0, 0 },
-            { "하늘", "하", true, 0, 1 },
-            { "하늘", "늘", true, 1, 1 },
-            { "하늘", "하늘", true, 0, 2 },
-            { "하늘", "ㅎㄴ", true, 0, 2 },
-            { "하늘", "ㅎ", true, 0, 1 },
-            { "하늘", "ㄴ", true, 1, 1 },
-            { "푸른 하늘", "하늘", true, 3, 2 },
-            { "푸른 하늘", "ㅎㄴ", true, 3, 2 },
-            { "하늘", "^$", false, 0, 0 },
-            { "푸른 하늘", "^ㅎㄴ", false, 0, 0 },
-            { "푸른 하늘", "푸른$", false, 0, 0 },
-            { "푸른 하늘", "ㅎㄹ", false, 0, 0 },
-        });
-    }
-
-    @Test
-    public void match_ReturnsExpectedResult() {
-        String message = String.format("text: %s, pattern: %s", _text, _pattern);
-        KoreanTextMatcher matcher = new KoreanTextMatcher(_pattern);
-        KoreanTextMatch match = matcher.match(_text);
-        assertThat(message, match.success(), is(equalTo(_expectedSuccess)));
+    @ParameterizedTest
+    @MethodSource("getTestParameters")
+    @DisplayName("match() with valid arguments")
+    void match_withValidArguments(String text, String pattern,
+             boolean expectedSuccess, int expectedIndex, int expectedLength) {
+        String message = String.format("text: %s, pattern: %s", text, pattern);
+        KoreanTextMatcher matcher = new KoreanTextMatcher(pattern);
+        KoreanTextMatch match = matcher.match(text);
+        assertThat(message, match.success(), equalTo(expectedSuccess));
         if (match.success()) {
-            assertThat(message, match.index(), is(equalTo(_expectedIndex)));
-            assertThat(message, match.length(), is(equalTo(_expectedLength)));
-            assertThat(message, match.length(), is(equalTo(match.value().length())));
-            assertTrue(message, _text.contains(match.value()));
+            assertThat(message, match.index(), equalTo(expectedIndex));
+            assertThat(message, match.length(), equalTo(expectedLength));
+            assertThat(message, match.length(), equalTo(match.value().length()));
+            assertThat(message, text.contains(match.value()));
         }
     }
 }

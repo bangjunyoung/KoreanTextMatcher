@@ -10,7 +10,11 @@ repositories {
 dependencies {
     api 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.google.guava:guava:28.0-jre'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.hamcrest:hamcrest:2.1'
+    testImplementation 'org.hamcrest:hamcrest-library:2.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+    testCompile 'org.junit.jupiter:junit-jupiter-params:5.5.2'
 }
 
 version = '3.0'
@@ -42,3 +46,7 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
+
+test {
+    useJUnitPlatform()
+}

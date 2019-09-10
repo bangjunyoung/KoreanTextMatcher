@@ -26,50 +26,38 @@
 package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class KoreanTextMatcher_matchesTest {
+class KoreanTextMatcher_matchesTest {
 
-    private String _text;
-    private String _pattern;
-    private int _expectedMatchCount;
-
-    public KoreanTextMatcher_matchesTest(String text, String pattern, int expectedMatchCount) {
-        _text = text;
-        _pattern = pattern;
-        _expectedMatchCount = expectedMatchCount;
+    static Stream<Arguments> getTestParameters() {
+        return Stream.of(
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄹ", 0),
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "하늘", 1),
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎ늘", 2),
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄴ", 4)
+        );
     }
 
-    @Parameters
-    public static Collection<Object[]> getTestParameters() {
-        return Arrays.asList(new Object[][] {
-            { "하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄹ", 0 },
-            { "하늘 ㅎ늘 하ㄴ ㅎㄴ", "하늘", 1 },
-            { "하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎ늘", 2 },
-            { "하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄴ", 4 },
-        });
-    }
-
-    @Test
-    public void nextMatch_ReturnsExpectedResult() {
-        String message = String.format("text: %s, pattern: %s", _text, _pattern);
+    @ParameterizedTest
+    @MethodSource("getTestParameters")
+    @DisplayName("matches(text, pattern) with valid arguments")
+    void matches_withValidArguments(String text, String pattern, int expectedMatchCount) {
+        String message = String.format("text: %s, pattern: %s", text, pattern);
 
         int count = 0;
-        for (KoreanTextMatch match : KoreanTextMatcher.matches(_text, _pattern)) {
+        for (KoreanTextMatch match : KoreanTextMatcher.matches(text, pattern)) {
             count++;
-            assertTrue(message, _text.contains(match.value()));
+            assertThat(message, text.contains(match.value()));
         }
-        assertThat(message, count, is(equalTo(_expectedMatchCount)));
+        assertThat(message, count, equalTo(expectedMatchCount));
     }
 }

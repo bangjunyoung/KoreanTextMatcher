@@ -26,103 +26,72 @@
 package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-@RunWith(Parameterized.class)
-public class KoreanTextMatcher_isMatchTest {
+class KoreanTextMatcher_isMatchTest {
 
-    private String _text;
-    private String _pattern;
-    private boolean _expectedResult;
-
-    public KoreanTextMatcher_isMatchTest(String text, String pattern, boolean expectedResult) {
-        _text = text;
-        _pattern = pattern;
-        _expectedResult = expectedResult;
+    static Stream<Arguments> getTestParameters() {
+        return Stream.of(
+            arguments("", "^$", true),
+            arguments("하늘", "", true),
+            arguments("하늘", "^", true),
+            arguments("하늘", "$", true),
+            arguments("하늘", "하늘", true),
+            arguments(" 하늘", "하늘", true),
+            arguments("하늘 ", "하늘", true),
+            arguments(" 하늘 ", "하늘", true),
+            arguments("하늘", "^하늘", true),
+            arguments("하늘 ", "^하늘", true),
+            arguments("하늘", "하늘$", true),
+            arguments(" 하늘", "하늘$", true),
+            arguments("하늘", "^하늘$", true),
+            arguments("하늘", "하ㄴ", true),
+            arguments("하늘", "^하ㄴ", true),
+            arguments("하늘", "하ㄴ$", true),
+            arguments("하늘", "^하ㄴ$", true),
+            arguments("하늘", "ㅎ늘", true),
+            arguments("하늘", "^ㅎ늘", true),
+            arguments("하늘", "ㅎ늘$", true),
+            arguments("하늘", "^ㅎ늘$", true),
+            arguments("하늘", "ㅎㄴ", true),
+            arguments("하늘 ", "ㅎㄴ", true),
+            arguments(" 하늘", "ㅎㄴ", true),
+            arguments(" 하늘 ", "ㅎㄴ", true),
+            arguments("하늘", "^ㅎㄴ", true),
+            arguments("하늘", "ㅎㄴ$", true),
+            arguments("하늘", "^ㅎㄴ$", true),
+            arguments("하늘", "^$", false),
+            arguments("하 늘", "하늘", false),
+            arguments(" 하 늘", "하늘", false),
+            arguments("하 늘 ", "하늘", false),
+            arguments(" 하 늘 ", "하늘", false),
+            arguments("하늘", "하를", false),
+            arguments(" 하늘", "^하늘", false),
+            arguments(" 하늘 ", "^하늘", false),
+            arguments("하늘 ", "하늘$", false),
+            arguments(" 하늘 ", "하늘$", false),
+            arguments(" 하늘", "^하늘$", false),
+            arguments("하늘 ", "^하늘$", false),
+            arguments("하늘", "ㅎ느", false),
+            arguments("하늘", "^ㅎ느", false),
+            arguments("하늘", "ㅎ느$", false),
+            arguments("하늘", "^ㅎ느$", false)
+        );
     }
 
-    @Parameters
-    public static Collection<Object[]> getTestParameters() {
-        return Arrays.asList(new Object[][] {
-            { "하늘", "", true },
-            { "하늘", "^", true },
-            { "하늘", "$", true },
-            { "", "^$", true },
-            { "하늘", "하늘", true },
-            { " 하늘", "하늘", true },
-            { "하늘 ", "하늘", true },
-            { " 하늘 ", "하늘", true },
-            { "하늘", "^하늘", true },
-            { "하늘 ", "^하늘", true },
-            { "하늘", "하늘$", true },
-            { " 하늘", "하늘$", true },
-            { "하늘", "^하늘$", true },
-            { "하늘", "하ㄴ", true },
-            { "하늘", "^하ㄴ", true },
-            { "하늘", "하ㄴ$", true },
-            { "하늘", "^하ㄴ$", true },
-            { "하늘", "ㅎ늘", true },
-            { "하늘", "^ㅎ늘", true },
-            { "하늘", "ㅎ늘$", true },
-            { "하늘", "^ㅎ늘$", true },
-            { "하늘", "ㅎㄴ", true },
-            { "하늘 ", "ㅎㄴ", true },
-            { " 하늘", "ㅎㄴ", true },
-            { " 하늘 ", "ㅎㄴ", true },
-            { "하늘", "^ㅎㄴ", true },
-            { "하늘", "ㅎㄴ$", true },
-            { "하늘", "^ㅎㄴ$", true },
-            { " 방준영 ", "ㅂㅈㅇ", true },
-            { "방ㅈㅇ", "ㅂㅈㅇ", true },
-            { "방ㅈㅇ", "ㅂㅈㅇ", true },
-            { " 방ㅈㅇ ", "ㅂㅈㅇ", true },
-            { "방ㅈㅇ", "^ㅂㅈㅇ", true },
-            { " 방ㅈㅇ", "ㅂㅈㅇ$", true },
-            { "방준영", "\u1107\u110C\u110B", true },
-            { "\u1107준영", "\u1107\u110C\u110B", true },
-            { "하늘", "^$", false },
-            { "하 늘", "하늘", false },
-            { " 하 늘", "하늘", false },
-            { "하 늘 ", "하늘", false },
-            { " 하 늘 ", "하늘", false },
-            { "하늘", "하를", false },
-            { " 하늘", "^하늘", false },
-            { " 하늘 ", "^하늘", false },
-            { "하늘 ", "하늘$", false },
-            { " 하늘 ", "하늘$", false },
-            { " 하늘", "^하늘$", false },
-            { "하늘 ", "^하늘$", false },
-            { "하늘", "ㅎ느", false },
-            { "하늘", "^ㅎ느", false },
-            { "하늘", "ㅎ느$", false },
-            { "하늘", "^ㅎ느$", false },
-            { "하늘", "하ㄹ", false },
-            { "하늘", "^하ㄹ", false },
-            { "하늘", "하ㄹ$", false },
-            { "하늘", "^하ㄹ$", false },
-            { "하늘", "하ㄹ", false },
-            { "하늘", "^ㅎㄹ", false },
-            { "하늘", "ㅎㄹ$", false },
-            { "하늘", "^ㅎㄹ$", false },
-            { "방준영", "ㅂㅇㅈ", false },
-            { " 방준영 ", "ㅂㅇㅈ", false },
-            { "방ㅈㅇ", "ㅂㅇㅈ", false },
-            { "방준", "ㅂㅈㅇ", false },
-        });
-    }
-
-    @Test
-    public void isMatch_ReturnsExpectedResult() {
-        assertThat(String.format("text: %s, pattern: %s", _text, _pattern),
-            KoreanTextMatcher.isMatch(_text, _pattern), is(equalTo(_expectedResult)));
+    @ParameterizedTest
+    @MethodSource("getTestParameters")
+    @DisplayName("isMatch(text, pattern) with valid arguments")
+    void isMatch_withValidArguments(String text, String pattern, boolean expectedResult) {
+        assertThat(String.format("text: %s, pattern: %s", text, pattern),
+            KoreanTextMatcher.isMatch(text, pattern), equalTo(expectedResult));
     }
 }
