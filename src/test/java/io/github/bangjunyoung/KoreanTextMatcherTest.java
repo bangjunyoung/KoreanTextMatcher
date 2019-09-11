@@ -27,12 +27,102 @@ package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class KoreanTextMatcherTest {
+
+    static Stream<Arguments> matchesTestParameters() {
+        return Stream.of(
+            // Hangul Compatibility Jamo
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄹ", 0),
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "하늘", 1),
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎ늘", 2),
+            arguments("하늘 ㅎ늘 하ㄴ ㅎㄴ", "ㅎㄴ", 4),
+            // Hangul Jamo
+            arguments("하늘 ᄒ늘 하ᄂ ᄒᄂ", "ᄒ늘", 2),
+            arguments("하늘 ᄒ늘 하ᄂ ᄒᄂ", "ᄒᄂ", 4)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("matchesTestParameters")
+    @DisplayName("matches(text, pattern) with valid arguments")
+    void matches_withValidArguments(String text, String pattern, int expectedMatchCount) {
+        String message = String.format("text: %s, pattern: %s", text, pattern);
+
+        int count = 0;
+        for (KoreanTextMatch match : KoreanTextMatcher.matches(text, pattern)) {
+            count++;
+            assertThat(message, text.contains(match.value()));
+        }
+        assertThat(message, count, equalTo(expectedMatchCount));
+    }
+
+    static Stream<Arguments> isMatchTestParameters() {
+        return Stream.of(
+            arguments("", "^$", true),
+            arguments("하늘", "", true),
+            arguments("하늘", "^", true),
+            arguments("하늘", "$", true),
+            arguments("하늘", "하늘", true),
+            arguments(" 하늘", "하늘", true),
+            arguments("하늘 ", "하늘", true),
+            arguments(" 하늘 ", "하늘", true),
+            arguments("하늘", "^하늘", true),
+            arguments("하늘 ", "^하늘", true),
+            arguments("하늘", "하늘$", true),
+            arguments(" 하늘", "하늘$", true),
+            arguments("하늘", "^하늘$", true),
+            arguments("하늘", "하ㄴ", true),
+            arguments("하늘", "^하ㄴ", true),
+            arguments("하늘", "하ㄴ$", true),
+            arguments("하늘", "^하ㄴ$", true),
+            arguments("하늘", "ㅎ늘", true),
+            arguments("하늘", "^ㅎ늘", true),
+            arguments("하늘", "ㅎ늘$", true),
+            arguments("하늘", "^ㅎ늘$", true),
+            arguments("하늘", "ㅎㄴ", true),
+            arguments("하늘 ", "ㅎㄴ", true),
+            arguments(" 하늘", "ㅎㄴ", true),
+            arguments(" 하늘 ", "ㅎㄴ", true),
+            arguments("하늘", "^ㅎㄴ", true),
+            arguments("하늘", "ㅎㄴ$", true),
+            arguments("하늘", "^ㅎㄴ$", true),
+            arguments("하늘", "^$", false),
+            arguments("하 늘", "하늘", false),
+            arguments(" 하 늘", "하늘", false),
+            arguments("하 늘 ", "하늘", false),
+            arguments(" 하 늘 ", "하늘", false),
+            arguments("하늘", "하를", false),
+            arguments(" 하늘", "^하늘", false),
+            arguments(" 하늘 ", "^하늘", false),
+            arguments("하늘 ", "하늘$", false),
+            arguments(" 하늘 ", "하늘$", false),
+            arguments(" 하늘", "^하늘$", false),
+            arguments("하늘 ", "^하늘$", false),
+            arguments("하늘", "ㅎ느", false),
+            arguments("하늘", "^ㅎ느", false),
+            arguments("하늘", "ㅎ느$", false),
+            arguments("하늘", "^ㅎ느$", false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isMatchTestParameters")
+    @DisplayName("isMatch(text, pattern) with valid arguments")
+    void isMatch_withValidArguments(String text, String pattern, boolean expectedResult) {
+        assertThat(String.format("text: %s, pattern: %s", text, pattern),
+            KoreanTextMatcher.isMatch(text, pattern), equalTo(expectedResult));
+    }
 
     @Test
     @DisplayName("new KoreanTextMatcher(null) throws IllegalArgumentException")
@@ -104,11 +194,5 @@ class KoreanTextMatcherTest {
             Iterable<KoreanTextMatch> matches = KoreanTextMatcher.matches("", "");
             matches.iterator().remove();
         });
-    }
-
-    @Test
-    @DisplayName("nextMatch() returns EMPTY if current match is EMPTY")
-    void nextMatch_returnsEMPTYIfCurrentMatchIsEMPTY() {
-        assertThat(KoreanTextMatch.EMPTY.nextMatch(), equalTo(KoreanTextMatch.EMPTY));
     }
 }
