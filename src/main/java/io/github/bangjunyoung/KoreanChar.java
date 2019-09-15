@@ -43,14 +43,13 @@ public final class KoreanChar {
     private static final int HANGUL_SYLLABLES_BASE = 0xAC00;
     private static final int HANGUL_SYLLABLES_END = HANGUL_SYLLABLES_BASE + HANGUL_SYLLABLE_COUNT;
 
-    private static final int[] COMPAT_CHOSEONG_MAP = new int[] {
-        0x3131, 0x3132, 0x3134, 0x3137, 0x3138, 0x3139, 0x3141, 0x3142, 0x3143, 0x3145,
-        0x3146, 0x3147, 0x3148, 0x3149, 0x314A, 0x314B, 0x314C, 0x314D, 0x314E
+    private static final char[] COMPAT_CHOSEONG_COLLECTION = new char[] {
+        'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
+        'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    };
     };
 
-    private KoreanChar() {
-        // Can never be instantiated.
-    }
+    private KoreanChar() {} // Can never be instantiated.
 
     /**
      * 주어진 문자가 Unicode Hangul Jamo 초성인지 검사한다.
@@ -109,12 +108,11 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             return '\0';
 
-        return (char)COMPAT_CHOSEONG_MAP[getChoseongIndex(syllable)];
+        return COMPAT_CHOSEONG_COLLECTION[getChoseongIndex(syllable)];
     }
 
     private static int getChoseongIndex(char syllable) {
-        final int syllableIndex = syllable - HANGUL_SYLLABLES_BASE;
-        final int choseongIndex = syllableIndex / (JUNGSEONG_COUNT * JONGSEONG_COUNT);
-        return choseongIndex;
+        final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
+        return sylIndex / (JUNGSEONG_COUNT * JONGSEONG_COUNT);
     }
 }
