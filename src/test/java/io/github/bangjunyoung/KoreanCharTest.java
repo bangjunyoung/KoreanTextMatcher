@@ -27,6 +27,7 @@ package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
@@ -35,58 +36,50 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class KoreanCharTest {
 
-    static Stream<Arguments> isSyllableTestParameters() {
-        return Stream.of(
-            arguments('가', true),
-            arguments('힣', true),
-            arguments('\uABFF', false),
-            arguments('\uD7A4', false)
-        );
+    @ParameterizedTest
+    @ValueSource(chars = { '가', '힣' })
+    @DisplayName("isSyllable(char) with valid arguments")
+    void isSyllable_withValidArguments(char syllable) {
+        assertTrue(KoreanChar.isSyllable(syllable));
     }
 
     @ParameterizedTest
-    @MethodSource("isSyllableTestParameters")
-    @DisplayName("isSyllable(syllable) with various arguments")
-    void isSyllable_withVariousArguments(char syllable, boolean expectedResult) {
-        String message = String.format("syllable: %c", syllable);
-        assertThat(message, KoreanChar.isSyllable(syllable), equalTo(expectedResult));
-    }
-
-    static Stream<Arguments> isChoseongTestParameters() {
-        return Stream.of(
-            arguments('ᄀ', true),
-            arguments('ᄒ', true),
-            arguments('\u10ff', false),
-            arguments('\u1200', false)
-        );
+    @ValueSource(chars = { '\uABFF', '\uD7A4' })
+    @DisplayName("isSyllable(char) with invalid arguments returns false")
+    void isSyllable_withInvalidArguments(char syllable) {
+        assertFalse(KoreanChar.isSyllable(syllable));
     }
 
     @ParameterizedTest
-    @MethodSource("isChoseongTestParameters")
-    @DisplayName("isChoseong(c) with various arguments")
-    void isChoseong_withVariousArguments(char c, boolean expectedResult) {
-        String message = String.format("char: %c", c);
-        assertThat(message, KoreanChar.isChoseong(c), equalTo(expectedResult));
-    }
-
-    static Stream<Arguments> isCompatChoseongTestParameters() {
-        return Stream.of(
-            arguments('ㄱ', true),
-            arguments('ㅎ', true),
-            arguments('\u3130', false),
-            arguments('\u318f', false)
-        );
+    @ValueSource(chars = { 'ᄀ', 'ᄒ' })
+    @DisplayName("isChoseong(char) with valid arguments")
+    void isChoseong_withValidArguments(char c) {
+        assertTrue(KoreanChar.isChoseong(c));
     }
 
     @ParameterizedTest
-    @MethodSource("isCompatChoseongTestParameters")
-    @DisplayName("isCompatChoseong(c) with various arguments")
-    void isCompatChoseong_withVariousArguments(char c, boolean expectedResult) {
-        String message = String.format("char: %c", c);
-        assertThat(message, KoreanChar.isCompatChoseong(c), equalTo(expectedResult));
+    @ValueSource(chars = { '\u10ff', '\u1200' })
+    @DisplayName("isChoseong(char) with invalid arguments returns false")
+    void isChoseong_withInvalidArguments(char c) {
+        assertFalse(KoreanChar.isChoseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'ㄱ', 'ㅎ' })
+    @DisplayName("isCompatChoseong(char) with valid arguments")
+    void isCompatChoseong_withValidArguments(char c) {
+        assertTrue(KoreanChar.isCompatChoseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { '\u3130', '\u318f' })
+    @DisplayName("isCompatChoseong(char) with invalid arguments returns false")
+    void isCompatChoseong_withInvalidArguments(char c) {
+        assertFalse(KoreanChar.isCompatChoseong(c));
     }
 
     static Stream<Arguments> getChoseongTestParameters() {

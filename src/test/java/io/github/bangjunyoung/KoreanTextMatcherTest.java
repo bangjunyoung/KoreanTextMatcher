@@ -25,13 +25,14 @@
 
 package io.github.bangjunyoung;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -57,14 +58,12 @@ class KoreanTextMatcherTest {
     @MethodSource("matchesTestParameters")
     @DisplayName("matches(text, pattern) with valid arguments")
     void matches_withValidArguments(String text, String pattern, int expectedMatchCount) {
-        String message = String.format("text: %s, pattern: %s", text, pattern);
-
         int count = 0;
         for (KoreanTextMatch match : KoreanTextMatcher.matches(text, pattern)) {
             count++;
-            assertThat(message, text.contains(match.value()));
+            assertThat(text, containsString(match.value()));
         }
-        assertThat(message, count, equalTo(expectedMatchCount));
+        assertThat(count, equalTo(expectedMatchCount));
     }
 
     static Stream<Arguments> isMatchTestParameters() {
@@ -120,49 +119,48 @@ class KoreanTextMatcherTest {
     @MethodSource("isMatchTestParameters")
     @DisplayName("isMatch(text, pattern) with valid arguments")
     void isMatch_withValidArguments(String text, String pattern, boolean expectedResult) {
-        assertThat(String.format("text: %s, pattern: %s", text, pattern),
-            KoreanTextMatcher.isMatch(text, pattern), equalTo(expectedResult));
+        assertThat(KoreanTextMatcher.isMatch(text, pattern), equalTo(expectedResult));
     }
 
     @Test
     @DisplayName("new KoreanTextMatcher(null) throws IllegalArgumentException")
     void KoreanTextMatcher_throwsExceptionOnNullPatternArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
             new KoreanTextMatcher(null));
     }
 
     @Test
     @DisplayName("static isMatch(null, \"\") throws IllegalArgumentException")
     void isMatch_throwsExceptionOnNullTextArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
             KoreanTextMatcher.isMatch(null, ""));
     }
 
     @Test
     @DisplayName("static isMatch(\"\", null) throws IllegalArgumentException")
     void isMatch_throwsExceptionOnNullPatternArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
             KoreanTextMatcher.isMatch("", null));
     }
 
     @Test
     @DisplayName("static match(null, \"\") throws IllegalArgumentException")
     void static_match_throwsExceptionOnNullTextArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
             KoreanTextMatcher.match(null, ""));
     }
 
     @Test
     @DisplayName("static match(\"\", null) throws IllegalArgumentException")
     void static_match_throwsExceptionOnNullPatternArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
             KoreanTextMatcher.match("", null));
     }
 
     @Test
     @DisplayName("match(null) throws IllegalArgumentException")
     void match_throwsExceptionOnNullTextArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             KoreanTextMatcher matcher = new KoreanTextMatcher("");
             matcher.match(null);
         });
@@ -171,7 +169,7 @@ class KoreanTextMatcherTest {
     @Test
     @DisplayName("match(text, startIndex) with startIndex < 0 throws IllegalArgumentException")
     void match_throwsExceptionOnNegativeStartIndexArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             KoreanTextMatcher matcher = new KoreanTextMatcher("");
             matcher.match("", -1);
         });
@@ -180,7 +178,7 @@ class KoreanTextMatcherTest {
     @Test
     @DisplayName("match(text, startIndex) with too large startIndex throws IllegalArgumentException")
     void match_throwsExceptionOnTooLargeStartIndexArgument() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             String text = "";
             KoreanTextMatcher matcher = new KoreanTextMatcher("");
             matcher.match(text, text.length() + 1);
@@ -190,7 +188,7 @@ class KoreanTextMatcherTest {
     @Test
     @DisplayName("Instance of Iterable<KoreanTextMatch> throws UnsupportedOperationException if remove() is called with it")
     void matches_throwsExceptionOnCallingRemove() {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+        assertThrows(UnsupportedOperationException.class, () -> {
             Iterable<KoreanTextMatch> matches = KoreanTextMatcher.matches("", "");
             matches.iterator().remove();
         });
