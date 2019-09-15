@@ -101,6 +101,7 @@ class KoreanTextMatcherTest {
             arguments("하늘", "ㅎㄴ$", true),
             arguments("하늘", "^ㅎㄴ$", true),
             arguments("하늘", "^$", false),
+            arguments("하늘", "ㅎㄴㅎㄴ", false),
             arguments("하늘", "한", false),
             arguments("하 늘", "하늘", false),
             arguments(" 하 늘", "하늘", false),
