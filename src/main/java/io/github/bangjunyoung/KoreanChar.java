@@ -52,7 +52,7 @@ public final class KoreanChar {
 
     /**
      * 주어진 문자가 Unicode Hangul Jamo 초성인지 검사한다.
-     * 
+     *
      * @param c 검사할 문자
      * @return {@code c}가 Unicode Hangul Jamo 초성이면 {@code true},
      *         아니면 {@code false}.
@@ -63,7 +63,7 @@ public final class KoreanChar {
 
     /**
      * 주어진 문자가 Unicode Hangul Compatibility Jamo 초성인지 검사한다.
-     * 
+     *
      * @param c 검사할 문자
      * @return {@code c}가 Unicode Hangul Compatibility Jamo 초성이면
      *         {@code true}, 아니면 {@code false}.
@@ -74,7 +74,7 @@ public final class KoreanChar {
 
     /**
      * 주어진 문자가 한글 음절인지 검사한다.
-     * 
+     *
      * @param c 검사할 문자
      * @return {@code c}가 한글 음절이면 {@code true}, 아니면 {@code false}.
      */
@@ -84,7 +84,7 @@ public final class KoreanChar {
 
     /**
      * 주어진 한글 음절로부터 Unicode Hangul Jamo 초성을 추출한다.
-     * 
+     *
      * @param syllable 초성을 추출할 한글 음절
      * @return Unicode Hangul Jamo 초성.
      *         {@code syllable}이 한글 음절이 아니면 {@code '\0'}.
@@ -98,7 +98,7 @@ public final class KoreanChar {
 
     /**
      * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 초성을 추출한다.
-     * 
+     *
      * @param syllable 초성을 추출할 한글 음절
      * @return Unicode Hangul Compatibility Jamo 초성.
      *         {@code syllable}이 한글 음절이 아니면 {@code '\0'}.
