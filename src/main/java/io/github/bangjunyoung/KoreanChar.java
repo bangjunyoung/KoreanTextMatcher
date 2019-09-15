@@ -49,6 +49,62 @@ public final class KoreanChar {
         'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
         'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
+    private static final char[] COMPAT_JUNGSEONG_COLLECTION = new char[]{
+        'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ',
+        'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ',
+        'ㅣ'
+    };
+    private static final char[] COMPAT_JONGSEONG_COLLECTION = new char[] {
+        '\u0000',
+        'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ',
+        'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ',
+        'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    };
+
+    private static final String[] JAMO_STRINGS = new String[] {
+        "",
+
+        "ᄀ", "ᄀᄀ", "ᄂ", "ᄃ", "ᄃᄃ", "ᄅ", "ᄆ", "ᄇ", "ᄇᄇ", "ᄉ",
+        "ᄉᄉ", "ᄋ", "ᄌ", "ᄌᄌ", "ᄎ", "ᄏ", "ᄐ", "ᄑ", "ᄒ",
+
+        "ᅡ", "ᅢ", "ᅣ", "ᅤ", "ᅥ", "ᅦ", "ᅧ", "ᅨ", "ᅩ", "ᅩᅡ",
+        "ᅩᅢ", "ᅩᅵ", "ᅭ", "ᅮ", "ᅮᅥ", "ᅮᅦ", "ᅮᅵ", "ᅲ", "ᅳ", "ᅳᅵ",
+        "ᅵ",
+
+        "ᆨ", "ᆨᆨ", "ᆨᆺ", "ᆫ", "ᆫᆽ", "ᆫᇂ", "ᆮ", "ᆯ", "ᆯᆨ", "ᆯᆷ",
+        "ᆯᆸ", "ᆯᆺ", "ᆯᇀ", "ᆯᇁ", "ᆯᇂ", "ᆷ", "ᆸ", "ᆸᆺ", "ᆺ", "ᆺᆺ",
+        "ᆼ", "ᆽ", "ᆾ", "ᆿ", "ᇀ", "ᇁ", "ᇂ",
+
+        "ㄱ", "ㄱㄱ", "ㄱㅅ", "ㄴ", "ㄴㅈ", "ㄴㅎ", "ㄷ", "ㄷㄷ", "ㄹ", "ㄹㄱ",
+        "ㄹㅁ", "ㄹㅂ", "ㄹㅅ", "ㄹㅌ", "ㄹㅍ", "ㄹㅎ", "ㅁ", "ㅂ", "ㅂㅂ", "ㅂㅅ",
+        "ㅅ", "ㅅㅅ", "ㅇ", "ㅈ", "ㅈㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ",
+
+        "ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅗㅏ",
+        "ㅗㅐ", "ㅗㅣ", "ㅛ", "ㅜ", "ㅜㅓ", "ㅜㅔ", "ㅜㅣ", "ㅠ", "ㅡ", "ㅡㅣ",
+        "ㅣ"
+    };
+    private static final char[] JAMO_CHARS = new char[] {
+        '\u0000',
+
+        'ᄀ', 'ᄁ', 'ᄂ', 'ᄃ', 'ᄄ', 'ᄅ', 'ᄆ', 'ᄇ', 'ᄈ', 'ᄉ',
+        'ᄊ', 'ᄋ', 'ᄌ', 'ᄍ', 'ᄎ', 'ᄏ', 'ᄐ', 'ᄑ', 'ᄒ',
+
+        'ᅡ', 'ᅢ', 'ᅣ', 'ᅤ', 'ᅥ', 'ᅦ', 'ᅧ', 'ᅨ', 'ᅩ', 'ᅪ',
+        'ᅫ', 'ᅬ', 'ᅭ', 'ᅮ', 'ᅯ', 'ᅰ', 'ᅱ', 'ᅲ', 'ᅳ', 'ᅴ',
+        'ᅵ',
+
+        'ᆨ', 'ᆩ', 'ᆪ', 'ᆫ', 'ᆬ', 'ᆭ', 'ᆮ', 'ᆯ', 'ᆰ', 'ᆱ',
+        'ᆲ', 'ᆳ', 'ᆴ', 'ᆵ', 'ᆶ', 'ᆷ', 'ᆸ', 'ᆹ', 'ᆺ', 'ᆻ',
+        'ᆼ', 'ᆽ', 'ᆾ', 'ᆿ', 'ᇀ', 'ᇁ', 'ᇂ',
+
+        'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㄺ',
+        'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅄ',
+        'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
+
+        'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ',
+        'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ',
+        'ㅣ'
+    };
 
     private KoreanChar() {} // Can never be instantiated.
 
@@ -90,11 +146,11 @@ public final class KoreanChar {
      *
      * @param syllable 초성을 추출할 한글 음절
      * @return Unicode Hangul Jamo 초성.
-     *         {@code syllable}이 한글 음절이 아니면 {@code '\0'}.
+     * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getChoseong(char syllable) {
         if (!isSyllable(syllable))
-            return '\0';
+            throw new IllegalArgumentException(String.valueOf(syllable));
 
         return (char)(0x1100 + getChoseongIndex(syllable));
     }
@@ -104,17 +160,97 @@ public final class KoreanChar {
      *
      * @param syllable 초성을 추출할 한글 음절
      * @return Unicode Hangul Compatibility Jamo 초성.
-     *         {@code syllable}이 한글 음절이 아니면 {@code '\0'}.
+     * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatChoseong(char syllable) {
         if (!isSyllable(syllable))
-            return '\0';
+            throw new IllegalArgumentException(String.valueOf(syllable));
 
         return COMPAT_CHOSEONG_COLLECTION[getChoseongIndex(syllable)];
+    }
+
+    /**
+     * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 중성을 추출한다.
+     *
+     * @param syllable 중성을 추출할 한글 음절
+     * @return Unicode Hangul Compatibility Jamo 중성.
+     * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
+     */
+    public static char getCompatJungseong(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        return COMPAT_JUNGSEONG_COLLECTION[getJungseongIndex(syllable)];
+    }
+
+    /**
+     * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 종성을 추출한다.
+     *
+     * @param syllable 종성을 추출할 한글 음절
+     * @return Unicode Hangul Compatibility Jamo 종성.
+     * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
+     */
+    public static char getCompatJongseong(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        return COMPAT_JONGSEONG_COLLECTION[getJongseongIndex(syllable)];
+    }
+
+    public static char compatChoseongToChoseong(char c) {
+        final int index = Arrays.binarySearch(COMPAT_CHOSEONG_COLLECTION, c);
+        if (index < 0)
+            throw new IllegalArgumentException(String.valueOf(c));
+
+        return (char)(0x1100 + index);
+    }
+
+    public static char choseongToCompatChoseong(char c) {
+        if (!isChoseong(c))
+            throw new IllegalArgumentException(String.valueOf(c));
+
+        return COMPAT_CHOSEONG_COLLECTION[(int)c - 0x1100];
+    }
+
+    public static char joinJamo(String jamo) {
+        final int index = Arrays.binarySearch(JAMO_STRINGS, jamo);
+        if (index < 0)
+            throw new IllegalArgumentException(jamo);
+
+        return JAMO_CHARS[index];
+    }
+
+    public static String splitJamo(char jamo) {
+        final int index = Arrays.binarySearch(JAMO_CHARS, jamo);
+        if (index < 0)
+            throw new IllegalArgumentException(String.valueOf(jamo));
+
+        return JAMO_STRINGS[index];
+    }
+
+    public static String decomposeIntoCompatJamo(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        String cho = splitJamo(getCompatChoseong(syllable));
+        String jung = splitJamo(getCompatJungseong(syllable));
+        String jong = splitJamo(getCompatJongseong(syllable));
+
+        return cho + jung + jong;
     }
 
     private static int getChoseongIndex(char syllable) {
         final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
         return sylIndex / (JUNGSEONG_COUNT * JONGSEONG_COUNT);
+    }
+
+    private static int getJungseongIndex(char syllable) {
+        final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
+        return sylIndex % (JUNGSEONG_COUNT * JONGSEONG_COUNT) / JONGSEONG_COUNT;
+    }
+
+    private static int getJongseongIndex(char syllable) {
+        final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
+        return sylIndex % JONGSEONG_COUNT;
     }
 }

@@ -178,7 +178,7 @@ public final class KoreanTextMatcher {
 
         for (int i = startIndex; i < startIndex + length - pattern.length() + 1; i++) {
             for (int j = 0; j < pattern.length(); j++) {
-                if (!choseongMatches(text.charAt(i + j), pattern.charAt(j)))
+                if (!KoreanCharApproxMatcher.match(text.charAt(i + j), pattern.charAt(j)))
                     break;
 
                 if (j == pattern.length() - 1)
@@ -250,20 +250,6 @@ public final class KoreanTextMatcher {
      */
     public static Iterable<KoreanTextMatch> matches(String text, String pattern) {
         return new KoreanTextMatcher(pattern).matches(text);
-    }
-
-    private static boolean choseongMatches(char a, char b) {
-        if (KoreanChar.isCompatChoseong(a) || KoreanChar.isChoseong(a))
-            return a == b;
-
-        char c;
-        if (KoreanChar.isCompatChoseong(b))
-            c = KoreanChar.getCompatChoseong(a);
-        else if (KoreanChar.isChoseong(b))
-            c = KoreanChar.getChoseong(a);
-        else
-            c = a;
-        return c == b;
     }
 
     private String stripAnchors(String pattern) {

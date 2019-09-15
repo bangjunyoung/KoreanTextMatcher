@@ -1,0 +1,60 @@
+/*
+ * Copyright 2019 Bang Jun-young
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package io.github.bangjunyoung;
+
+public class KoreanCharApproxMatcher {
+    private KoreanCharApproxMatcher() {} // Can never be instantiated.
+
+    /**
+     * 주어진 두 문자를 음절 근사 매칭으로 비교한다.
+     *
+     * 비교할 첫번째 문자는 두번째 문자보다 항상 자모 개수가 같거나 많아야 한다.
+     * 예를 들어 {@code match('한', '하')}는 성공하지만 {@code match('하', '한')}은 실패한다.
+     *
+     * @param t 비교할 첫번째 문자.
+     * @param p 비교할 두번째 문자.
+     * @return 매칭이 성공하면 {@code true}, 실패하면 {@code false}.
+     */
+    public static boolean match(char t, char p) {
+        if (!KoreanChar.isSyllable(p) &&
+            !KoreanChar.isCompatChoseong(p) &&
+            !KoreanChar.isChoseong(p))
+            return t == p;
+
+        return decompose(t).startsWith(decompose(p));
+    }
+
+    private static String decompose(char c) {
+        if (KoreanChar.isSyllable(c))
+            return KoreanChar.decomposeIntoCompatJamo(c);
+        else if (KoreanChar.isCompatChoseong(c))
+            return KoreanChar.splitJamo(c);
+        else if (KoreanChar.isChoseong(c))
+            return KoreanChar.splitJamo(KoreanChar.choseongToCompatChoseong(c));
+        else
+            return String.valueOf(c);
+    }
+}
