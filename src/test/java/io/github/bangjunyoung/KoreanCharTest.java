@@ -76,7 +76,7 @@ class KoreanCharTest {
     }
 
     @ParameterizedTest
-    @ValueSource(chars = { '\u3130', '\u318f' })
+    @ValueSource(chars = { 'ㄳ', 'ㅄ' })
     @DisplayName("isCompatChoseong(char) with invalid arguments returns false")
     void isCompatChoseong_withInvalidArguments(char c) {
         assertFalse(KoreanChar.isCompatChoseong(c));

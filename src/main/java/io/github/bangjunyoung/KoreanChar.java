@@ -25,6 +25,8 @@
 
 package io.github.bangjunyoung;
 
+import java.util.Arrays;
+
 /**
  * 한글 초성 추출을 위한 클래스
  * <p>
@@ -69,7 +71,8 @@ public final class KoreanChar {
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatChoseong(char c) {
-        return 0x3131 <= c && c <= 0x314E;
+        final int index = Arrays.binarySearch(COMPAT_CHOSEONG_COLLECTION, c);
+        return index >= 0;
     }
 
     /**
