@@ -179,7 +179,7 @@ class KoreanCharTest {
     @DisplayName("getJungseong with invalid arguments throws IllegalArgumentException")
     void getJungseong_withInvalidArguments() {
         assertThrows(IllegalArgumentException.class, () -> {
-            KoreanChar.getCompatJungseong('A');
+            KoreanChar.getJungseong('A');
         });
     }
 
