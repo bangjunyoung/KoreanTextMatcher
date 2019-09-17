@@ -386,14 +386,14 @@ class KoreanCharTest {
     @MethodSource("decomposeIntoCompatJamo_TestParameters")
     @DisplayName("decomposeIntoCompatJamo(char) with valid arguments")
     void decomposeIntoCompatJamo_withValidArguments(char syllable, String expected) {
-        assertThat(KoreanChar.decomposeIntoCompatJamo(syllable), equalTo(expected));
+        assertThat(KoreanChar.decomposeCompat(syllable), equalTo(expected));
     }
 
     @Test
     @DisplayName("decomposeIntoCompatJamo with invalid arguments throws IllegalArgumentException")
     void decomposeIntoCompatJamo_withInvalidArguments() {
         assertThrows(IllegalArgumentException.class, () -> {
-            KoreanChar.decomposeIntoCompatJamo('A');
+            KoreanChar.decomposeCompat('A');
         });
     }
 }

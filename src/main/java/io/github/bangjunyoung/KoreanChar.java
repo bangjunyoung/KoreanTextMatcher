@@ -303,7 +303,7 @@ public final class KoreanChar {
         return JAMO_STRINGS[index];
     }
 
-    public static String decomposeIntoCompatJamo(char syllable) {
+    public static String decomposeCompat(char syllable) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
