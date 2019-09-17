@@ -202,6 +202,35 @@ public final class KoreanChar {
     }
 
     /**
+     * 주어진 한글 음절로부터 Unicode Hangul Jamo 중성을 추출한다.
+     *
+     * @param syllable 중성을 추출할 한글 음절
+     * @return Unicode Hangul Jamo 중성.
+     * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
+     */
+    public static char getJungseong(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        return (char)(0x1161 + getJungseongIndex(syllable));
+    }
+
+    /**
+     * 주어진 한글 음절로부터 Unicode Hangul Jamo 종성을 추출한다.
+     *
+     * @param syllable 종성을 추출할 한글 음절
+     * @return Unicode Hangul Jamo 종성.
+     * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
+     */
+    public static char getJongseong(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        final int index = getJongseongIndex(syllable);
+        return (char)(index == 0 ? '\u0000' : 0x11A7 + index);
+    }
+
+    /**
      * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 초성을 추출한다.
      *
      * @param syllable 초성을 추출할 한글 음절

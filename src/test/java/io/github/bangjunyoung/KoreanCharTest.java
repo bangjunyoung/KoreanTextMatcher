@@ -161,6 +161,51 @@ class KoreanCharTest {
         });
     }
 
+    static Stream<Arguments> getJungseong_TestParameters() {
+        return Stream.of(
+            arguments('한', 'ᅡ'),
+            arguments('글', 'ᅳ')
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getJungseong_TestParameters")
+    @DisplayName("getJungseong(char) with valid arguments")
+    void getJungseong_withValidArguments(char syllable, char expected) {
+        assertThat(KoreanChar.getJungseong(syllable), equalTo(expected));
+    }
+
+    @Test
+    @DisplayName("getJungseong with invalid arguments throws IllegalArgumentException")
+    void getJungseong_withInvalidArguments() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            KoreanChar.getCompatJungseong('A');
+        });
+    }
+
+    static Stream<Arguments> getJongseong_TestParameters() {
+        return Stream.of(
+            arguments('나', '\u0000'),
+            arguments('한', 'ᆫ'),
+            arguments('값', 'ᆹ')
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getJongseong_TestParameters")
+    @DisplayName("getJongseong(char) with valid arguments")
+    void getJongseong_withValidArguments(char syllable, char expected) {
+        assertThat(KoreanChar.getJongseong(syllable), equalTo(expected));
+    }
+
+    @Test
+    @DisplayName("getJongseong with invalid arguments throws IllegalArgumentException")
+    void getJongseong_withInvalidArguments() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            KoreanChar.getJongseong('A');
+        });
+    }
+
     static Stream<Arguments> getCompatChoseong_TestParameters() {
         return Stream.of(
             arguments('하', 'ㅎ'),
