@@ -70,6 +70,34 @@ class KoreanCharTest {
     }
 
     @ParameterizedTest
+    @ValueSource(chars = { 'ᅡ', 'ᅵ' })
+    @DisplayName("isJungseong(char) with valid arguments")
+    void isJungseong_withValidArguments(char c) {
+        assertTrue(KoreanChar.isJungseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { '\u1160', '\u1176' })
+    @DisplayName("isJungseong(char) with invalid arguments returns false")
+    void isJungseong_withInvalidArguments(char c) {
+        assertFalse(KoreanChar.isJungseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'ᆨ', 'ᇂ' })
+    @DisplayName("isJongseong(char) with valid arguments")
+    void isJongseong_withValidArguments(char c) {
+        assertTrue(KoreanChar.isJongseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { '\u11A7', '\u11C3' })
+    @DisplayName("isJongseong(char) with invalid arguments returns false")
+    void isJongseong_withInvalidArguments(char c) {
+        assertFalse(KoreanChar.isJongseong(c));
+    }
+
+    @ParameterizedTest
     @ValueSource(chars = { 'ㄱ', 'ㅎ' })
     @DisplayName("isCompatChoseong(char) with valid arguments")
     void isCompatChoseong_withValidArguments(char c) {
@@ -81,6 +109,34 @@ class KoreanCharTest {
     @DisplayName("isCompatChoseong(char) with invalid arguments returns false")
     void isCompatChoseong_withInvalidArguments(char c) {
         assertFalse(KoreanChar.isCompatChoseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'ㅏ', 'ㅣ' })
+    @DisplayName("isCompatJungseong(char) with valid arguments")
+    void isCompatJungseong_withValidArguments(char c) {
+        assertTrue(KoreanChar.isCompatJungseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { '\u314E', '\u3164' })
+    @DisplayName("isCompatJungseong(char) with invalid arguments returns false")
+    void isCompatJungseong_withInvalidArguments(char c) {
+        assertFalse(KoreanChar.isCompatJungseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'ㄳ', 'ㅄ' })
+    @DisplayName("isCompatJongseong(char) with valid arguments")
+    void isCompatJongseong_withValidArguments(char c) {
+        assertTrue(KoreanChar.isCompatJongseong(c));
+    }
+
+    @ParameterizedTest
+    @ValueSource(chars = { 'ㄸ', 'ㅃ' })
+    @DisplayName("isCompatJongseong(char) with invalid arguments returns false")
+    void isCompatJongseong_withInvalidArguments(char c) {
+        assertFalse(KoreanChar.isCompatJongseong(c));
     }
 
     static Stream<Arguments> getChoseong_TestParameters() {

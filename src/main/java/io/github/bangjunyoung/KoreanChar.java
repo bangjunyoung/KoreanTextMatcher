@@ -120,6 +120,28 @@ public final class KoreanChar {
     }
 
     /**
+     * 주어진 문자가 Unicode Hangul Jamo 중성인지 검사한다.
+     *
+     * @param c 검사할 문자
+     * @return {@code c}가 Unicode Hangul Jamo 중성이면 {@code true},
+     *         아니면 {@code false}.
+     */
+    public static boolean isJungseong(char c) {
+        return 0x1161 <= c && c <= 0x1175;
+    }
+
+    /**
+     * 주어진 문자가 Unicode Hangul Jamo 종성인지 검사한다.
+     *
+     * @param c 검사할 문자
+     * @return {@code c}가 Unicode Hangul Jamo 종성이면 {@code true},
+     *         아니면 {@code false}.
+     */
+    public static boolean isJongseong(char c) {
+        return 0x11A8 <= c && c <= 0x11C2;
+    }
+
+    /**
      * 주어진 문자가 Unicode Hangul Compatibility Jamo 초성인지 검사한다.
      *
      * @param c 검사할 문자
@@ -128,6 +150,30 @@ public final class KoreanChar {
      */
     public static boolean isCompatChoseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_CHOSEONG_COLLECTION, c);
+        return index >= 0;
+    }
+
+    /**
+     * 주어진 문자가 Unicode Hangul Compatibility Jamo 중성인지 검사한다.
+     *
+     * @param c 검사할 문자
+     * @return {@code c}가 Unicode Hangul Compatibility Jamo 중성이면
+     *         {@code true}, 아니면 {@code false}.
+     */
+    public static boolean isCompatJungseong(char c) {
+        final int index = Arrays.binarySearch(COMPAT_JUNGSEONG_COLLECTION, c);
+        return index >= 0;
+    }
+
+    /**
+     * 주어진 문자가 Unicode Hangul Compatibility Jamo 종성인지 검사한다.
+     *
+     * @param c 검사할 문자
+     * @return {@code c}가 Unicode Hangul Compatibility Jamo 종성이면
+     *         {@code true}, 아니면 {@code false}.
+     */
+    public static boolean isCompatJongseong(char c) {
+        final int index = Arrays.binarySearch(COMPAT_JONGSEONG_COLLECTION, c);
         return index >= 0;
     }
 
