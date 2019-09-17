@@ -39,11 +39,6 @@ public class KoreanCharApproxMatcher {
      * @return 매칭이 성공하면 {@code true}, 실패하면 {@code false}.
      */
     public static boolean match(char t, char p) {
-        if (!KoreanChar.isSyllable(p) &&
-            !KoreanChar.isCompatChoseong(p) &&
-            !KoreanChar.isChoseong(p))
-            return t == p;
-
         return decompose(t).startsWith(decompose(p));
     }
 
