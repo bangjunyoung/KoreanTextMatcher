@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Bang Jun-young
+ * Copyright 2019 Bang Jun-young
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
