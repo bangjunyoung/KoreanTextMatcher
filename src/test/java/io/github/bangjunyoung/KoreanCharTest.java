@@ -372,6 +372,31 @@ class KoreanCharTest {
             KoreanChar.splitJamo('A'));
     }
 
+    static Stream<Arguments> decompose_TestParameters() {
+        return Stream.of(
+            arguments('하', "\u1112\u1161"),
+            arguments('늘', "\u1102\u1173\u11AF"),
+            arguments('밝', "\u1107\u1161\u11AF\u11A8"),
+            arguments('꿄', "\u1100\u1100\u116E\u11AF\u11BA"),
+            arguments('쒏', "\u1109\u1109\u116E\u1165\u11AF\u11C2")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("decompose_TestParameters")
+    @DisplayName("decompose(char) with valid arguments")
+    void decompose_withValidArguments(char syllable, String expected) {
+        assertThat(KoreanChar.decompose(syllable), equalTo(expected));
+    }
+
+    @Test
+    @DisplayName("decompose with invalid arguments throws IllegalArgumentException")
+    void decompose_withInvalidArguments() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            KoreanChar.decompose('A');
+        });
+    }
+
     static Stream<Arguments> decomposeCompat_TestParameters() {
         return Stream.of(
             arguments('하', "ㅎㅏ"),

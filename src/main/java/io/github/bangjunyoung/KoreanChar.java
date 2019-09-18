@@ -303,6 +303,17 @@ public final class KoreanChar {
         return JAMO_STRINGS[index];
     }
 
+    public static String decompose(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        String cho = splitJamo(getChoseong(syllable));
+        String jung = splitJamo(getJungseong(syllable));
+        String jong = splitJamo(getJongseong(syllable));
+
+        return cho + jung + jong;
+    }
+
     public static String decomposeCompat(char syllable) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
