@@ -109,6 +109,16 @@ public final class KoreanChar {
     private KoreanChar() {} // Can never be instantiated.
 
     /**
+     * 주어진 문자가 한글 음절인지 검사한다.
+     *
+     * @param c 검사할 문자
+     * @return {@code c}가 한글 음절이면 {@code true}, 아니면 {@code false}.
+     */
+    public static boolean isSyllable(char c) {
+        return HANGUL_SYLLABLES_BASE <= c && c < HANGUL_SYLLABLES_END;
+    }
+
+    /**
      * 주어진 문자가 Unicode Hangul Jamo 초성인지 검사한다.
      *
      * @param c 검사할 문자
@@ -175,16 +185,6 @@ public final class KoreanChar {
     public static boolean isCompatJongseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_JONGSEONG_COLLECTION, c);
         return index >= 0;
-    }
-
-    /**
-     * 주어진 문자가 한글 음절인지 검사한다.
-     *
-     * @param c 검사할 문자
-     * @return {@code c}가 한글 음절이면 {@code true}, 아니면 {@code false}.
-     */
-    public static boolean isSyllable(char c) {
-        return HANGUL_SYLLABLES_BASE <= c && c < HANGUL_SYLLABLES_END;
     }
 
     /**
