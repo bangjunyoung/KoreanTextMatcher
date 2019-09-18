@@ -37,6 +37,7 @@ import java.util.Arrays;
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
 public final class KoreanChar {
+    private KoreanChar() {} // Can never be instantiated.
 
     private static final int CHOSEONG_COUNT = 19;
     private static final int JUNGSEONG_COUNT = 21;
@@ -105,8 +106,6 @@ public final class KoreanChar {
         'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ',
         'ㅣ'
     };
-
-    private KoreanChar() {} // Can never be instantiated.
 
     /**
      * 주어진 문자가 한글 음절인지 검사한다.
