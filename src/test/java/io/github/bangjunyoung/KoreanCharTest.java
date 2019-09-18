@@ -372,7 +372,7 @@ class KoreanCharTest {
             KoreanChar.splitJamo('A'));
     }
 
-    static Stream<Arguments> decomposeIntoCompatJamo_TestParameters() {
+    static Stream<Arguments> decomposeCompat_TestParameters() {
         return Stream.of(
             arguments('하', "ㅎㅏ"),
             arguments('늘', "ㄴㅡㄹ"),
@@ -383,15 +383,15 @@ class KoreanCharTest {
     }
 
     @ParameterizedTest
-    @MethodSource("decomposeIntoCompatJamo_TestParameters")
-    @DisplayName("decomposeIntoCompatJamo(char) with valid arguments")
-    void decomposeIntoCompatJamo_withValidArguments(char syllable, String expected) {
+    @MethodSource("decomposeCompat_TestParameters")
+    @DisplayName("decomposeCompat(char) with valid arguments")
+    void decomposeCompat_withValidArguments(char syllable, String expected) {
         assertThat(KoreanChar.decomposeCompat(syllable), equalTo(expected));
     }
 
     @Test
-    @DisplayName("decomposeIntoCompatJamo with invalid arguments throws IllegalArgumentException")
-    void decomposeIntoCompatJamo_withInvalidArguments() {
+    @DisplayName("decomposeCompat with invalid arguments throws IllegalArgumentException")
+    void decomposeCompat_withInvalidArguments() {
         assertThrows(IllegalArgumentException.class, () -> {
             KoreanChar.decomposeCompat('A');
         });
