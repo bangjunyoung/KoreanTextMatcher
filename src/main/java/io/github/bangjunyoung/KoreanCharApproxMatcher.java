@@ -44,7 +44,7 @@ public class KoreanCharApproxMatcher {
 
     private static String decompose(char c) {
         if (KoreanChar.isSyllable(c))
-            return KoreanChar.decomposeCompat(c);
+            return String.join("", KoreanChar.decomposeCompat(c));
         else if (KoreanChar.isCompatChoseong(c))
             return KoreanChar.splitJamo(c);
         else if (KoreanChar.isChoseong(c))

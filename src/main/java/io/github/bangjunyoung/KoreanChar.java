@@ -302,7 +302,15 @@ public final class KoreanChar {
         return JAMO_STRINGS[index];
     }
 
-    public static String decompose(char syllable) {
+    /**
+     * 주어진 한글 음절을 Unicode Hangul Jamo 초성, 중성, 종성으로 분해한다.
+     *
+     * @param syllable 분해할 한글 음절.
+     * @return 초성, 중성, 종성으로 분해된 문자열 배열. 종성이 없는 음절은 이
+     *         배열의 크기가 2이고, 종성이 있는 음절은 이 배열의 크기가 3이다.
+     * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
+     */
+    public static String[] decompose(char syllable) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
@@ -310,10 +318,21 @@ public final class KoreanChar {
         String jung = splitJamo(getJungseong(syllable));
         String jong = splitJamo(getJongseong(syllable));
 
-        return cho + jung + jong;
+        if (jong.isEmpty())
+            return new String[] { cho, jung };
+        else
+            return new String[] { cho, jung, jong };
     }
 
-    public static String decomposeCompat(char syllable) {
+    /**
+     * 주어진 한글 음절을 Unicode Hangul Compatibility Jamo 초성, 중성, 종성으로 분해한다.
+     *
+     * @param syllable 분해할 한글 음절.
+     * @return 초성, 중성, 종성으로 분해된 문자열 배열. 종성이 없는 음절은 이
+     *         배열의 크기가 2이고, 종성이 있는 음절은 이 배열의 크기가 3이다.
+     * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
+     */
+    public static String[] decomposeCompat(char syllable) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
@@ -321,7 +340,10 @@ public final class KoreanChar {
         String jung = splitJamo(getCompatJungseong(syllable));
         String jong = splitJamo(getCompatJongseong(syllable));
 
-        return cho + jung + jong;
+        if (jong.isEmpty())
+            return new String[] { cho, jung };
+        else
+            return new String[] { cho, jung, jong };
     }
 
     private static int getChoseongIndex(char syllable) {

@@ -374,18 +374,18 @@ class KoreanCharTest {
 
     static Stream<Arguments> decompose_TestParameters() {
         return Stream.of(
-            arguments('하', "\u1112\u1161"),
-            arguments('늘', "\u1102\u1173\u11AF"),
-            arguments('밝', "\u1107\u1161\u11AF\u11A8"),
-            arguments('꿄', "\u1100\u1100\u116E\u11AF\u11BA"),
-            arguments('쒏', "\u1109\u1109\u116E\u1165\u11AF\u11C2")
+            arguments('하', new String[] { "\u1112", "\u1161" }),
+            arguments('늘', new String[] { "\u1102", "\u1173" ,"\u11AF" }),
+            arguments('밝', new String[] { "\u1107", "\u1161" ,"\u11AF\u11A8" }),
+            arguments('꿄', new String[] { "\u1100\u1100" ,"\u116E", "\u11AF\u11BA" }),
+            arguments('쒏', new String[] { "\u1109\u1109" ,"\u116E\u1165", "\u11AF\u11C2" })
         );
     }
 
     @ParameterizedTest
     @MethodSource("decompose_TestParameters")
     @DisplayName("decompose(char) with valid arguments")
-    void decompose_withValidArguments(char syllable, String expected) {
+    void decompose_withValidArguments(char syllable, String[] expected) {
         assertThat(KoreanChar.decompose(syllable), equalTo(expected));
     }
 
@@ -399,18 +399,18 @@ class KoreanCharTest {
 
     static Stream<Arguments> decomposeCompat_TestParameters() {
         return Stream.of(
-            arguments('하', "ㅎㅏ"),
-            arguments('늘', "ㄴㅡㄹ"),
-            arguments('밝', "ㅂㅏㄹㄱ"),
-            arguments('꿄', "ㄱㄱㅜㄹㅅ"),
-            arguments('쒏', "ㅅㅅㅜㅓㄹㅎ")
+            arguments('하', new String[] { "ㅎ", "ㅏ" }),
+            arguments('늘', new String[] { "ㄴ", "ㅡ", "ㄹ" }),
+            arguments('밝', new String[] { "ㅂ", "ㅏ", "ㄹㄱ" }),
+            arguments('꿄', new String[] { "ㄱㄱ", "ㅜ", "ㄹㅅ" }),
+            arguments('쒏', new String[] { "ㅅㅅ", "ㅜㅓ", "ㄹㅎ"})
         );
     }
 
     @ParameterizedTest
     @MethodSource("decomposeCompat_TestParameters")
     @DisplayName("decomposeCompat(char) with valid arguments")
-    void decomposeCompat_withValidArguments(char syllable, String expected) {
+    void decomposeCompat_withValidArguments(char syllable, String[] expected) {
         assertThat(KoreanChar.decomposeCompat(syllable), equalTo(expected));
     }
 
