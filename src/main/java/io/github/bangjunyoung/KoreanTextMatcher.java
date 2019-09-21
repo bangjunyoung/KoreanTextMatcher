@@ -28,9 +28,21 @@ package io.github.bangjunyoung;
 import java.util.Iterator;
 
 /**
- * 한글 초성 매칭 검색 클래스
- * <p>
- * Unicode Hangul Jamo와 Hangul Compatibility Jamo를 모두 지원한다.
+ * 한글 음절 근사 매칭 클래스
+ *
+ * 한글 음절 근사 매칭은 두 개의 한글 음절을 비교할 때 음절을 이루는 자모의 일부만
+ * 일치해도 두 음절이 같은 것으로 간주하는 매칭 방법이다. 예를 들어 일반적인 문자
+ * 비교에서 {@code '밝'}은 {@code 'ㅂ'}, {@code '바'}, {@code '발'}과 다른 문자로
+ * 간주되지만 음절 근사 매칭에서는 {@code '밝'}에 {@code 'ㅂ'}, {@code '바'},
+ * {@code '발'}이 모두 부합하는 것으로 간주한다.
+ *
+ * 단, 여기서 주의할 점은 자모의 개수가 다른 두 음절간 비교시 교환성이 성립하지
+ * 않는다는 것이다. 예를 들어 {@code '발'}은 {@code '밝'}에 부합하지만
+ * {@code '밝'}은 {@code '발'}에 부합하지 않는다. 즉, 자모의 개수가 더 많은 음절에
+ * 대해 자모의 개수가 더 적은 음절을 비교하는 쪽으로 매칭이 이루어져야 한다는 뜻이다.
+ *
+ * 매칭에 사용할 자모로 Unicode Hangul Jamo와 Hangul Compatibility Jamo를 모두
+ * 지원한다.
  *
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
@@ -41,10 +53,7 @@ public final class KoreanTextMatcher {
 
     /**
      * {@link KoreanTextMatcher} 클래스의 새 인스턴스를 초기화한다.
-     * <p>
-     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의
-     * 문자와 초성만 대조한다.
-     * <p>
+     *
      * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
      * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
@@ -68,7 +77,7 @@ public final class KoreanTextMatcher {
     /**
      * 주어진 {@code text}에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
      * {@code pattern}의 첫번째 출현을 찾는다.
-     * <p>
+     *
      * {@code text} 내 검색 시작 위치를 지정하려면 {@link #match(String, int)}를 사용한다.
      *
      * @param text 검색 대상 문자열
@@ -121,7 +130,7 @@ public final class KoreanTextMatcher {
     /**
      * 주어진 {@code text}에 대해 {@link #KoreanTextMatcher(String)}에서 지정해 둔
      * {@code pattern}의 모든 출현을 찾는다.
-     * <p>
+     *
      * {@code text} 내 검색 시작 위치를 지정하려면 {@link #matches(String, int)}를
      * 사용한다.
      *
@@ -190,10 +199,7 @@ public final class KoreanTextMatcher {
 
     /**
      * 주어진 {@code text} 내에 주어진 {@code pattern}이 존재하는지 여부를 조사한다.
-     * <p>
-     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의
-     * 문자와 초성만 대조한다.
-     * <p>
+     *
      * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
      * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
@@ -210,12 +216,9 @@ public final class KoreanTextMatcher {
 
     /**
      * 주어진 {@code text} 내에서 주어진 {@code pattern}의 첫번째 출현을 찾는다.
-     * <p>
+     *
      * 모든 출현을 찾으려면 {@link #matches(String, String)}를 사용한다.
-     * <p>
-     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의
-     * 문자와 초성만 대조한다.
-     * <p>
+     *
      * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
      * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
@@ -233,12 +236,9 @@ public final class KoreanTextMatcher {
 
     /**
      * 주어진 {@code text} 내에서 주어진 {@code pattern}의 모든 출현을 찾는다.
-     * <p>
+     *
      * 첫번째 출현만 찾으려면 {@link #match(String, String)}를 사용한다.
-     * <p>
-     * {@code pattern}에 한글 초성이 포함되어 있으면 검색 문자열내 해당 위치의 문자와
-     * 초성만 대조한다.
-     * <p>
+     *
      * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
      * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *

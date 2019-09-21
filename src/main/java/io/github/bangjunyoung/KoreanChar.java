@@ -28,10 +28,10 @@ package io.github.bangjunyoung;
 import java.util.Arrays;
 
 /**
- * 한글 초성 추출을 위한 클래스
- * <p>
+ * 한글 처리에 필요한 다양한 종류의 도우미 함수들을 담고 있는 클래스
+ *
  * Unicode Hangul Jamo와 Unicode Hangul Compatibility Jamo를 모두 지원한다.
- * <p>
+ *
  * 이 클래스는 인스턴스 생성이 불가능하다.
  *
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
@@ -271,6 +271,14 @@ public final class KoreanChar {
         return COMPAT_JONGSEONG_COLLECTION[getJongseongIndex(syllable)];
     }
 
+    /**
+     * Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.
+     *
+     * @param c 변환할 Unicode Hangul Compatibility Jamo 초성 문자.
+     * @return 변환된 Unicode Hangul Jamo 초성 문자.
+     * @throws IllegalArgumentException 주어진 {@code c}가
+     *         Unicode Hangul Compatibility Jamo 초성 문자가 아닐 때.
+     */
     public static char compatChoseongToChoseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_CHOSEONG_COLLECTION, c);
         if (index < 0)
@@ -279,6 +287,14 @@ public final class KoreanChar {
         return (char)(0x1100 + index);
     }
 
+    /**
+     * Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.
+     *
+     * @param c 변환할 Unicode Hangul Jamo 초성 문자.
+     * @return 변환된 Unicode Hangul Compatibility Jamo 초성 문자.
+     * @throws IllegalArgumentException 주어진 {@code c}가
+     *         Unicode Hangul Jamo 초성 문자가 아닐 때.
+     */
     public static char choseongToCompatChoseong(char c) {
         if (!isChoseong(c))
             throw new IllegalArgumentException(String.valueOf(c));
@@ -286,6 +302,16 @@ public final class KoreanChar {
         return COMPAT_CHOSEONG_COLLECTION[(int)c - 0x1100];
     }
 
+    /**
+     * 주어진 자모를 복자모로 결합한다.
+     *
+     * 복자모가 주어지거나 단자모가 한 개만 주어지면 주어진 자모를 그대로 반환한다.
+     *
+     * @param jamo 결합할 두 개의 단자모.
+     * @return 결합된 한 개의 복자모.
+     * @throws IllegalArgumentException 주어진 {@code jamo}가 한글 자모가 아니거나
+     *         두 개를 넘는 자모가 주어질 때.
+     */
     public static char joinJamo(String jamo) {
         final int index = Arrays.binarySearch(JAMO_STRINGS, jamo);
         if (index < 0)
@@ -294,6 +320,16 @@ public final class KoreanChar {
         return JAMO_CHARS[index];
     }
 
+    /**
+     * 주어진 자모를 단자모로 분해한다.
+     *
+     * 복자모가 주어지면 두 개의 단자모로 분해하여 반환하며,
+     * 단자모가 주어지면 주어진 단자모를 그대로 반환한다.
+     *
+     * @param jamo 분해할 복자모.
+     * @return 분해된 단자모.
+     * @throws IllegalArgumentException 주어진 {@code jamo}가 한글 자모가 아닐 때.
+     */
     public static String splitJamo(char jamo) {
         final int index = Arrays.binarySearch(JAMO_CHARS, jamo);
         if (index < 0)
