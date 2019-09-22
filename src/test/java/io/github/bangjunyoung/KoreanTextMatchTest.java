@@ -115,8 +115,8 @@ class KoreanTextMatchTest {
     }
 
     @Test
-    @DisplayName("nextMatch() returns EMPTY if current match is EMPTY")
-    void nextMatch_returnsEMPTYIfCurrentMatchIsEMPTY() {
+    @DisplayName("EMPTY.nextMatch() returns EMPTY")
+    void EMPTY_nextMatch_returnsEMPTY() {
         assertThat(KoreanTextMatch.EMPTY.nextMatch(), equalTo(KoreanTextMatch.EMPTY));
     }
 }
