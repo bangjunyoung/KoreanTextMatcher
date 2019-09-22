@@ -187,7 +187,7 @@ public final class KoreanTextMatcher {
 
         for (int i = startIndex; i < startIndex + length - pattern.length() + 1; i++) {
             for (int j = 0; j < pattern.length(); j++) {
-                if (!KoreanCharApproxMatcher.match(text.charAt(i + j), pattern.charAt(j)))
+                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), pattern.charAt(j)))
                     break;
 
                 if (j == pattern.length() - 1)

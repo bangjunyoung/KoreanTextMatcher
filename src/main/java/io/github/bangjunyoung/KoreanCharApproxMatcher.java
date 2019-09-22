@@ -39,7 +39,7 @@ public class KoreanCharApproxMatcher {
      * @param p 비교할 두번째 문자.
      * @return 매칭이 성공하면 {@code true}, 실패하면 {@code false}.
      */
-    public static boolean match(char t, char p) {
+    public static boolean isMatch(char t, char p) {
         return decompose(t).startsWith(decompose(p));
     }
 

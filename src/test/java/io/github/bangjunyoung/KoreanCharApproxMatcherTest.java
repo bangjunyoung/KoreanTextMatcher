@@ -63,7 +63,7 @@ class KoreanCharApproxMatcherTest {
     @MethodSource("matchMatchedTestParameters")
     @DisplayName("match() with matched arguments")
     void match_withMatchedArguments(char t, char p) {
-        assertTrue(KoreanCharApproxMatcher.match(t, p));
+        assertTrue(KoreanCharApproxMatcher.isMatch(t, p));
     }
 
     static Stream<Arguments> matchUnmatchedTestParameters() {
@@ -79,6 +79,6 @@ class KoreanCharApproxMatcherTest {
     @MethodSource("matchUnmatchedTestParameters")
     @DisplayName("match() with unmatched arguments")
     void match_withUnmatchedArguments(char t, char p) {
-        assertFalse(KoreanCharApproxMatcher.match(t, p));
+        assertFalse(KoreanCharApproxMatcher.isMatch(t, p));
     }
 }
