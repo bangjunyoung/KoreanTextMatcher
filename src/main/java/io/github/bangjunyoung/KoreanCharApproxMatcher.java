@@ -32,7 +32,8 @@ public class KoreanCharApproxMatcher {
      * 주어진 두 문자를 음절 근사 매칭으로 비교한다.
      *
      * 비교할 첫번째 문자는 두번째 문자보다 항상 자모 개수가 같거나 많아야 한다.
-     * 예를 들어 {@code match('한', '하')}는 성공하지만 {@code match('하', '한')}은 실패한다.
+     * 예를 들어 {@code match('한', '하')}는 성공하지만 {@code match('하', '한')}은
+     * 실패한다.
      *
      * @param t 비교할 첫번째 문자.
      * @param p 비교할 두번째 문자.
