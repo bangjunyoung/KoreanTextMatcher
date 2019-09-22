@@ -124,7 +124,7 @@ public final class KoreanTextMatcher {
         if (length == 0)
             return new KoreanTextMatch(this, text, 0, length);
 
-        return match(text, startIndex, length, _pattern);
+        return match(text, startIndex, length);
     }
 
     /**
@@ -181,17 +181,17 @@ public final class KoreanTextMatcher {
         };
     }
 
-    private KoreanTextMatch match(String text, int startIndex, int length, String pattern) {
-        if (pattern.length() == 0)
-            return new KoreanTextMatch(this, text, 0, pattern.length());
+    private KoreanTextMatch match(String text, int startIndex, int length) {
+        if (_pattern.length() == 0)
+            return new KoreanTextMatch(this, text, 0, _pattern.length());
 
-        for (int i = startIndex; i < startIndex + length - pattern.length() + 1; i++) {
-            for (int j = 0; j < pattern.length(); j++) {
-                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), pattern.charAt(j)))
+        for (int i = startIndex; i < startIndex + length - _pattern.length() + 1; i++) {
+            for (int j = 0; j < _pattern.length(); j++) {
+                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _pattern.charAt(j)))
                     break;
 
-                if (j == pattern.length() - 1)
-                    return new KoreanTextMatch(this, text, i, pattern.length());
+                if (j == _pattern.length() - 1)
+                    return new KoreanTextMatch(this, text, i, _pattern.length());
             }
         }
         return KoreanTextMatch.EMPTY;
