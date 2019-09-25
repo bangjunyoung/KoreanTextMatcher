@@ -289,8 +289,8 @@ class KoreanCharTest {
     @Test
     @DisplayName("compatChoseongToChoseong(char) with invalid arguments throws IllegalArgumentException")
     void compatChoseongToChoseong_withInvalidArguments() {
-        assertThrows(IllegalArgumentException.class, () ->
-            KoreanChar.compatChoseongToChoseong('A'));
+        assertThrows(IllegalArgumentException.class,
+            () -> KoreanChar.compatChoseongToChoseong('A'));
     }
 
     static Stream<Arguments> choseongToCompatChoseong_TestParameters() {
@@ -339,8 +339,8 @@ class KoreanCharTest {
     @Test
     @DisplayName("joinJamo(String) with invalid arguments throws IllegalArgumentException")
     void joinJamo_withInvalidArguments() {
-        assertThrows(IllegalArgumentException.class, () ->
-            KoreanChar.joinJamo("A"));
+        assertThrows(IllegalArgumentException.class,
+            () -> KoreanChar.joinJamo("A"));
     }
 
     static Stream<Arguments> splitJamo_TestParameters() {
@@ -368,8 +368,8 @@ class KoreanCharTest {
     @Test
     @DisplayName("splitJamo(char) with invalid arguments throws IllegalArgumentException")
     void splitJamo_withInvalidArguments() {
-        assertThrows(IllegalArgumentException.class, () ->
-            KoreanChar.splitJamo('A'));
+        assertThrows(IllegalArgumentException.class,
+            () -> KoreanChar.splitJamo('A'));
     }
 
     static Stream<Arguments> decompose_TestParameters() {
@@ -392,9 +392,8 @@ class KoreanCharTest {
     @Test
     @DisplayName("decompose with invalid arguments throws IllegalArgumentException")
     void decompose_withInvalidArguments() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            KoreanChar.decompose('A');
-        });
+        assertThrows(IllegalArgumentException.class,
+            () -> KoreanChar.decompose('A'));
     }
 
     static Stream<Arguments> decomposeCompat_TestParameters() {
@@ -417,8 +416,7 @@ class KoreanCharTest {
     @Test
     @DisplayName("decomposeCompat with invalid arguments throws IllegalArgumentException")
     void decomposeCompat_withInvalidArguments() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            KoreanChar.decomposeCompat('A');
-        });
+        assertThrows(IllegalArgumentException.class,
+            () -> KoreanChar.decomposeCompat('A'));
     }
 }
