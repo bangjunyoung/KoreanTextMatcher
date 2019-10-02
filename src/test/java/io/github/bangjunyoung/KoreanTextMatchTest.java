@@ -27,6 +27,7 @@ package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
@@ -112,6 +113,12 @@ class KoreanTextMatchTest {
             match = match.nextMatch();
         }
         assertThat(message, matchCount, equalTo(expectedMatchCount));
+    }
+
+    @Test
+    @DisplayName("EMPTY.success() returns false")
+    void EMPTY_succes_returnsFalse() {
+        assertFalse(KoreanTextMatch.EMPTY.success());
     }
 
     @Test
