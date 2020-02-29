@@ -117,7 +117,7 @@ class KoreanTextMatchTest {
 
     @Test
     @DisplayName("EMPTY.success() returns false")
-    void EMPTY_succes_returnsFalse() {
+    void EMPTY_success_returnsFalse() {
         assertFalse(KoreanTextMatch.EMPTY.success());
     }
 
