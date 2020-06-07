@@ -126,7 +126,7 @@ public final class KoreanTextMatcher {
         startIndex = (int)(textRange >> 32);
         int length = (int)(textRange & 0xFFFFFFF);
         if (length == 0)
-            return new KoreanTextMatch(this, text, 0, length);
+            return new KoreanTextMatch(this, text, 0, 0);
 
         return match(text, startIndex, length);
     }
@@ -187,7 +187,7 @@ public final class KoreanTextMatcher {
 
     private KoreanTextMatch match(String text, int startIndex, int length) {
         if (_pattern.length() == 0)
-            return new KoreanTextMatch(this, text, 0, _pattern.length());
+            return new KoreanTextMatch(this, text, 0, 0);
 
         for (int i = startIndex; i < startIndex + length - _pattern.length() + 1; i++) {
             for (int j = 0; j < _pattern.length(); j++) {
