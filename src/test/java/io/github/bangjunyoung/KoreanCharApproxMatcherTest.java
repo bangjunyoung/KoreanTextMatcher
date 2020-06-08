@@ -37,7 +37,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class KoreanCharApproxMatcherTest {
-    static Stream<Arguments> matchMatchedTestParameters() {
+    static Stream<Arguments> isMatchMatchedTestParameters() {
         return Stream.of(
             arguments('h', 'h'),
             arguments('\u3131', '\u1100'),
@@ -60,13 +60,13 @@ class KoreanCharApproxMatcherTest {
     }
 
     @ParameterizedTest
-    @MethodSource("matchMatchedTestParameters")
-    @DisplayName("match() with matched arguments")
-    void match_withMatchedArguments(char t, char p) {
+    @MethodSource("isMatchMatchedTestParameters")
+    @DisplayName("isMatch() returns true for matched arguments")
+    void isMatch_returnsTrueForMatchedArguments(char t, char p) {
         assertTrue(KoreanCharApproxMatcher.isMatch(t, p));
     }
 
-    static Stream<Arguments> matchUnmatchedTestParameters() {
+    static Stream<Arguments> isMatchUnmatchedTestParameters() {
         return Stream.of(
             arguments('H', 'h'),
             arguments('하', '한'),
@@ -76,9 +76,9 @@ class KoreanCharApproxMatcherTest {
     }
 
     @ParameterizedTest
-    @MethodSource("matchUnmatchedTestParameters")
-    @DisplayName("match() with unmatched arguments")
-    void match_withUnmatchedArguments(char t, char p) {
+    @MethodSource("isMatchUnmatchedTestParameters")
+    @DisplayName("isMatch() returns false for unmatched arguments")
+    void isMatch_returnsFalseForUnmatchedArguments(char t, char p) {
         assertFalse(KoreanCharApproxMatcher.isMatch(t, p));
     }
 }
