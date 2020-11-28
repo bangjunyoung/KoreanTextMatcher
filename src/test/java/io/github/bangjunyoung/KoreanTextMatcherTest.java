@@ -173,7 +173,7 @@ class KoreanTextMatcherTest {
     }
 
     @Test
-    @DisplayName("match(text, startIndex) with startIndex < 0 throws IllegalArgumentException")
+    @DisplayName("match(text, startIndex) throws IllegalArgumentException if startIndex < 0")
     void match_throwsExceptionOnNegativeStartIndexArgument() {
         assertThrows(IllegalArgumentException.class, () -> {
             KoreanTextMatcher matcher = new KoreanTextMatcher("");
@@ -182,7 +182,7 @@ class KoreanTextMatcherTest {
     }
 
     @Test
-    @DisplayName("match(text, startIndex) with too large startIndex throws IllegalArgumentException")
+    @DisplayName("match(text, startIndex) throws IllegalArgumentException if startIndex is too large")
     void match_throwsExceptionOnTooLargeStartIndexArgument() {
         assertThrows(IllegalArgumentException.class, () -> {
             String text = "";
