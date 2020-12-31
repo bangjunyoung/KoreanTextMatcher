@@ -350,9 +350,9 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        String cho = splitJamo(getChoseong(syllable));
-        String jung = splitJamo(getJungseong(syllable));
-        String jong = splitJamo(getJongseong(syllable));
+        final String cho = splitJamo(getChoseong(syllable));
+        final String jung = splitJamo(getJungseong(syllable));
+        final String jong = splitJamo(getJongseong(syllable));
 
         if (jong.isEmpty())
             return new String[] { cho, jung };
@@ -372,9 +372,9 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        String cho = splitJamo(getCompatChoseong(syllable));
-        String jung = splitJamo(getCompatJungseong(syllable));
-        String jong = splitJamo(getCompatJongseong(syllable));
+        final String cho = splitJamo(getCompatChoseong(syllable));
+        final String jung = splitJamo(getCompatJungseong(syllable));
+        final String jong = splitJamo(getCompatJongseong(syllable));
 
         if (jong.isEmpty())
             return new String[] { cho, jung };

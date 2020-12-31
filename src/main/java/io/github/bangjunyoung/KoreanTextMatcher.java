@@ -119,16 +119,16 @@ public final class KoreanTextMatcher {
         //
         // Optimization: narrow the range of text to be matched for pattern.
         //
-        long textRange = getTextRange(text, _pattern.length(), startIndex);
+        final long textRange = getTextRange(text, _pattern.length(), startIndex);
         if (textRange == -1)
             return KoreanTextMatch.EMPTY;
         // textRange is a tuple of (int startIndex, int length).
-        startIndex = (int)(textRange >> 32);
-        int length = (int)(textRange & 0xFFFFFFF);
+        final int startIndexOpt = (int)(textRange >> 32);
+        final int length = (int)(textRange & 0xFFFFFFF);
         if (length == 0)
             return new KoreanTextMatch(this, text, 0, 0);
 
-        return match(text, startIndex, length);
+        return match(text, startIndexOpt, length);
     }
 
     /**
@@ -266,7 +266,7 @@ public final class KoreanTextMatcher {
     }
 
     private long getTextRange(String text, int hintLength, int startIndex) {
-        boolean trimStart = _foundEndAnchor, trimEnd = _foundStartAnchor;
+        final boolean trimStart = _foundEndAnchor, trimEnd = _foundStartAnchor;
 
         int length = text.length() - startIndex;
 
