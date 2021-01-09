@@ -1,110 +1,62 @@
-# KoreanTextMatcher 3.0
+# KoreanTextMatcher 4.0
 
 [![Build Status](https://travis-ci.org/bangjunyoung/KoreanTextMatcher.svg?branch=master)](https://travis-ci.org/bangjunyoung/KoreanTextMatcher)
 [![codecov](https://codecov.io/gh/bangjunyoung/KoreanTextMatcher/branch/master/graph/badge.svg)](https://codecov.io/gh/bangjunyoung/KoreanTextMatcher)
 
-KoreanTextMatcher는 자바/안드로이드에서 한글 초성 매칭 검색을 가능하게 해주는 라이브러리다.
-주요 기능과 특징은 다음과 같다:
+KoreanTextMatcher는 한글 음절 근사 매칭 및 초성 검색 기능을 제공하는 자바 라이브러리다. 주요 기능과 특징은 다음과 같다:
 
-- 단순 문자열 검색과 초성 매칭 검색 모두 지원
+- 단순 문자열 검색, 한글 음절 근사 매칭, 초성 매칭 모두 지원
 - 한 문자열 내에서 여러 개의 패턴 검색 가능
 - 정규식 앵커 `^`와 `$`를 이용하여 패턴의 위치를 검색 대상 문자열의 시작과 끝으로 한정할 수 있음
 - Unicode Hangul Jamo와 Unicode Hangul Compatibility Jamo 모두 지원
-- 사용하기 쉬운 API
+- 한글 자모를 음절로 조합하고 음절을 자모로 분해하는 API 제공
 - 가비지 컬렉션을 최소화하도록 세심하게 작성된 코드
 - 완전 쓰레드 세이프: 모든 타입이 이뮤터블
 - 100개 이상의 유닛 테스트 케이스, 99% 이상의 코드 커버리지 등을 통해 검증된 품질
 - 오픈 소스: 수정, 배포, 2차 저작 등 어떤 프로그램에도 자유롭게 사용 가능한 BSD 라이선스.
   상용 프로그램에도 물론 아무 제약없이 사용할 수 있다(저작권 문구는 절대 지우지 마세요!).
+- JDK 11 상에서 개발/테스트되었고 안드로이드 프로젝트에도 수정없이 사용 가능
 
-## 사용법
+## 음절 근사 매칭과 초성 매칭
 
-KoreanTextMatcher는 `KoreanChar`, `KoreanTextMatcher`, `KoreanTextMatch` 세 클래스로 이루어져 있다.
+KoreanTextMatcher 4.0에서 구현한 한글 음절 근사 매칭은 두벌식 한글 자판 입력을 기준으로 두 한글 음절간의 유사성을 판단하는 방법이다. 예를 들어 '봤'이라는 음절이 주어질 때 'ㅂ', '보', '봐', '봣', '봤'이라는 패턴은 모두 '봤'에 근사적으로 부합한다. 반면 '와', '밨', '봑' 등의 패턴은 각각 초성, 중성, 종성이 '봤'의 것과 다르므로 근사적으로 부합하지 않는다. 음절 근사 매칭을 이용하면 가능한한 적은 수의 한글 입력만으로 대량의 텍스트 내에서 특정 한글 패턴을 쉽게 찾아낼 수 있다.
 
-### KoreanChar
+초성 매칭은 음절 근사 매칭 중 초성만이 부합하는 특수한 경우라고 볼 수 있기 때문에 KoreanTextMatcher에서는 음절 근사 매칭과 초성 매칭을 구분하지 않는다.
 
-`KoreanChar`는 한글 문자에서 초성을 추출하는 데 쓰는 클래스다. `isSyllable()`은 입력 문자가
-한글 음절인지, `isCompatChoseong()`/`isChoseong()`은 입력 문자가 초성인지 여부를
-알려준다. `getCompatChoseong()`/`getChoseong()`은 한글 음절에서 초성을 추출한다.
-사용예는 다음과 같다:
+## 빌드
 
-``` java
-char c = '한';
-boolean isHangulChar = KoreanChar.isSyllable(c);
-char compatChoseong = KoreanChar.getCompatChoseong(c);
-char choseong = KoreanChar.getChoseong(c);
-boolean isCompatChoseong = KoreanChar.isCompatChoseong(compatChoseong);
-boolean isChoseong = KoreanChar.isChoseong(choseong);
+빌드에 필요한 도구:
+
+- JDK 11 이상
+- Gradle 5.6 이상
+- JUnit 5.6 이상
+
+```shell
+$ cd /some/path/to/KoreanTextMatcher
+$ ./gradlew build
+
+BUILD SUCCESSFUL in 6s
+5 actionable tasks: 5 executed
 ```
 
-`getCompatChoseong()`/`getChoseong()`은 입력이 한글 음절이 아니면 `'\0'`을 리턴한다.
+빌드가 성공하면 `build/libs` 폴더 밑에 `KoreanTextMatcher-X.xx.jar` 파일이 생성되는데, 이것을 여러분의 프로젝트로 임포트해서 쓰면 된다.
 
-자음/모음으로만 구분되어 있는 Hangul Compatibility Jamo와 별개로 초성/중성/종성으로 구분되는
-Hangul Jamo가 있지만 최소한 Windows와 Android에서는 쓰는 경우가 거의 없는 것 같다. 따라서
-대부분은 `xxxCompatChoseong()` API를 쓰면 될 것이다.
+**주의**: 안드로이드 개발 환경에서는 JDK 12 이상의 버전에서 빌드한 JAR 파일을 사용하면 파일 포맷 에러가 발생하는 경우가 있다. 그럴 경우 JDK 11 이하에서 빌드한 JAR 파일을 사용하기 바란다. 참고로 [바이너리 배포 페이지](https://github.com/bangjunyoung/KoreanTextMatcher/releases/tag/4.0)에 있는 JAR 파일은 JDK 11에서 빌드한 것이다.
 
-### KoreanTextMatcher/KoreanTextMatch
-
-한글 초성 매칭 검색을 수행하는 클래스다. `KoreanTextMatcher`에 매칭 API가 들어 있고
-매칭 결과가 `KoreanTextMatch` 인스턴스로 리턴된다. 사용예는 다음과 같다:
+## 프로그래밍
 
 ``` java
-KoreanTextMatcher matcher = new KoreanTextMatcher("ㅊㅅ");
-KoreanTextMatch match = matcher.match("한글 초성 매칭");
+import io.github.bangjunyoung.KoreanTextMatch;
+import io.github.bangjunyoung.KoreanTextMatcher;
+
+/* ... */
+
+KoreanTextMatcher matcher = new KoreanTextMatcher("음ㅈ 그ㅅ");
+KoreanTextMatch match = matcher.match("한글 음절 근사 매칭");
 if (match.success()) {
     System.out.format("%s: %s[%d]에서 시작, 길이 %d\n",
         match.value(), text, match.index(), match.length());
 }
 ```
 
-1회성으로 쓸 때에는 `static` 버전의 `match()`를 쓰는 쪽이 간편하다:
-
-``` java
-KoreanTextMatch match = KoreanTextMatcher.match("한글 초성 매칭", "ㅊㅅ");
-if (match.success()) {
-    System.out.format("%s: %s[%d]에서 시작, 길이 %d\n",
-        match.value(), text, match.index(), match.length());
-}
-```
-
-패턴이 문자열의 시작 또는 끝에 위치하는 경우만 매칭하려면 정규식에서 널리 쓰이는 `^`와 `$`를
-각각 쓰면 된다. 단순히 매칭 성공 여부만을 알려주는 `isMatch()`와 함께 쓰면 다음과 같다:
-
-``` java
-KoreanTextMatcher.isMatch("하늘", "^ㅎㄴ");  // true
-KoreanTextMatcher.isMatch(" 하늘", "^ㅎㄴ"); // false
-KoreanTextMatcher.isMatch("하늘", "ㅎㄴ$");  // true
-KoreanTextMatcher.isMatch("하늘 ", "ㅎㄴ$"); // false
-```
-
-`^`와 `$`는 각각 `String.startsWith()`와 `String.endsWith()`를 대체하는 목적으로 쓸 수 있다.
-둘을 한꺼번에 쓰면 `String.equals()`를 쓴 것과 동일한 효과를 얻을 수 있다:
-
-``` java
-KoreanTextMatcher.isMatch("하늘", "^ㅎㄴ$");  // true
-KoreanTextMatcher.isMatch(" 하늘 ", "^ㅎㄴ$"); // false
-```
-
-`KoreanTextMatcher.matches()`는 문자열 내에서 매칭되는 패턴을 모두 찾아
-`Iterable<KoreanTextMatch>`로 돌려준다. 검색 결과에서 검색어만 하일라이트할 필요가 있을 때 쓰면
-편리하다. 아래는 안드로이드에서 사용한 예다:
-
-``` java
-String text = "바닥에 남은 차가운 껍질에 뜨거운 눈물을 부어";
-
-TextView tv = new TextView(getBaseContext());
-tv.setTextSize(25F);
-tv.setText(text, TextView.BufferType.SPANNABLE);
-
-Spannable spannedText = (Spannable) tv.getText();
-
-KoreanTextMatcher matcher = new KoreanTextMatcher("ㄱㅇ");
-for (KoreanTextMatch match : matcher.matches(text)) {
-    spannedText.setSpan(new ForegroundColorSpan(Color.RED),
-        match.index(), match.index() + match.length(),
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-}
-```
-
-`matches()` 역시 `match()`처럼 인스턴스 버전과 `static` 버전이 있으므로 필요에 따라 골라 쓰면 된다.
-대개는 `static` 쪽이 쓰기 편하다.
+자세한 API 사용법은 [위키 페이지](https://github.com/bangjunyoung/KoreanTextMatcher/wiki) 참조.
