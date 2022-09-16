@@ -31,8 +31,8 @@ KoreanTextMatcher 4.0에서 구현한 한글 음절 근사 매칭은 두벌식 �
 - Gradle 5.6 이상
 - JUnit 5.6 이상
 
-```shell
-$ cd /some/path/to/KoreanTextMatcher
+```
+$ cd /path/to/KoreanTextMatcher
 $ ./gradlew build
 
 BUILD SUCCESSFUL in 6s
