@@ -12,7 +12,7 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest-library:2.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
-    testCompile 'org.junit.jupiter:junit-jupiter-params:5.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.0'
 }
 
 version = '3.99'
@@ -38,8 +38,8 @@ tasks.withType(JavaCompile) {
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        html.enabled false
+        xml.required = true
+        html.required = false
     }
 }
 
