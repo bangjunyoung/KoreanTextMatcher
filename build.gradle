@@ -9,42 +9,49 @@ repositories {
 
 dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.1'
-    testImplementation 'org.hamcrest:hamcrest-library:2.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.0'
+
+    testImplementation platform("org.junit:junit-bom:5.6.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
 version = '3.99'
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 jar {
     manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
+        attributes(
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version
+        )
     }
 }
 
 javadoc {
     options {
-        encoding 'utf-8'
+        encoding 'UTF-8'
         noQualifiers 'java.lang'
         links 'https://docs.oracle.com/en/java/javase/12/docs/api/'
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding 'utf-8'
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {
+    onlyIf {
+        task -> task.project.tasks.test.state.failure == null
+    }
+
     reports {
         xml.required = true
-        html.required = false
+        html.required = true
     }
 }
 
 check.dependsOn jacocoTestReport
-
-test {
-    useJUnitPlatform()
-}
