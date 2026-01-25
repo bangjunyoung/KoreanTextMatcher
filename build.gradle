@@ -17,6 +17,25 @@ dependencies {
 
 version = '3.99'
 
+subprojects {
+    plugins.withId("java-library") {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(17)
+            }
+        }
+    }
+
+    plugins.withId("com.android.library") {
+        extensions.configure("android") {
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_17
+                targetCompatibility JavaVersion.VERSION_17
+            }
+        }
+    }
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
@@ -34,7 +53,7 @@ javadoc {
     options {
         encoding 'UTF-8'
         noQualifiers 'java.lang'
-        links 'https://docs.oracle.com/en/java/javase/12/docs/api/'
+        links 'https://docs.oracle.com/en/java/javase/17/docs/api/'
     }
 }
 
