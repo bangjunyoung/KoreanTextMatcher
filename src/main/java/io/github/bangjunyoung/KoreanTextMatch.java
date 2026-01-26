@@ -26,7 +26,7 @@
 package io.github.bangjunyoung;
 
 /**
- * {@link KoreanTextMatcher} 매칭 결과를 담고 있는 클래스
+ * {@link KoreanTextMatcher} 매칭 결과를 담고 있는 클래스.
  * 
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */

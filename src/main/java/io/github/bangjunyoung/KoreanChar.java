@@ -28,7 +28,7 @@ package io.github.bangjunyoung;
 import java.util.Arrays;
 
 /**
- * 한글 처리에 필요한 다양한 종류의 도우미 함수들을 담고 있는 클래스
+ * 한글 처리에 필요한 다양한 종류의 도우미 함수들을 담고 있는 클래스.
  *
  * Unicode Hangul Jamo와 Unicode Hangul Compatibility Jamo를 모두 지원한다.
  *
