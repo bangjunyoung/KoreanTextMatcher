@@ -1,6 +1,6 @@
 # KoreanTextMatcher 4.0
 
-[![Build Status](https://travis-ci.org/bangjunyoung/KoreanTextMatcher.svg?branch=master)](https://travis-ci.org/bangjunyoung/KoreanTextMatcher)
+[![Java CI](https://github.com/bangjunyoung/KoreanTextMatcher/actions/workflows/java.yml/badge.svg)](https://github.com/bangjunyoung/KoreanTextMatcher/actions/workflows/java.yml)
 [![codecov](https://codecov.io/gh/bangjunyoung/KoreanTextMatcher/branch/master/graph/badge.svg)](https://codecov.io/gh/bangjunyoung/KoreanTextMatcher)
 
 KoreanTextMatcher는 한글 음절 근사 매칭 및 초성 검색 기능을 제공하는 자바 라이브러리다. 주요 기능과 특징은 다음과 같다:
