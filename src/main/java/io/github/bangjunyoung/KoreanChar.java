@@ -63,8 +63,6 @@ public final class KoreanChar {
     };
 
     private static final String[] JAMO_STRINGS = new String[] {
-        "",
-
         "ᄀ", "ᄀᄀ", "ᄂ", "ᄃ", "ᄃᄃ", "ᄅ", "ᄆ", "ᄇ", "ᄇᄇ", "ᄉ",
         "ᄉᄉ", "ᄋ", "ᄌ", "ᄌᄌ", "ᄎ", "ᄏ", "ᄐ", "ᄑ", "ᄒ",
 
@@ -85,8 +83,6 @@ public final class KoreanChar {
         "ㅣ"
     };
     private static final char[] JAMO_CHARS = new char[] {
-        '\u0000',
-
         'ᄀ', 'ᄁ', 'ᄂ', 'ᄃ', 'ᄄ', 'ᄅ', 'ᄆ', 'ᄇ', 'ᄈ', 'ᄉ',
         'ᄊ', 'ᄋ', 'ᄌ', 'ᄍ', 'ᄎ', 'ᄏ', 'ᄐ', 'ᄑ', 'ᄒ',
 
@@ -352,7 +348,8 @@ public final class KoreanChar {
 
         final String cho = splitJamo(getChoseong(syllable));
         final String jung = splitJamo(getJungseong(syllable));
-        final String jong = splitJamo(getJongseong(syllable));
+        final char j = getJongseong(syllable);
+        final String jong = j == '\u0000' ? "" : splitJamo(j);
 
         if (jong.isEmpty())
             return new String[] { cho, jung };
@@ -374,7 +371,8 @@ public final class KoreanChar {
 
         final String cho = splitJamo(getCompatChoseong(syllable));
         final String jung = splitJamo(getCompatJungseong(syllable));
-        final String jong = splitJamo(getCompatJongseong(syllable));
+        final char j = getCompatJongseong(syllable);
+        final String jong = j == '\u0000' ? "" : splitJamo(j);
 
         if (jong.isEmpty())
             return new String[] { cho, jung };

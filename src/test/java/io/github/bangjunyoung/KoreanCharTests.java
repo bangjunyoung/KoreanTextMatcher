@@ -431,6 +431,7 @@ class KoreanCharTests {
 
     static Stream<Arguments> joinJamoExceptionTestParameters() {
         return Stream.of(
+            arguments(""),
             arguments("A"),
             arguments("1"),
             arguments(" "),
@@ -469,6 +470,7 @@ class KoreanCharTests {
 
     static Stream<Arguments> splitJamoExceptionTestParameters() {
         return Stream.of(
+            arguments('\u0000'),
             arguments('A'),
             arguments('1'),
             arguments(' '),
