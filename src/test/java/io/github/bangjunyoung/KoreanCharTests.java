@@ -30,113 +30,133 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class KoreanCharTests {
 
-    @ParameterizedTest
-    @ValueSource(chars = { '가', '힣' })
-    @DisplayName("isSyllable(char) returns true for a syllable")
-    void isSyllable_returnsTrueForSyllable(char syllable) {
-        assertTrue(KoreanChar.isSyllable(syllable));
+    static Stream<Arguments> isSyllableTestParameters() {
+        return Stream.of(
+            arguments('가', true),
+            arguments('힣', true),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { '\uABFF', '\uD7A4' })
-    @DisplayName("isSyllable(char) returns false for a non-syllable")
-    void isSyllable_returnsFalseForNonSyllable(char syllable) {
-        assertFalse(KoreanChar.isSyllable(syllable));
+    @ParameterizedTest(name = "isSyllable❨{0}❩ returns {1}")
+    @MethodSource("isSyllableTestParameters")
+    void isSyllableTest(char syllable, boolean expected) {
+        assertThat(KoreanChar.isSyllable(syllable), equalTo(expected));
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ᄀ', 'ᄒ' })
-    @DisplayName("isChoseong(char) returns true for a choseong")
-    void isChoseong_returnsTrueForChoseong(char c) {
-        assertTrue(KoreanChar.isChoseong(c));
+    static Stream<Arguments> isChoseongTestParameters() {
+        return Stream.of(
+            arguments('ᄀ', true),
+            arguments('ᄒ', true),
+            arguments('ㄱ', false),
+            arguments('ㅎ', false),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { '\u10ff', '\u1200' })
-    @DisplayName("isChoseong(char) returns false for a non-choseong")
-    void isChoseong_returnsFalseForNonChoseong(char c) {
-        assertFalse(KoreanChar.isChoseong(c));
+    @ParameterizedTest(name = "isChoseong❨{0}❩ returns {1}")
+    @MethodSource("isChoseongTestParameters")
+    void isChoseongTest(char c, boolean expected) {
+        assertThat(KoreanChar.isChoseong(c), equalTo(expected));
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ᅡ', 'ᅵ' })
-    @DisplayName("isJungseong(char) returns true for a jungseong")
-    void isJungseong_returnsTrueForJungseong(char c) {
-        assertTrue(KoreanChar.isJungseong(c));
+    static Stream<Arguments> isJungseongTestParameters() {
+        return Stream.of(
+            arguments('ᅡ', true),
+            arguments('ᅵ', true),
+            arguments('ㅏ', false),
+            arguments('ㅣ', false),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { '\u1160', '\u1176' })
-    @DisplayName("isJungseong(char) returns false for a non-jungseong")
-    void isJungseong_returnsFalseForNonJungseong(char c) {
-        assertFalse(KoreanChar.isJungseong(c));
+    @ParameterizedTest(name = "isJungseong❨{0}❩ returns {1}")
+    @MethodSource("isJungseongTestParameters")
+    void isJungseongTest(char c, boolean expected) {
+        assertThat(KoreanChar.isJungseong(c), equalTo(expected));
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ᆨ', 'ᇂ' })
-    @DisplayName("isJongseong(char) returns true for a jongseong")
-    void isJongseong_returnsTrueForJongseong(char c) {
-        assertTrue(KoreanChar.isJongseong(c));
+    static Stream<Arguments> isJongseongTestParameters() {
+        return Stream.of(
+            arguments('ᆨ', true),
+            arguments('ᇂ', true),
+            arguments('ㄱ', false),
+            arguments('ㅎ', false),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { '\u11A7', '\u11C3' })
-    @DisplayName("isJongseong(char) returns false for a non-jongseong")
-    void isJongseong_returnsFalseForNonJongseong(char c) {
-        assertFalse(KoreanChar.isJongseong(c));
+    @ParameterizedTest(name = "isJongseong❨{0}❩ returns {1}")
+    @MethodSource("isJongseongTestParameters")
+    void isJongseongTest(char c, boolean expected) {
+        assertThat(KoreanChar.isJongseong(c), equalTo(expected));
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ㄱ', 'ㅎ' })
-    @DisplayName("isCompatChoseong(char) returns true for a Compat choseong")
-    void isCompatChoseong_returnsTrueForCompatChoseong(char c) {
-        assertTrue(KoreanChar.isCompatChoseong(c));
+    static Stream<Arguments> isCompatChoseongTestParameters() {
+        return Stream.of(
+            arguments('ㄱ', true),
+            arguments('ㅎ', true),
+            arguments('ᄀ', false),
+            arguments('ᄒ', false),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ㄳ', 'ㅄ' })
-    @DisplayName("isCompatChoseong(char) returns false for a non-Compat choseong")
-    void isCompatChoseong_returnsFalseForNonCompatChoseong(char c) {
-        assertFalse(KoreanChar.isCompatChoseong(c));
+    @ParameterizedTest(name = "isCompatChoseong❨{0}❩ returns {1}")
+    @MethodSource("isCompatChoseongTestParameters")
+    void isCompatChoseongTest(char c, boolean expected) {
+        assertThat(KoreanChar.isCompatChoseong(c), equalTo(expected));
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ㅏ', 'ㅣ' })
-    @DisplayName("isCompatJungseong(char) returns true for a Compat jungseong")
-    void isCompatJungseong_returnsTrueForCompatJungseong(char c) {
-        assertTrue(KoreanChar.isCompatJungseong(c));
+    static Stream<Arguments> isCompatJungseongTestParameters() {
+        return Stream.of(
+            arguments('ㅏ', true),
+            arguments('ㅣ', true),
+            arguments('ᅡ', false),
+            arguments('ᅵ', false),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { '\u314E', '\u3164' })
-    @DisplayName("isCompatJungseong(char) returns false for a non-Compat jungseong")
-    void isCompatJungseong_returnsFalseForNonCompatJungseong(char c) {
-        assertFalse(KoreanChar.isCompatJungseong(c));
+    @ParameterizedTest(name = "isCompatJungseong❨{0}❩ returns {1}")
+    @MethodSource("isCompatJungseongTestParameters")
+    void isCompatJungseongTest(char c, boolean expected) {
+        assertEquals(expected, KoreanChar.isCompatJungseong(c));
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ㄳ', 'ㅄ' })
-    @DisplayName("isCompatJongseong(char) returns true for a Compat jongseong")
-    void isCompatJongseong_returnsTrueForCompatJongseong(char c) {
-        assertTrue(KoreanChar.isCompatJongseong(c));
+    static Stream<Arguments> isCompatJongseongTestParameters() {
+        return Stream.of(
+            arguments('ㄳ', true),
+            arguments('ㅄ', true),
+            arguments('ㄸ', false),
+            arguments('ㅃ', false),
+            arguments('ᆨ', false),
+            arguments('ᇂ', false),
+            arguments('1', false),
+            arguments('A', false)
+        );
     }
 
-    @ParameterizedTest
-    @ValueSource(chars = { 'ㄸ', 'ㅃ' })
-    @DisplayName("isCompatJongseong(char) returns false for a non-Compat jongseong")
-    void isCompatJongseong_returnsFalseForNonCompatJongseong(char c) {
-        assertFalse(KoreanChar.isCompatJongseong(c));
+    @ParameterizedTest(name = "isCompatJongseong❨{0}❩ returns {1}")
+    @MethodSource("isCompatJongseongTestParameters")
+    void isCompatJongseongTest(char c, boolean expected) {
+        assertThat(KoreanChar.isCompatJongseong(c), equalTo(expected));
     }
 
     static Stream<Arguments> getChoseongTestParameters() {
@@ -146,18 +166,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getChoseong❨{0}❩ returns {1}")
     @MethodSource("getChoseongTestParameters")
-    @DisplayName("getChoseong(char) returns choseong of a syllable")
-    void getChoseong_returnsChoseongOfSyllable(char syllable, char expected) {
+    void getChoseongTest(char syllable, char expected) {
         assertThat(KoreanChar.getChoseong(syllable), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("getChoseong(char) throws an exception for an invalid argument")
-    void getChoseong_throwsExceptionForInvalidArgument() {
-        assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.getChoseong('A'));
+    static Stream<Arguments> getChoseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "getChoseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("getChoseongExceptionTestParameters")
+    void getChoseongExceptionTest(char syllable) {
+        assertThrows(IllegalArgumentException.class, 
+            () -> KoreanChar.getChoseong(syllable));
     }
 
     static Stream<Arguments> getJungseongTestParameters() {
@@ -167,18 +197,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getJungseong❨{0}❩ returns {1}")
     @MethodSource("getJungseongTestParameters")
-    @DisplayName("getJungseong(char) returns jungseong of a syllable")
-    void getJungseong_returnsJungseongOfSyllable(char syllable, char expected) {
+    void getJungseongTest(char syllable, char expected) {
         assertThat(KoreanChar.getJungseong(syllable), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("getJungseong(char) throws an exception for an invalid argument")
-    void getJungseong_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> getJungseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "getJungseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("getJungseongExceptionTestParameters")
+    void getJungseongExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.getJungseong('A'));
+            () -> KoreanChar.getJungseong(syllable));
     }
 
     static Stream<Arguments> getJongseongTestParameters() {
@@ -189,18 +229,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getJongseong❨{0}❩ returns {1}")
     @MethodSource("getJongseongTestParameters")
-    @DisplayName("getJongseong(char) returns jongseong of a syllable")
-    void getJongseong_returnsJongseongOfSyllable(char syllable, char expected) {
+    void getJongseongTest(char syllable, char expected) {
         assertThat(KoreanChar.getJongseong(syllable), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("getJongseong(char) throws an exception for an invalid argument")
-    void getJongseong_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> getJongseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "getJongseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("getJongseongExceptionTestParameters")
+    void getJongseongExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.getJongseong('A'));
+            () -> KoreanChar.getJongseong(syllable));
     }
 
     static Stream<Arguments> getCompatChoseongTestParameters() {
@@ -210,18 +260,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getCompatChoseong❨{0}❩ returns {1}")
     @MethodSource("getCompatChoseongTestParameters")
-    @DisplayName("getCompatChoseong(char) returns Compat choseong of a syllable")
-    void getCompatChoseong_returnsCompatChoseongOfSyllable(char syllable, char expected) {
+    void getCompatChoseongTest(char syllable, char expected) {
         assertThat(KoreanChar.getCompatChoseong(syllable), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("getCompatChoseong(char) throws an exception for an invalid argument")
-    void getCompatChoseong_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> getCompatChoseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "getCompatChoseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("getCompatChoseongExceptionTestParameters")
+    void getCompatChoseongExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.getCompatChoseong('A'));
+            () -> KoreanChar.getCompatChoseong(syllable));
     }
 
     static Stream<Arguments> getCompatJungseongTestParameters() {
@@ -231,18 +291,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getCompatJungseong❨{0}❩ returns {1}")
     @MethodSource("getCompatJungseongTestParameters")
-    @DisplayName("getCompatJungseong(char) returns Compat jungseong of a syllable")
-    void getCompatJungseong_returnsCompatJungseongOfSyllable(char syllable, char expected) {
+    void getCompatJungseongTest(char syllable, char expected) {
         assertThat(KoreanChar.getCompatJungseong(syllable), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("getCompatJungseong(char) throws an exception for an invalid argument")
-    void getCompatJungseong_throwsIllegalArgumentExceptionForNonSyllable() {
+    static Stream<Arguments> getCompatJungseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "getCompatJungseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("getCompatJungseongExceptionTestParameters")
+    void getCompatJungseongExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.getCompatJungseong('A'));
+            () -> KoreanChar.getCompatJungseong(syllable));
     }
 
     static Stream<Arguments> getCompatJongseongTestParameters() {
@@ -252,18 +322,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getCompatJongseong❨{0}❩ returns {1}")
     @MethodSource("getCompatJongseongTestParameters")
-    @DisplayName("getCompatJongseong(char) with a valid argument")
-    void getCompatJongseong_withValidArguments(char syllable, char expected) {
+    void getCompatJongseongTest(char syllable, char expected) {
         assertThat(KoreanChar.getCompatJongseong(syllable), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("getCompatJongseong(char) throws an exception for an invalid argument")
-    void getCompatJongseong_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> getCompatJongseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "getCompatJongseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("getCompatJongseongExceptionTestParameters")
+    void getCompatJongseongExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.getCompatJongseong('A'));
+            () -> KoreanChar.getCompatJongseong(syllable));
     }
 
     static Stream<Arguments> compatChoseongToChoseongTestParameters() {
@@ -273,18 +353,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "compatChoseongToChoseong❨{0}❩ returns {1}")
     @MethodSource("compatChoseongToChoseongTestParameters")
-    @DisplayName("compatChoseongToChoseong(char) returns the corresponding choseong to a Compat choseong")
-    void compatChoseongToChoseong_returnsChoseongForCompatChoseong(char c, char expected) {
+    void compatChoseongToChoseongTest(char c, char expected) {
         assertThat(KoreanChar.compatChoseongToChoseong(c), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("compatChoseongToChoseong(char) throws an exception for an invalid argument")
-    void compatChoseongToChoseong_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> compatChoseongToChoseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "compatChoseongToChoseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("compatChoseongToChoseongExceptionTestParameters")
+    void compatChoseongToChoseongExceptionTest(char c) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.compatChoseongToChoseong('A'));
+            () -> KoreanChar.compatChoseongToChoseong(c));
     }
 
     static Stream<Arguments> choseongToCompatChoseongTestParameters() {
@@ -294,18 +384,28 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "choseongToCompatChoseong❨{0}❩ returns {1}")
     @MethodSource("choseongToCompatChoseongTestParameters")
-    @DisplayName("choseongToCompatChoseong(char) returns the corresponding Compat choseong to a choseong")
-    void choseongToCompatChoseong_returnsCompatChoseongForChoseong(char c, char expected) {
+    void choseongToCompatChoseongTest(char c, char expected) {
         assertThat(KoreanChar.choseongToCompatChoseong(c), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("choseongToCompatChoseong(char) throws an exception for an invalid argument")
-    void choseongToCompatChoseong_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> choseongToCompatChoseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "choseongToCompatChoseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("choseongToCompatChoseongExceptionTestParameters")
+    void choseongToCompatChoseongExceptionTest(char c) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.choseongToCompatChoseong('A'));
+            () -> KoreanChar.choseongToCompatChoseong(c));
     }
 
     static Stream<Arguments> joinJamoTestParameters() {
@@ -323,18 +423,27 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "joinJamo❨{0}❩ returns {1}")
     @MethodSource("joinJamoTestParameters")
-    @DisplayName("joinJamo(String) with a valid argument")
-    void joinJamo_withValidArgument(String jamo, char expected) {
+    void joinJamoTest(String jamo, char expected) {
         assertThat(KoreanChar.joinJamo(jamo), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("joinJamo(String) throws an exception for an invalid argument")
-    void joinJamo_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> joinJamoExceptionTestParameters() {
+        return Stream.of(
+            arguments("A"),
+            arguments("1"),
+            arguments(" "),
+            arguments("!"),
+            arguments("ABC")
+        );
+    }
+
+    @ParameterizedTest(name = "joinJamo❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("joinJamoExceptionTestParameters")
+    void joinJamoExceptionTest(String s) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.joinJamo("A"));
+            () -> KoreanChar.joinJamo(s));
     }
 
     static Stream<Arguments> splitJamoTestParameters() {
@@ -352,65 +461,96 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "splitJamo❨{0}❩ returns {1}")
     @MethodSource("splitJamoTestParameters")
-    @DisplayName("splitJamo(char) with a valid argument")
-    void splitJamo_withValidArguments(char jamo, String expected) {
+    void splitJamoTest(char jamo, String expected) {
         assertThat(KoreanChar.splitJamo(jamo), equalTo(expected));
     }
 
-    @Test
-    @DisplayName("splitJamo(char) throws an exception for an invalid argument")
-    void splitJamo_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> splitJamoExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢')
+        );
+    }
+
+    @ParameterizedTest(name = "splitJamo❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("splitJamoExceptionTestParameters")
+    void splitJamoExceptionTest(char c) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.splitJamo('A'));
+            () -> KoreanChar.splitJamo(c));
     }
 
     static Stream<Arguments> decomposeTestParameters() {
         return Stream.of(
-            arguments('하', new String[] { "\u1112", "\u1161" }),
-            arguments('늘', new String[] { "\u1102", "\u1173" ,"\u11AF" }),
-            arguments('밝', new String[] { "\u1107", "\u1161" ,"\u11AF\u11A8" }),
-            arguments('꿄', new String[] { "\u1100\u1100" ,"\u116E", "\u11AF\u11BA" }),
-            arguments('쒏', new String[] { "\u1109\u1109" ,"\u116E\u1165", "\u11AF\u11C2" })
+            arguments('하', List.of("\u1112", "\u1161")),
+            arguments('늘', List.of("\u1102", "\u1173", "\u11AF")),
+            arguments('밝', List.of("\u1107", "\u1161", "\u11AF\u11A8")),
+            arguments('꿄', List.of("\u1100\u1100", "\u116E", "\u11AF\u11BA")),
+            arguments('쒏', List.of("\u1109\u1109", "\u116E\u1165", "\u11AF\u11C2"))
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "decompose❨{0}❩ returns {1}")
     @MethodSource("decomposeTestParameters")
-    @DisplayName("decompose(char) with a valid argument")
-    void decompose_withValidArgument(char syllable, String[] expected) {
-        assertThat(KoreanChar.decompose(syllable), equalTo(expected));
+    void decomposeTest(char syllable, List<String> expected) {
+        List<String> actual = Arrays.asList(KoreanChar.decompose(syllable));
+        assertThat(actual, equalTo(expected));
     }
 
-    @Test
-    @DisplayName("decompose(char) throws an exception for an invalid argument")
-    void decompose_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> decomposeExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "decompose❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("decomposeExceptionTestParameters")
+    void decomposeExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.decompose('A'));
+            () -> KoreanChar.decompose(syllable));
     }
 
     static Stream<Arguments> decomposeCompatTestParameters() {
         return Stream.of(
-            arguments('하', new String[] { "ㅎ", "ㅏ" }),
-            arguments('늘', new String[] { "ㄴ", "ㅡ", "ㄹ" }),
-            arguments('밝', new String[] { "ㅂ", "ㅏ", "ㄹㄱ" }),
-            arguments('꿄', new String[] { "ㄱㄱ", "ㅜ", "ㄹㅅ" }),
-            arguments('쒏', new String[] { "ㅅㅅ", "ㅜㅓ", "ㄹㅎ"})
+            arguments('하', List.of("ㅎ", "ㅏ")),
+            arguments('늘', List.of("ㄴ", "ㅡ", "ㄹ")),
+            arguments('밝', List.of("ㅂ", "ㅏ", "ㄹㄱ")),
+            arguments('꿄', List.of("ㄱㄱ", "ㅜ", "ㄹㅅ")),
+            arguments('쒏', List.of("ㅅㅅ", "ㅜㅓ", "ㄹㅎ"))
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "decomposeCompat❨{0}❩ returns {1}")
     @MethodSource("decomposeCompatTestParameters")
-    @DisplayName("decomposeCompat(char) with a valid argument")
-    void decomposeCompat_withValidArgument(char syllable, String[] expected) {
-        assertThat(KoreanChar.decomposeCompat(syllable), equalTo(expected));
+    void decomposeCompatTest(char syllable, List<String> expected) {
+        List<String> actual = Arrays.asList(KoreanChar.decomposeCompat(syllable));
+        assertThat(actual, equalTo(expected));
     }
 
-    @Test
-    @DisplayName("decomposeCompat(char) throws an exception for an invalid argument")
-    void decomposeCompat_throwsExceptionForInvalidArgument() {
+    static Stream<Arguments> decomposeCompatExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "decomposeCompat❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("decomposeCompatExceptionTestParameters")
+    void decomposeCompatExceptionTest(char syllable) {
         assertThrows(IllegalArgumentException.class,
-            () -> KoreanChar.decomposeCompat('A'));
+            () -> KoreanChar.decomposeCompat(syllable));
     }
 }

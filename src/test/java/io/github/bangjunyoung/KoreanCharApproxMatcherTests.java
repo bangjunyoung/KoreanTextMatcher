@@ -25,60 +25,46 @@
 
 package io.github.bangjunyoung;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class KoreanCharApproxMatcherTests {
-    static Stream<Arguments> isMatchMatchedTestParameters() {
+    static Stream<Arguments> isMatchTestParameters() {
         return Stream.of(
-            arguments('h', 'h'),
-            arguments('\u3131', '\u1100'),
-            arguments('\u314E', '\u1112'),
-            arguments('\u1100', '\u3131'),
-            arguments('\u1112', '\u314E'),
-            arguments('또', 'ㄷ'),
-            arguments('또', 'ㄸ'),
-            arguments('광', '고'),
-            arguments('광', '과'),
-            arguments('밝', '발'),
-            arguments('밝', '밝'),
-            arguments('꽜', 'ㄱ'),
-            arguments('꽜', 'ㄲ'),
-            arguments('꽜', '꼬'),
-            arguments('꽜', '꽈'),
-            arguments('꽜', '꽛'),
-            arguments('꽜', '꽜')
+            arguments('h', 'h', true),
+            arguments('\u3131', '\u1100', true),
+            arguments('\u314E', '\u1112', true),
+            arguments('\u1100', '\u3131', true),
+            arguments('\u1112', '\u314E', true),
+            arguments('또', 'ㄷ', true),
+            arguments('또', 'ㄸ', true),
+            arguments('광', '고', true),
+            arguments('광', '과', true),
+            arguments('밝', '발', true),
+            arguments('밝', '밝', true),
+            arguments('꽜', 'ㄱ', true),
+            arguments('꽜', 'ㄲ', true),
+            arguments('꽜', '꼬', true),
+            arguments('꽜', '꽈', true),
+            arguments('꽜', '꽛', true),
+            arguments('꽜', '꽜', true),
+            arguments('H', 'h', false),
+            arguments('하', '한', false),
+            arguments('한', 'ㅏ', false),
+            arguments('한', '핞', false)
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("isMatchMatchedTestParameters")
-    @DisplayName("isMatch() returns true for matched arguments")
-    void isMatch_returnsTrueForMatchedArguments(char t, char p) {
-        assertTrue(KoreanCharApproxMatcher.isMatch(t, p));
-    }
-
-    static Stream<Arguments> isMatchUnmatchedTestParameters() {
-        return Stream.of(
-            arguments('H', 'h'),
-            arguments('하', '한'),
-            arguments('한', 'ㅏ'),
-            arguments('한', '핞')
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("isMatchUnmatchedTestParameters")
-    @DisplayName("isMatch() returns false for unmatched arguments")
-    void isMatch_returnsFalseForUnmatchedArguments(char t, char p) {
-        assertFalse(KoreanCharApproxMatcher.isMatch(t, p));
+    @ParameterizedTest(name = "isMatch❨{0}, {1}❩ returns {2}")
+    @MethodSource("isMatchTestParameters")
+    void isMatchTest(char t, char p, boolean expected) {
+        assertThat(KoreanCharApproxMatcher.isMatch(t, p), equalTo(expected));
     }
 }

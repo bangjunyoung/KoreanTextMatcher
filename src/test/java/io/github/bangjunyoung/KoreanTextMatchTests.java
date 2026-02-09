@@ -27,12 +27,10 @@ package io.github.bangjunyoung;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -66,10 +64,9 @@ class KoreanTextMatchTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "new KoreanTextMatcher❨{1}❩.match❨{0}❩ returns success={2}, index={3}, length={4}")
     @MethodSource("matchTestParameters")
-    @DisplayName("new KoreanTextMatcher(pattern).match(text) with valid arguments")
-    void match_withValidArguments(String text, String pattern,
+    void matchTest(String text, String pattern,
             boolean expectedSuccess, int expectedIndex, int expectedLength) {
         String message = String.format("text: %s, pattern: %s", text, pattern);
         KoreanTextMatcher matcher = new KoreanTextMatcher(pattern);
@@ -96,10 +93,9 @@ class KoreanTextMatchTests {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "nextMatch❨{0}, {1}❩ returns {2}")
     @MethodSource("nextMatchTestParameters")
-    @DisplayName("new KoreanTextMatcher(pattern).match(text) with valid arguments")
-    void nextMatch_withValidArguments(String text, String pattern, int expectedMatchCount) {
+    void nextMatchTest(String text, String pattern, int expectedMatchCount) {
         String message = String.format("text: %s, pattern: %s", text, pattern);
         KoreanTextMatcher matcher = new KoreanTextMatcher(pattern);
         KoreanTextMatch match = matcher.match(text);
@@ -109,21 +105,19 @@ class KoreanTextMatchTests {
             int index = match.index();
             int length = match.length();
             String value = match.value();
-            assertThat(message, text.substring(index, index + length).equals(value));
+            assertThat(message, text.substring(index, index + length), equalTo(value));
             match = match.nextMatch();
         }
         assertThat(message, matchCount, equalTo(expectedMatchCount));
     }
 
     @Test
-    @DisplayName("EMPTY.success() returns false")
-    void EMPTY_success_returnsFalse() {
-        assertFalse(KoreanTextMatch.EMPTY.success());
+    void EMPTY_success_always_returns_false() {
+        assertThat(KoreanTextMatch.EMPTY.success(), equalTo(false));
     }
 
     @Test
-    @DisplayName("EMPTY.nextMatch() returns EMPTY")
-    void EMPTY_nextMatch_returnsEMPTY() {
+    void EMPTY_nextMatch_always_returns_EMPTY() {
         assertThat(KoreanTextMatch.EMPTY.nextMatch(), equalTo(KoreanTextMatch.EMPTY));
     }
 }
