@@ -44,8 +44,8 @@ class KoreanCharTests {
         return Stream.of(
             arguments('가', true),
             arguments('힣', true),
-            arguments('1', false),
-            arguments('A', false)
+            arguments('A', false),
+            arguments('ぁ', false)
         );
     }
 
