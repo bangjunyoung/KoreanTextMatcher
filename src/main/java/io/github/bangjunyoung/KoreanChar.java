@@ -214,7 +214,7 @@ public final class KoreanChar {
      * 주어진 한글 음절로부터 Unicode Hangul Jamo 종성을 추출한다.
      *
      * @param syllable 종성을 추출할 한글 음절
-     * @return Unicode Hangul Jamo 종성.
+     * @return Unicode Hangul Jamo 종성. 종성이 없으면 '\u0000'를 반환한다.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getJongseong(char syllable) {
@@ -257,7 +257,7 @@ public final class KoreanChar {
      * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 종성을 추출한다.
      *
      * @param syllable 종성을 추출할 한글 음절
-     * @return Unicode Hangul Compatibility Jamo 종성.
+     * @return Unicode Hangul Compatibility Jamo 종성. 종성이 없으면 '\u0000'를 반환한다.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatJongseong(char syllable) {
