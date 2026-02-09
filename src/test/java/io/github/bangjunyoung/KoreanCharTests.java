@@ -45,7 +45,7 @@ class KoreanCharTests {
             arguments('가', true),
             arguments('힣', true),
             arguments('A', false),
-            arguments('ぁ', false)
+            arguments('\uFFFF', false)
         );
     }
 
