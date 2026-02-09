@@ -25,8 +25,7 @@
 
 package io.github.bangjunyoung;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
@@ -65,6 +64,6 @@ class KoreanCharApproxMatcherTests {
     @ParameterizedTest(name = "isMatch❨{0}, {1}❩ returns {2}")
     @MethodSource("isMatchTestParameters")
     void isMatchTest(char t, char p, boolean expected) {
-        assertThat(KoreanCharApproxMatcher.isMatch(t, p), equalTo(expected));
+        assertThat(KoreanCharApproxMatcher.isMatch(t, p)).isEqualTo(expected);
     }
 }

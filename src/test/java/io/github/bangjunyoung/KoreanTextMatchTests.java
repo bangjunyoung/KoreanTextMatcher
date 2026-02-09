@@ -25,8 +25,7 @@
 
 package io.github.bangjunyoung;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
@@ -71,12 +70,12 @@ class KoreanTextMatchTests {
         String message = String.format("text: %s, pattern: %s", text, pattern);
         KoreanTextMatcher matcher = new KoreanTextMatcher(pattern);
         KoreanTextMatch match = matcher.match(text);
-        assertThat(message, match.success(), equalTo(expectedSuccess));
+        assertThat(match.success()).as(message).isEqualTo(expectedSuccess);
         if (match.success()) {
-            assertThat(message, match.index(), equalTo(expectedIndex));
-            assertThat(message, match.length(), equalTo(expectedLength));
-            assertThat(message, match.length(), equalTo(match.value().length()));
-            assertThat(message, text.contains(match.value()));
+            assertThat(match.index()).as(message).isEqualTo(expectedIndex);
+            assertThat(match.length()).as(message).isEqualTo(expectedLength);
+            assertThat(match.length()).as(message).isEqualTo(match.value().length());
+            assertThat(text).as(message).contains(match.value());
         }
     }
 
@@ -105,19 +104,19 @@ class KoreanTextMatchTests {
             int index = match.index();
             int length = match.length();
             String value = match.value();
-            assertThat(message, text.substring(index, index + length), equalTo(value));
+            assertThat(text.substring(index, index + length)).as(message).isEqualTo(value);
             match = match.nextMatch();
         }
-        assertThat(message, matchCount, equalTo(expectedMatchCount));
+        assertThat(matchCount).as(message).isEqualTo(expectedMatchCount);
     }
 
     @Test
     void EMPTY_success_always_returns_false() {
-        assertThat(KoreanTextMatch.EMPTY.success(), equalTo(false));
+        assertThat(KoreanTextMatch.EMPTY.success()).isFalse();
     }
 
     @Test
     void EMPTY_nextMatch_always_returns_EMPTY() {
-        assertThat(KoreanTextMatch.EMPTY.nextMatch(), equalTo(KoreanTextMatch.EMPTY));
+        assertThat(KoreanTextMatch.EMPTY.nextMatch()).isEqualTo(KoreanTextMatch.EMPTY);
     }
 }
