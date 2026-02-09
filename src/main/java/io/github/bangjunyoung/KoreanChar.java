@@ -46,23 +46,23 @@ public final class KoreanChar {
     private static final int HANGUL_SYLLABLES_BASE = 0xAC00;
     private static final int HANGUL_SYLLABLES_END = HANGUL_SYLLABLES_BASE + HANGUL_SYLLABLE_COUNT;
 
-    private static final char[] COMPAT_CHOSEONG_COLLECTION = new char[] {
+    private static final char[] COMPAT_CHOSEONG = new char[] {
         'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
         'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
-    private static final char[] COMPAT_JUNGSEONG_COLLECTION = new char[]{
+    private static final char[] COMPAT_JUNGSEONG = new char[]{
         'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ',
         'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ',
         'ㅣ'
     };
-    private static final char[] COMPAT_JONGSEONG_COLLECTION = new char[] {
+    private static final char[] COMPAT_JONGSEONG = new char[] {
         '\u0000',
         'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ',
         'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ',
         'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
 
-    private static final String[] JAMO_STRINGS = new String[] {
+    private static final String[] JAMO_AS_STRING = new String[] {
         "ᄀ", "ᄀᄀ", "ᄂ", "ᄃ", "ᄃᄃ", "ᄅ", "ᄆ", "ᄇ", "ᄇᄇ", "ᄉ",
         "ᄉᄉ", "ᄋ", "ᄌ", "ᄌᄌ", "ᄎ", "ᄏ", "ᄐ", "ᄑ", "ᄒ",
 
@@ -82,7 +82,7 @@ public final class KoreanChar {
         "ㅗㅐ", "ㅗㅣ", "ㅛ", "ㅜ", "ㅜㅓ", "ㅜㅔ", "ㅜㅣ", "ㅠ", "ㅡ", "ㅡㅣ",
         "ㅣ"
     };
-    private static final char[] JAMO_CHARS = new char[] {
+    private static final char[] JAMO_AS_CHAR = new char[] {
         'ᄀ', 'ᄁ', 'ᄂ', 'ᄃ', 'ᄄ', 'ᄅ', 'ᄆ', 'ᄇ', 'ᄈ', 'ᄉ',
         'ᄊ', 'ᄋ', 'ᄌ', 'ᄍ', 'ᄎ', 'ᄏ', 'ᄐ', 'ᄑ', 'ᄒ',
 
@@ -154,7 +154,7 @@ public final class KoreanChar {
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatChoseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_CHOSEONG_COLLECTION, c);
+        final int index = Arrays.binarySearch(COMPAT_CHOSEONG, c);
         return index >= 0;
     }
 
@@ -166,7 +166,7 @@ public final class KoreanChar {
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatJungseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_JUNGSEONG_COLLECTION, c);
+        final int index = Arrays.binarySearch(COMPAT_JUNGSEONG, c);
         return index >= 0;
     }
 
@@ -178,7 +178,7 @@ public final class KoreanChar {
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatJongseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_JONGSEONG_COLLECTION, c);
+        final int index = Arrays.binarySearch(COMPAT_JONGSEONG, c);
         return index >= 0;
     }
 
@@ -222,7 +222,10 @@ public final class KoreanChar {
             throw new IllegalArgumentException(String.valueOf(syllable));
 
         final int index = getJongseongIndex(syllable);
-        return (char)(index == 0 ? '\u0000' : 0x11A7 + index);
+        if (index == 0)
+            return '\u0000';
+        else
+            return (char)((int)'ᆨ' + index - 1);
     }
 
     /**
@@ -236,7 +239,7 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        return COMPAT_CHOSEONG_COLLECTION[getChoseongIndex(syllable)];
+        return COMPAT_CHOSEONG[getChoseongIndex(syllable)];
     }
 
     /**
@@ -250,7 +253,7 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        return COMPAT_JUNGSEONG_COLLECTION[getJungseongIndex(syllable)];
+        return COMPAT_JUNGSEONG[getJungseongIndex(syllable)];
     }
 
     /**
@@ -264,7 +267,7 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        return COMPAT_JONGSEONG_COLLECTION[getJongseongIndex(syllable)];
+        return COMPAT_JONGSEONG[getJongseongIndex(syllable)];
     }
 
     /**
@@ -276,7 +279,7 @@ public final class KoreanChar {
      *         Unicode Hangul Compatibility Jamo 초성 문자가 아닐 때.
      */
     public static char compatChoseongToChoseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_CHOSEONG_COLLECTION, c);
+        final int index = Arrays.binarySearch(COMPAT_CHOSEONG, c);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(c));
 
@@ -295,7 +298,7 @@ public final class KoreanChar {
         if (!isChoseong(c))
             throw new IllegalArgumentException(String.valueOf(c));
 
-        return COMPAT_CHOSEONG_COLLECTION[(int)c - 0x1100];
+        return COMPAT_CHOSEONG[(int)c - 0x1100];
     }
 
     /**
@@ -309,11 +312,11 @@ public final class KoreanChar {
      *         두 개를 넘는 자모가 주어질 때.
      */
     public static char joinJamo(String jamo) {
-        final int index = Arrays.binarySearch(JAMO_STRINGS, jamo);
+        final int index = Arrays.binarySearch(JAMO_AS_STRING, jamo);
         if (index < 0)
             throw new IllegalArgumentException(jamo);
 
-        return JAMO_CHARS[index];
+        return JAMO_AS_CHAR[index];
     }
 
     /**
@@ -327,11 +330,11 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code jamo}가 한글 자모가 아닐 때.
      */
     public static String splitJamo(char jamo) {
-        final int index = Arrays.binarySearch(JAMO_CHARS, jamo);
+        final int index = Arrays.binarySearch(JAMO_AS_CHAR, jamo);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(jamo));
 
-        return JAMO_STRINGS[index];
+        return JAMO_AS_STRING[index];
     }
 
     /**
@@ -346,15 +349,15 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        final String cho = splitJamo(getChoseong(syllable));
-        final String jung = splitJamo(getJungseong(syllable));
-        final char j = getJongseong(syllable);
-        final String jong = j == '\u0000' ? "" : splitJamo(j);
+        final String choseong = splitJamo(getChoseong(syllable));
+        final String jungseong = splitJamo(getJungseong(syllable));
+        final char jong = getJongseong(syllable);
+        final String jongseong = jong == '\u0000' ? "" : splitJamo(jong);
 
-        if (jong.isEmpty())
-            return new String[] { cho, jung };
+        if (jongseong.isEmpty())
+            return new String[] { choseong, jungseong };
         else
-            return new String[] { cho, jung, jong };
+            return new String[] { choseong, jungseong, jongseong };
     }
 
     /**
@@ -369,15 +372,15 @@ public final class KoreanChar {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
-        final String cho = splitJamo(getCompatChoseong(syllable));
-        final String jung = splitJamo(getCompatJungseong(syllable));
-        final char j = getCompatJongseong(syllable);
-        final String jong = j == '\u0000' ? "" : splitJamo(j);
+        final String choseong = splitJamo(getCompatChoseong(syllable));
+        final String jungseong = splitJamo(getCompatJungseong(syllable));
+        final char jong = getCompatJongseong(syllable);
+        final String jongseong = jong == '\u0000' ? "" : splitJamo(jong);
 
-        if (jong.isEmpty())
-            return new String[] { cho, jung };
+        if (jongseong.isEmpty())
+            return new String[] { choseong, jungseong };
         else
-            return new String[] { cho, jung, jong };
+            return new String[] { choseong, jungseong, jongseong };
     }
 
     private static int getChoseongIndex(char syllable) {
