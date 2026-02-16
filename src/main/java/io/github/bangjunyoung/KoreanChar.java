@@ -62,7 +62,7 @@ public final class KoreanChar {
         'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
 
-    private static final String[] JAMO_AS_STRING = new String[] {
+    private static final String[] SPLITTED_JAMOS = new String[] {
         "ᄀ", "ᄀᄀ", "ᄂ", "ᄃ", "ᄃᄃ", "ᄅ", "ᄆ", "ᄇ", "ᄇᄇ", "ᄉ",
         "ᄉᄉ", "ᄋ", "ᄌ", "ᄌᄌ", "ᄎ", "ᄏ", "ᄐ", "ᄑ", "ᄒ",
 
@@ -82,7 +82,7 @@ public final class KoreanChar {
         "ㅗㅐ", "ㅗㅣ", "ㅛ", "ㅜ", "ㅜㅓ", "ㅜㅔ", "ㅜㅣ", "ㅠ", "ㅡ", "ㅡㅣ",
         "ㅣ"
     };
-    private static final char[] JAMO_AS_CHAR = new char[] {
+    private static final char[] JOINED_JAMOS = new char[] {
         'ᄀ', 'ᄁ', 'ᄂ', 'ᄃ', 'ᄄ', 'ᄅ', 'ᄆ', 'ᄇ', 'ᄈ', 'ᄉ',
         'ᄊ', 'ᄋ', 'ᄌ', 'ᄍ', 'ᄎ', 'ᄏ', 'ᄐ', 'ᄑ', 'ᄒ',
 
@@ -316,15 +316,15 @@ public final class KoreanChar {
         case 0:
             return '\u0000';
         case 1:
-            int index = Arrays.binarySearch(JAMO_AS_CHAR, jamo.charAt(0));
+            int index = Arrays.binarySearch(JOINED_JAMOS, jamo.charAt(0));
             if (index < 0)
                 throw new IllegalArgumentException(jamo);
-            return JAMO_AS_CHAR[index];
+            return JOINED_JAMOS[index];
         case 2:
-            index = Arrays.binarySearch(JAMO_AS_STRING, jamo);
+            index = Arrays.binarySearch(SPLITTED_JAMOS, jamo);
             if (index < 0)
                 throw new IllegalArgumentException(jamo);
-            return JAMO_AS_CHAR[index];
+            return JOINED_JAMOS[index];
         default:
             throw new IllegalArgumentException(jamo);
         }
@@ -343,11 +343,11 @@ public final class KoreanChar {
     public static String splitJamo(char jamo) {
         if (jamo == '\u0000')
             return "";
-        final int index = Arrays.binarySearch(JAMO_AS_CHAR, jamo);
+        final int index = Arrays.binarySearch(JOINED_JAMOS, jamo);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(jamo));
 
-        return JAMO_AS_STRING[index];
+        return SPLITTED_JAMOS[index];
     }
 
     /**
