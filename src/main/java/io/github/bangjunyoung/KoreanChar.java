@@ -312,13 +312,22 @@ public final class KoreanChar {
      *         두 개를 넘는 자모가 주어질 때.
      */
     public static char joinJamo(String jamo) {
-        if (jamo.isEmpty())
+        switch (jamo.length()) {
+        case 0:
             return '\u0000';
-        final int index = Arrays.binarySearch(JAMO_AS_STRING, jamo);
-        if (index < 0)
+        case 1:
+            int index = Arrays.binarySearch(JAMO_AS_CHAR, jamo.charAt(0));
+            if (index < 0)
+                throw new IllegalArgumentException(jamo);
+            return JAMO_AS_CHAR[index];
+        case 2:
+            index = Arrays.binarySearch(JAMO_AS_STRING, jamo);
+            if (index < 0)
+                throw new IllegalArgumentException(jamo);
+            return JAMO_AS_CHAR[index];
+        default:
             throw new IllegalArgumentException(jamo);
-
-        return JAMO_AS_CHAR[index];
+        }
     }
 
     /**
