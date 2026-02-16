@@ -433,10 +433,8 @@ class KoreanCharTests {
     static Stream<Arguments> joinJamoExceptionTestParameters() {
         return Stream.of(
             arguments("A"),
-            arguments("1"),
-            arguments(" "),
-            arguments("!"),
-            arguments("ABC")
+            arguments("ㄱㅎ"),
+            arguments("ㄱㄱㅅ")
         );
     }
 
