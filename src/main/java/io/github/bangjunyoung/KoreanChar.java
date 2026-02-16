@@ -312,6 +312,8 @@ public final class KoreanChar {
      *         두 개를 넘는 자모가 주어질 때.
      */
     public static char joinJamo(String jamo) {
+        if (jamo.isEmpty())
+            return '\u0000';
         final int index = Arrays.binarySearch(JAMO_AS_STRING, jamo);
         if (index < 0)
             throw new IllegalArgumentException(jamo);
@@ -330,6 +332,8 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code jamo}가 한글 자모가 아닐 때.
      */
     public static String splitJamo(char jamo) {
+        if (jamo == '\u0000')
+            return "";
         final int index = Arrays.binarySearch(JAMO_AS_CHAR, jamo);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(jamo));
@@ -352,8 +356,7 @@ public final class KoreanChar {
 
         final String choseong = splitJamo(getChoseong(syllable));
         final String jungseong = splitJamo(getJungseong(syllable));
-        final char jong = getJongseong(syllable);
-        final String jongseong = jong == '\u0000' ? "" : splitJamo(jong);
+        final String jongseong = splitJamo(getJongseong(syllable));
 
         if (jongseong.isEmpty())
             return new String[] { choseong, jungseong };
@@ -376,8 +379,7 @@ public final class KoreanChar {
 
         final String choseong = splitJamo(getCompatChoseong(syllable));
         final String jungseong = splitJamo(getCompatJungseong(syllable));
-        final char jong = getCompatJongseong(syllable);
-        final String jongseong = jong == '\u0000' ? "" : splitJamo(jong);
+        final String jongseong = splitJamo(getCompatJongseong(syllable));
 
         if (jongseong.isEmpty())
             return new String[] { choseong, jungseong };

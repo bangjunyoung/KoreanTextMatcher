@@ -409,6 +409,8 @@ class KoreanCharTests {
 
     static Stream<Arguments> joinJamoTestParameters() {
         return Stream.of(
+            // 한글 단자모를 복자모로 결합할 때 빈 문자열을 적법한 자모로 간주하는 것이 코드가 자연스러워짐
+            arguments("", '\u0000'),
             // Hangul Compatibility Jamo
             arguments("ㄱ", 'ㄱ'),
             arguments("ㅎ", 'ㅎ'),
@@ -430,7 +432,6 @@ class KoreanCharTests {
 
     static Stream<Arguments> joinJamoExceptionTestParameters() {
         return Stream.of(
-            arguments(""),
             arguments("A"),
             arguments("1"),
             arguments(" "),
@@ -448,6 +449,8 @@ class KoreanCharTests {
 
     static Stream<Arguments> splitJamoTestParameters() {
         return Stream.of(
+            // 한글 복자모를 단자모로 분해할 때 '\u0000'을 적법한 자모로 간주하는 것이 코드가 자연스러워짐
+            arguments('\u0000', ""),
             // Hangul Compatibility Jamo
             arguments('ㄱ', "ㄱ"),
             arguments('ㅎ', "ㅎ"),
@@ -469,7 +472,6 @@ class KoreanCharTests {
 
     static Stream<Arguments> splitJamoExceptionTestParameters() {
         return Stream.of(
-            arguments('\u0000'),
             arguments('A'),
             arguments('1'),
             arguments(' '),
