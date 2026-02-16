@@ -382,7 +382,7 @@ public final class KoreanChar {
      *         종성이 있는 음절은 3이다.
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
-    public static String[] decomposeCompat(char syllable) {
+    public static String[] decomposeToCompat(char syllable) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 

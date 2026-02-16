@@ -520,7 +520,7 @@ class KoreanCharTests {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> decomposeCompatTestParameters() {
+    static Stream<Arguments> decomposeToCompatTestParameters() {
         return Stream.of(
             arguments('하', List.of("ㅎ", "ㅏ")),
             arguments('늘', List.of("ㄴ", "ㅡ", "ㄹ")),
@@ -530,14 +530,14 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "decomposeCompat❨{0}❩ returns {1}")
-    @MethodSource("decomposeCompatTestParameters")
-    void decomposeCompatTest(char syllable, List<String> expected) {
-        List<String> actual = Arrays.asList(KoreanChar.decomposeCompat(syllable));
+    @ParameterizedTest(name = "decomposeToCompat❨{0}❩ returns {1}")
+    @MethodSource("decomposeToCompatTestParameters")
+    void decomposeToCompatTest(char syllable, List<String> expected) {
+        List<String> actual = Arrays.asList(KoreanChar.decomposeToCompat(syllable));
         assertThat(actual).isEqualTo(expected);
     }
 
-    static Stream<Arguments> decomposeCompatExceptionTestParameters() {
+    static Stream<Arguments> decomposeToCompatExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -548,10 +548,10 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "decomposeCompat❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("decomposeCompatExceptionTestParameters")
-    void decomposeCompatExceptionTest(char syllable) {
-        assertThatThrownBy(() -> KoreanChar.decomposeCompat(syllable))
+    @ParameterizedTest(name = "decomposeToCompat❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("decomposeToCompatExceptionTestParameters")
+    void decomposeToCompatExceptionTest(char syllable) {
+        assertThatThrownBy(() -> KoreanChar.decomposeToCompat(syllable))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }
