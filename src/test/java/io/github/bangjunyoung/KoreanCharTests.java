@@ -124,12 +124,12 @@ class KoreanCharTests {
 
     static Stream<Arguments> isCompatJungseongTestParameters() {
         return Stream.of(
+            arguments('1', false),
             arguments('ㅏ', true),
             arguments('ㅣ', true),
             arguments('ᅡ', false),
             arguments('ᅵ', false),
-            arguments('1', false),
-            arguments('A', false)
+            arguments('\uFFE6', false)
         );
     }
 

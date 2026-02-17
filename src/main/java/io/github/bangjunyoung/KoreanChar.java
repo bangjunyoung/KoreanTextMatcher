@@ -166,8 +166,7 @@ public final class KoreanChar {
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatJungseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_JUNGSEONG, c);
-        return index >= 0;
+        return 0x314F <= c && c <= 0x3163;
     }
 
     /**
