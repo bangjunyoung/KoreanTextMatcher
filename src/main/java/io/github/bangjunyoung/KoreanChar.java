@@ -62,7 +62,7 @@ public final class KoreanChar {
         'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
     };
 
-    private static final String[] SPLITTED_JAMOS = new String[] {
+    private static final String[] SPLIT_JAMOS = new String[] {
         "ᄀ", "ᄀᄀ", "ᄂ", "ᄃ", "ᄃᄃ", "ᄅ", "ᄆ", "ᄇ", "ᄇᄇ", "ᄉ",
         "ᄉᄉ", "ᄋ", "ᄌ", "ᄌᄌ", "ᄎ", "ᄏ", "ᄐ", "ᄑ", "ᄒ",
 
@@ -321,7 +321,7 @@ public final class KoreanChar {
                 throw new IllegalArgumentException(jamo);
             return JOINED_JAMOS[index];
         case 2:
-            index = Arrays.binarySearch(SPLITTED_JAMOS, jamo);
+            index = Arrays.binarySearch(SPLIT_JAMOS, jamo);
             if (index < 0)
                 throw new IllegalArgumentException(jamo);
             return JOINED_JAMOS[index];
@@ -347,7 +347,7 @@ public final class KoreanChar {
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(jamo));
 
-        return SPLITTED_JAMOS[index];
+        return SPLIT_JAMOS[index];
     }
 
     /**
