@@ -761,4 +761,70 @@ class KoreanCharTests {
         assertThatThrownBy(() -> KoreanChar.decomposeToCompat(syllable))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    static Stream<Arguments> splitGyeopBatchimTestParameters() {
+        return Stream.of(
+            arguments('가', "가"),
+            arguments('각', "각"),
+            arguments('갂', "각ᆨ"),
+            arguments('핧', "할ᇂ")
+        );
+    }
+
+    @ParameterizedTest(name = "splitGyeopBatchim❨{0}❩")
+    @MethodSource("splitGyeopBatchimTestParameters")
+    void splitGyeopBatchimTest(char syllable, String expected) {
+        assertThat(KoreanChar.splitGyeopBatchim(syllable)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> splitGyeopBatchimExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "splitGyeopBatchim❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("splitGyeopBatchimExceptionTestParameters")
+    void splitGyeopBatchimExceptionTest(char syllable) {
+        assertThatThrownBy(() -> KoreanChar.splitGyeopBatchim(syllable))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> splitGyeopBatchimToCompatTestParameters() {
+        return Stream.of(
+            arguments('가', "가"),
+            arguments('각', "각"),
+            arguments('갂', "각ㄱ"),
+            arguments('핧', "할ㅎ")
+        );
+    }
+
+    @ParameterizedTest(name = "splitGyeopBatchimToCompat❨{0}❩")
+    @MethodSource("splitGyeopBatchimToCompatTestParameters")
+    void splitGyeopBatchimToCompatTest(char syllable, String expected) {
+        assertThat(KoreanChar.splitGyeopBatchimToCompat(syllable)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> splitGyeopBatchimToCompatExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "splitGyeopBatchimToCompat❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("splitGyeopBatchimToCompatExceptionTestParameters")
+    void splitGyeopBatchimToCompatExceptionTest(char syllable) {
+        assertThatThrownBy(() -> KoreanChar.splitGyeopBatchimToCompat(syllable))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 }
