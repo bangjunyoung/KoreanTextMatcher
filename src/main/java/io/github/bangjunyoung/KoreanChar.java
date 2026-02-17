@@ -415,6 +415,71 @@ public final class KoreanChar {
     }
 
     /**
+     * 주어진 초성, 중성을 조합하여 종성이 없는 한글 음절을 만든다.
+     *
+     * @param choseong 조합할 초성. Unicode Hangul Jamo 초성 문자 또는
+     *     Unicode Hangul Compatibility Jamo 초성 문자여야 한다.
+     * @param jungseong 조합할 중성. Unicode Hangul Jamo 중성 문자 또는
+     *     Unicode Hangul Compatibility Jamo 중성 문자여야 한다.
+     * @return 조합된 한글 음절. 종성이 없는 음절이 만들어진다.
+     * @throws IllegalArgumentException 초성, 중성 중 하나라도 유효하지 않은 경우.
+     */
+    public static char compose(char choseong, char jungseong) {
+        return compose(choseong, jungseong, '\u0000');
+    }
+
+    /**
+     * 주어진 초성, 중성, 종성을 조합하여 한글 음절을 만든다.
+     *
+     * @param choseong 조합할 초성. Unicode Hangul Jamo 초성 문자 또는
+     *     Unicode Hangul Compatibility Jamo 초성 문자여야 한다.
+     * @param jungseong 조합할 중성. Unicode Hangul Jamo 중성 문자 또는
+     *     Unicode Hangul Compatibility Jamo 중성 문자여야 한다.
+     * @param jongseong 조합할 종성. Unicode Hangul Jamo 종성 문자 또는
+     *     Unicode Hangul Compatibility Jamo 종성 문자여야 한다.
+     *     종성이 없는 경우는 '\u0000'을 넣거나, 이 매개변수를 아예 생략할 수 있다.
+     * @return 조합된 한글 음절.
+     * @throws IllegalArgumentException 초성, 중성, 종성 중 하나라도 유효하지 않은 경우.
+     */
+    public static char compose(char choseong, char jungseong, char jongseong) {
+        final int choseongIndex = choseongToIndex(choseong);
+        final int jungseongIndex = jungseongToIndex(jungseong);
+        final int jongseongIndex = jongseongToIndex(jongseong);
+
+        return (char)(HANGUL_SYLLABLES_BASE +
+                        choseongIndex * JUNGSEONG_COUNT * JONGSEONG_COUNT +
+                        jungseongIndex * JONGSEONG_COUNT +
+                        jongseongIndex);
+    }
+
+    /**
+     * 주어진 초성, 중성을 조합하여 종성이 없는 한글 음절을 만든다.
+     *
+     * @param choseong 조합할 초성. 단자음 또는 복자음으로 이루어진 문자열이어야 한다.
+     * @param jungseong 조합할 중성. 단모음 또는 복모음으로 이루어진 문자열이어야 한다.
+     * @return 조합된 한글 음절. 종성이 없는 음절이 만들어진다.
+     * @throws IllegalArgumentException 초성, 중성 중 하나라도 유효하지 않은
+     */
+    public static char compose(String choseong, String jungseong) {
+        return compose(choseong, jungseong, "");
+    }
+
+    /**
+     * 주어진 초성, 중성, 종성을 조합하여 한글 음절을 만든다.
+     *
+     * @param choseong 조합할 초성. 단자음 또는 복자음으로 이루어진 문자열이어야 한다.
+     * @param jungseong 조합할 중성. 단모음 또는 복모음으로 이루어진 문자열이어야 한다.
+     * @param jongseong 조합할 종성. 단자음 또는 복자음으로 이루어진 문자열이어야 한다.
+     *     종성이 없는 경우는 빈 문자열을 넣거나, 이 매개변수를 아예 생략할 수 있다.
+     * @return 조합된 한글 음절.
+     * @throws IllegalArgumentException 초성, 중성, 종성 중 하나라도 유효하지 않은 경우.
+     */
+
+    public static char compose(String choseong, String jungseong, String jongseong) {
+        return compose(joinJamo(choseong), joinJamo(jungseong), joinJamo(jongseong));
+    }
+
+    /**
      * 주어진 한글 음절을 Unicode Hangul Jamo 초성, 중성, 종성으로 분해한다.
      *
      * @param syllable 분해할 한글 음절.
@@ -473,5 +538,44 @@ public final class KoreanChar {
     private static int getJongseongIndex(char syllable) {
         final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
         return sylIndex % JONGSEONG_COUNT;
+    }
+
+    private static int choseongToIndex(char c) {
+        int index = Arrays.binarySearch(COMPAT_CHOSEONG, c);
+        if (index >= 0)
+            return index;
+        else {
+            index = (int)c - 0x1100;
+            if (0 <= index && index < CHOSEONG_COUNT)
+                return index;
+            else
+                throw new IllegalArgumentException("Not a choseong: " + String.valueOf(c));
+        }
+    }
+
+    private static int jungseongToIndex(char c) {
+        int index = (int)c - 0x314F;
+        if (0 <= index && index < JUNGSEONG_COUNT)
+            return index;
+        else {
+            index = (int)c - 0x1161;
+            if (0 <= index && index < JUNGSEONG_COUNT)
+                return index;
+            else
+                throw new IllegalArgumentException("Not a jungseong: " + String.valueOf(c));
+        }
+    }
+
+    private static int jongseongToIndex(char c) {
+        int index = Arrays.binarySearch(COMPAT_JONGSEONG, c);
+        if (index >= 0)
+            return index;
+        else {
+            index = (int)c - 0x11A8 + 1;
+            if (0 < index && index < JONGSEONG_COUNT)
+                return index;
+            else
+                throw new IllegalArgumentException("Not a jongseong: " + String.valueOf(c));
+        }
     }
 }

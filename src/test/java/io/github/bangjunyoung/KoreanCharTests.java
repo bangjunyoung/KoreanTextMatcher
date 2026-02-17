@@ -611,6 +611,87 @@ class KoreanCharTests {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    static Stream<Arguments> composeTestParameters() {
+        return Stream.of(
+            // 초성, 중성, 종성, 예상 결과값
+            arguments('\u1101', '\u116A', '\u0000', "꽈"),
+            arguments('\u1101', '\u116A', '\u11A9', "꽊"),
+            arguments('\u3132', '\u116A', '\u11A9', "꽊"),
+            arguments('\u3132', '\u3158', '\u11A9', "꽊"),
+            arguments('\u3132', '\u3158', '\u3132', "꽊")
+        );
+    }
+
+    @ParameterizedTest(name = "compose❨{0}, {1}, {2}❩")
+    @MethodSource("composeTestParameters")
+    void composeTest(char cho, char jung, char jong, char expected) {
+        char actual = KoreanChar.compose(cho, jung, jong);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> composeWithoutJongseongTestParameters() {
+        return Stream.of(
+            // 초성, 중성, 종성, 예상 결과값
+            arguments('\u1101', '\u116A', "꽈")
+        );
+    }
+
+    @ParameterizedTest(name = "compose❨{0}, {1}, {2}❩")
+    @MethodSource("composeWithoutJongseongTestParameters")
+    void composeWithoutJongseongTest(char cho, char jung, char expected) {
+        char actual = KoreanChar.compose(cho, jung);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> composeExceptionTestParameters() {
+        return Stream.of(
+            arguments('A',      '\u116A', '\u11A9'),
+            arguments('\u1101', 'A',      '\u11A9'),
+            arguments('\u1101', '\u116A', 'A'),
+            arguments('\uFFE6', '\u116A', '\u11A9'),
+            arguments('\u1101', '\uFFE6', '\u11A9'),
+            arguments('\u1101', '\u116A', '\uFFE6')
+        );
+    }
+    @ParameterizedTest(name = "compose❨{0}, {1}, {2}❩ throws IllegalArgumentException")
+    @MethodSource("composeExceptionTestParameters")
+    void composeExceptionTest(char cho, char jung, char jong) {
+        assertThatThrownBy(() -> KoreanChar.compose(cho, jung, jong))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> composeFromStringsTestParameters() {
+        return Stream.of(
+            // 초성, 중성, 종성, 예상 결과값
+            arguments("\u1101", "\u116A", "", "꽈"),
+            arguments("\u1101", "\u116A", "\u11A9", "꽊"),
+            arguments("\u3132", "\u116A", "\u11A9", "꽊"),
+            arguments("\u3132", "\u3158", "\u11A9", "꽊"),
+            arguments("\u3132", "\u3158", "\u3132", "꽊")
+        );
+    }
+
+    @ParameterizedTest(name = "compose❨{0}, {1}, {2}❩")
+    @MethodSource("composeFromStringsTestParameters")
+    void composeFromStringsTest(String cho, String jung, String jong, char expected) {
+        char actual = KoreanChar.compose(cho, jung, jong);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> composeFromStringsWithoutJongseongTestParameters() {
+        return Stream.of(
+            // 초성, 중성, 종성, 예상 결과값
+            arguments("\u1101", "\u116A", "꽈")
+        );
+    }
+
+    @ParameterizedTest(name = "compose❨{0}, {1}, {2}❩")
+    @MethodSource("composeFromStringsWithoutJongseongTestParameters")
+    void composeFromStringsWithoutJongseongTest(String cho, String jung, char expected) {
+        char actual = KoreanChar.compose(cho, jung);
+        assertThat(actual).isEqualTo(expected);
+    }
+
     static Stream<Arguments> decomposeTestParameters() {
         return Stream.of(
             arguments('하', List.of("\u1112", "\u1161")),
