@@ -286,6 +286,38 @@ public final class KoreanChar {
     }
 
     /**
+     * Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.
+     *
+     * @param c 변환할 Unicode Hangul Compatibility Jamo 중성 문자.
+     * @return 변환된 Unicode Hangul Jamo 중성 문자.
+     * @throws IllegalArgumentException 주어진 {@code c}가
+     *         Unicode Hangul Compatibility Jamo 중성 문자가 아닐 때.
+     */
+    public static char compatJungseongToJungseong(char c) {
+        final int index = (int)c - 0x314F;
+        if (index < 0 || index >= JUNGSEONG_COUNT)
+            throw new IllegalArgumentException(String.valueOf(c));
+
+        return (char)(0x1161 + index);
+    }
+
+    /**
+     * Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.
+     *
+     * @param c 변환할 Unicode Hangul Compatibility Jamo 종성 문자.
+     * @return 변환된 Unicode Hangul Jamo 종성 문자. 종성이 없는 경우 '\u0000'를 반환한다.
+     * @throws IllegalArgumentException 주어진 {@code c}가
+     *         Unicode Hangul Compatibility Jamo 종성 문자가 아닐 때.
+     */
+    public static char compatJongseongToJongseong(char c) {
+        final int index = Arrays.binarySearch(COMPAT_JONGSEONG, c);
+        if (index < 0)
+            throw new IllegalArgumentException(String.valueOf(c));
+
+        return index == 0 ? '\u0000' : (char)(0x11A8 + index - 1);
+    }
+
+    /**
      * Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.
      *
      * @param c 변환할 Unicode Hangul Jamo 초성 문자.
@@ -298,6 +330,39 @@ public final class KoreanChar {
             throw new IllegalArgumentException(String.valueOf(c));
 
         return COMPAT_CHOSEONG[(int)c - 0x1100];
+    }
+
+    /**
+     * Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.
+     *
+     * @param c 변환할 Unicode Hangul Jamo 중성 문자.
+     * @return 변환된 Unicode Hangul Compatibility Jamo 중성 문자.
+     * @throws IllegalArgumentException 주어진 {@code c}가
+     *         Unicode Hangul Jamo 중성 문자가 아닐 때.
+     */
+    public static char jungseongToCompatJungseong(char c) {
+        if (!isJungseong(c))
+            throw new IllegalArgumentException(String.valueOf(c));
+
+        return (char)((int)c - 0x1161 + 0x314F);
+    }
+
+    /**
+     * Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.
+     *
+     * @param c 변환할 Unicode Hangul Jamo 종성 문자.
+     * @return 변환된 Unicode Hangul Compatibility Jamo 종성 문자. 종성이 없는 경우
+     *         '\u0000'를 반환한다.
+     * @throws IllegalArgumentException 주어진 {@code c}가
+     *         Unicode Hangul Jamo 종성 문자가 아닐 때.
+     */
+    public static char jongseongToCompatJongseong(char c) {
+        if (c == '\u0000')
+            return '\u0000';
+        if (!isJongseong(c))
+            throw new IllegalArgumentException(String.valueOf(c));
+
+        return COMPAT_JONGSEONG[(int)c - 0x11A8 + 1];
     }
 
     /**

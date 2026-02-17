@@ -407,6 +407,132 @@ class KoreanCharTests {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    static Stream<Arguments> compatJungseongToJungseongTestParameters() {
+        return Stream.of(
+            arguments('\u314F', '\u1161'),
+            arguments('\u3163', '\u1175')
+        );
+    }
+
+    @ParameterizedTest(name = "compatJungseongToJungseong❨{0}❩ returns {1}")
+    @MethodSource("compatJungseongToJungseongTestParameters")
+    void compatJungseongToJungseongTest(char c, char expected) {
+        assertThat(KoreanChar.compatJungseongToJungseong(c)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> compatJungseongToJungseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "compatJungseongToJungseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("compatJungseongToJungseongExceptionTestParameters")
+    void compatJungseongToJungseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.compatJungseongToJungseong(c))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> jungseongToCompatJungseongTestParameters() {
+        return Stream.of(
+            arguments('\u1161', '\u314F'),
+            arguments('\u1175', '\u3163')
+        );
+    }
+
+    @ParameterizedTest(name = "jungseongToCompatJungseong❨{0}❩ returns {1}")
+    @MethodSource("jungseongToCompatJungseongTestParameters")
+    void jungseongToCompatJungseongTest(char c, char expected) {
+        assertThat(KoreanChar.jungseongToCompatJungseong(c)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> jungseongToCompatJungseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "jungseongToCompatJungseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("jungseongToCompatJungseongExceptionTestParameters")
+    void jungseongToCompatJungseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.jungseongToCompatJungseong(c))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> compatJongseongToJongseongTestParameters() {
+        return Stream.of(
+            arguments('\u0000', '\u0000'),
+            arguments('\u3131', '\u11A8'),
+            arguments('\u314E', '\u11C2'),
+            arguments('\u3132', '\u11A9')
+        );
+    }
+
+    @ParameterizedTest(name = "compatJongseongToJongseong❨{0}❩ returns {1}")
+    @MethodSource("compatJongseongToJongseongTestParameters")
+    void compatJongseongToJongseongTest(char c, char expected) {
+        assertThat(KoreanChar.compatJongseongToJongseong(c)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> compatJongseongToJongseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢')
+        );
+    }
+
+    @ParameterizedTest(name = "compatJongseongToJongseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("compatJongseongToJongseongExceptionTestParameters")
+    void compatJongseongToJongseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.compatJongseongToJongseong(c))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> jongseongToCompatJongseongTestParameters() {
+        return Stream.of(
+            arguments('\u0000', '\u0000'),
+            arguments('\u11A8', '\u3131'),
+            arguments('\u11C2', '\u314E'),
+            arguments('\u11A9', '\u3132')
+        );
+    }
+
+    @ParameterizedTest(name = "jongseongToCompatJongseong❨{0}❩ returns {1}")
+    @MethodSource("jongseongToCompatJongseongTestParameters")
+    void jongseongToCompatJongseongTest(char c, char expected) {
+        assertThat(KoreanChar.jongseongToCompatJongseong(c)).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> jongseongToCompatJongseongExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢')
+        );
+    }
+
+    @ParameterizedTest(name = "jongseongToCompatJongseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("jongseongToCompatJongseongExceptionTestParameters")
+    void jongseongToCompatJongseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.jongseongToCompatJongseong(c))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
     static Stream<Arguments> joinJamoTestParameters() {
         return Stream.of(
             // 한글 단자모를 복자모로 결합할 때 빈 문자열을 적법한 자모로 간주하는 것이 코드가 자연스러워짐
