@@ -2,6 +2,7 @@
 
 [![Java CI](https://github.com/bangjunyoung/KoreanTextMatcher/actions/workflows/java.yml/badge.svg)](https://github.com/bangjunyoung/KoreanTextMatcher/actions/workflows/java.yml)
 [![codecov](https://codecov.io/gh/bangjunyoung/KoreanTextMatcher/branch/master/graph/badge.svg)](https://codecov.io/gh/bangjunyoung/KoreanTextMatcher)
+[![](https://jitpack.io/v/bangjunyoung/KoreanTextMatcher.svg)](https://jitpack.io/#bangjunyoung/KoreanTextMatcher)
 
 KoreanTextMatcher는 한글 음절 근사 매칭 및 초성 검색 기능을 제공하는 자바 라이브러리다. 주요 기능과 특징은 다음과 같다:
 
@@ -42,6 +43,23 @@ KoreanTextMatcher는 한글 음절 근사 매칭 및 초성 검색 기능을 제
 빌드가 성공하면 `build/libs` 폴더 밑에 `KoreanTextMatcher-X.xx.jar` 파일이 생성되는데, 이것을 여러분의 프로젝트로 임포트해서 쓰면 된다.
 
 **주의**: 안드로이드 개발 환경에서는 JDK 20 이상의 버전에서 빌드한 JAR 파일을 사용하면 파일 포맷 에러가 발생하는 경우가 있다. 그럴 경우 JDK 17 이하에서 빌드한 JAR 파일을 사용하기 바란다. 참고로 [바이너리 배포 페이지](https://github.com/bangjunyoung/KoreanTextMatcher/releases/tag/4.0)에 있는 JAR 파일은 JDK 17에서 빌드한 것이다.
+
+## JitPack에서 가져오기
+
+소스 코드를 직접 빌드하는 대신 미리 빌드된 바이너리를 여러분의 프로젝트로 임포트하는 방법도 있다. 바로 [JitPack](https://jitpack.io) 서비스를 이용하는 것인데,
+아래 라인들을 `build.gradle` 파일에 추가하면 된다:
+
+
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.bangjunyoung:KoreanTextMatcher:v3.999'
+}
+```
 
 ## 프로그래밍
 
