@@ -56,10 +56,12 @@ class KoreanTextMatchTests {
             arguments("푸른 하늘", "하늘", true, 3, 2),
             arguments("푸른 하늘", "ㅎㄴ", true, 3, 2),
             arguments("하늘", "^$", false, 0, 0),
-            arguments("하늘", "한", false, 0, 0),
             arguments("푸른 하늘", "^ㅎㄴ", false, 0, 0),
             arguments("푸른 하늘", "푸른$", false, 0, 0),
-            arguments("푸른 하늘", "ㅎㄹ", false, 0, 0)
+            arguments("푸른 하늘", "ㅎㄹ", false, 0, 0),
+            arguments("한ㄴ", "한", true, 0, 1),
+            arguments("하늘", "한", true, 0, 2),
+            arguments("하ㄴ", "한", true, 0, 2)
         );
     }
 
@@ -88,7 +90,8 @@ class KoreanTextMatchTests {
             arguments("바다 하늘 바다", "^바다", 1),
             arguments("바다 하늘 바다", "바다", 2),
             arguments("바다 하늘 바다", "바다$", 1),
-            arguments("하늘하늘하늘", "ㅎㄴ", 3)
+            arguments("하늘하늘하늘", "ㅎㄴ", 3),
+            arguments("하늘하늘하늘", "한", 3)
         );
     }
 

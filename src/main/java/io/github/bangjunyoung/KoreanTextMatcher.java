@@ -53,6 +53,7 @@ import java.util.Iterator;
 public final class KoreanTextMatcher {
 
     private final String _pattern;
+    private final String _splitPattern;
     private final boolean _foundStartAnchor, _foundEndAnchor;
 
     /**
@@ -71,10 +72,23 @@ public final class KoreanTextMatcher {
         if (pattern.length() == 0) {
             _foundStartAnchor = _foundEndAnchor = false;
             _pattern = pattern;
+            _splitPattern = null;
         } else {
             _foundStartAnchor = pattern.charAt(0) == '^';
             _foundEndAnchor = pattern.charAt(pattern.length() - 1) == '$';
             _pattern = stripAnchors(pattern);
+
+            String split = null;
+            if (_pattern.length() > 0) {
+                char last = _pattern.charAt(_pattern.length() - 1);
+                if (KoreanChar.isSyllable(last) && KoreanChar.getJongseong(last) != '\0') {
+                    String lastSplit = KoreanChar.splitTrailingConsonant(last);
+                    if (lastSplit.length() == 2) {
+                        split = _pattern.substring(0, _pattern.length() - 1) + lastSplit;
+                    }
+                }
+            }
+            _splitPattern = split;
         }
     }
 
@@ -189,14 +203,24 @@ public final class KoreanTextMatcher {
         if (_pattern.length() == 0)
             return new KoreanTextMatch(this, text, 0, 0);
 
-        for (int i = startIndex; i < startIndex + length - _pattern.length() + 1; i++) {
-            for (int j = 0; j < _pattern.length(); j++) {
-                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _pattern.charAt(j)))
-                    break;
+        final int patternLength = _pattern.length();
+        final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
+        final int commonLength = patternLength - 1;
 
-                if (j == _pattern.length() - 1)
-                    return new KoreanTextMatch(this, text, i, _pattern.length());
+        outerLoop:
+        for (int i = startIndex; i < startIndex + length - patternLength + 1; i++) {
+            for (int j = 0; j < commonLength; j++) {
+                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _pattern.charAt(j)))
+                    continue outerLoop;
             }
+
+            if (KoreanCharApproxMatcher.isMatch(text.charAt(i + commonLength), _pattern.charAt(commonLength)))
+                return new KoreanTextMatch(this, text, i, patternLength);
+
+            if (_splitPattern != null && i + splitPatternLength <= startIndex + length)
+                if (KoreanCharApproxMatcher.isMatch(text.charAt(i + commonLength), _splitPattern.charAt(commonLength)) &&
+                    KoreanCharApproxMatcher.isMatch(text.charAt(i + commonLength + 1), _splitPattern.charAt(commonLength + 1)))
+                    return new KoreanTextMatch(this, text, i, splitPatternLength);
         }
         return KoreanTextMatch.EMPTY;
     }
