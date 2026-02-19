@@ -140,7 +140,7 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @return 검색 결과를 담은 {@code Iterable<KoreanTextMatch>} 인스턴스.
-     *         찾은 것이 없으면 빈 리스트를 리턴한다. 
+     *         찾은 것이 없으면 빈 리스트를 리턴한다.
      * @throws IllegalArgumentException {@code text}가 {@code null}일 때.
      */
     public Iterable<KoreanTextMatch> matches(String text) {
