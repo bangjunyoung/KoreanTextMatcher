@@ -762,55 +762,23 @@ class KoreanCharTests {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> splitGyeopBatchimTestParameters() {
+    static Stream<Arguments> splitTrailingConsonantTestParameters() {
         return Stream.of(
             arguments('가', "가"),
-            arguments('각', "각"),
-            arguments('갂', "각ᆨ"),
-            arguments('핧', "할ᇂ")
-        );
-    }
-
-    @ParameterizedTest(name = "splitGyeopBatchim❨{0}❩")
-    @MethodSource("splitGyeopBatchimTestParameters")
-    void splitGyeopBatchimTest(char syllable, String expected) {
-        assertThat(KoreanChar.splitGyeopBatchim(syllable)).isEqualTo(expected);
-    }
-
-    static Stream<Arguments> splitGyeopBatchimExceptionTestParameters() {
-        return Stream.of(
-            arguments('A'),
-            arguments('1'),
-            arguments(' '),
-            arguments('!'),
-            arguments('漢'),
-            arguments('\u0000')
-        );
-    }
-
-    @ParameterizedTest(name = "splitGyeopBatchim❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("splitGyeopBatchimExceptionTestParameters")
-    void splitGyeopBatchimExceptionTest(char syllable) {
-        assertThatThrownBy(() -> KoreanChar.splitGyeopBatchim(syllable))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    static Stream<Arguments> splitGyeopBatchimToCompatTestParameters() {
-        return Stream.of(
-            arguments('가', "가"),
-            arguments('각', "각"),
+            arguments('각', "가ㄱ"),
             arguments('갂', "각ㄱ"),
-            arguments('핧', "할ㅎ")
+            arguments('핧', "할ㅎ"),
+            arguments('힣', "히ㅎ")
         );
     }
 
-    @ParameterizedTest(name = "splitGyeopBatchimToCompat❨{0}❩")
-    @MethodSource("splitGyeopBatchimToCompatTestParameters")
-    void splitGyeopBatchimToCompatTest(char syllable, String expected) {
-        assertThat(KoreanChar.splitGyeopBatchimToCompat(syllable)).isEqualTo(expected);
+    @ParameterizedTest(name = "splitTrailingConsonant❨{0}❩")
+    @MethodSource("splitTrailingConsonantTestParameters")
+    void splitTrailingConsonantTest(char syllable, String expected) {
+        assertThat(KoreanChar.splitTrailingConsonant(syllable)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> splitGyeopBatchimToCompatExceptionTestParameters() {
+    static Stream<Arguments> splitTrailingConsonantExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -821,10 +789,10 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "splitGyeopBatchimToCompat❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("splitGyeopBatchimToCompatExceptionTestParameters")
-    void splitGyeopBatchimToCompatExceptionTest(char syllable) {
-        assertThatThrownBy(() -> KoreanChar.splitGyeopBatchimToCompat(syllable))
+    @ParameterizedTest(name = "splitTrailingConsonant❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("splitTrailingConsonantExceptionTestParameters")
+    void splitTrailingConsonantExceptionTest(char syllable) {
+        assertThatThrownBy(() -> KoreanChar.splitTrailingConsonant(syllable))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

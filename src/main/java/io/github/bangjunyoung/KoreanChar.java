@@ -525,30 +525,26 @@ public final class KoreanChar {
             return new String[] { choseong, jungseong, jongseong };
     }
 
-    private static String splitGyeopBatchimInternal(char syllable, boolean compat) {
+    static String splitTrailingConsonant(char syllable) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
 
         final char choseong = getChoseong(syllable);
         final char jungseong = getJungseong(syllable);
-        final char jongseong = compat ? getCompatJongseong(syllable) : getJongseong(syllable);
+        final char jongseong = getCompatJongseong(syllable);
 
         if (jongseong == '\u0000')
             return String.valueOf(syllable);
 
         final String splitJongseong = splitJamo(jongseong);
         if (splitJongseong.length() == 1)
-            return String.valueOf(syllable);
-
-        return "" + compose(choseong, jungseong, splitJongseong.charAt(0)) + splitJongseong.charAt(1);
+            return "" + removeJongseong(syllable) + splitJongseong;
+        else
+            return "" + compose(choseong, jungseong, splitJongseong.charAt(0)) + splitJongseong.charAt(1);
     }
 
-    public static String splitGyeopBatchim(char syllable) {
-        return splitGyeopBatchimInternal(syllable, false);
-    }
-
-    public static String splitGyeopBatchimToCompat(char syllable) {
-        return splitGyeopBatchimInternal(syllable, true);
+    private static char removeJongseong(char syllable) {
+        return (char)(syllable - getJongseongIndex(syllable));
     }
 
     private static int getChoseongIndex(char syllable) {
