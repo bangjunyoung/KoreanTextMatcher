@@ -46,7 +46,7 @@ KoreanTextMatcher는 한글 음절 근사 매칭 및 초성 검색 기능을 제
 
 ## 미리 빌드된 바이너리 이용
 
-소스 코드를 직접 빌드하는 대신 미리 빌드된 바이너리를 [JitPack](https://jitpack.io) 서비스를 이용 여러분의 프로젝트로 임포트하는 방법도 있다.
+소스 코드를 직접 빌드하는 대신 미리 빌드된 바이너리를 [JitPack](https://jitpack.io) 서비스를 이용해 여러분의 프로젝트로 임포트하는 방법도 있다.
 아래 라인들을 `build.gradle` 파일에 추가하면 된다:
 
 ```groovy
@@ -62,7 +62,7 @@ dependencies {
 
 `v:3.999` 부분을 사용하려는 KoreanTextMatcher의 버전으로 바꿔주면 된다.
 
-## 프로그래밍
+## 프로그래밍 예시
 
 ``` java
 import io.github.bangjunyoung.KoreanTextMatch;
