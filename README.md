@@ -44,11 +44,10 @@ KoreanTextMatcher는 한글 음절 근사 매칭 및 초성 검색 기능을 제
 
 **주의**: 안드로이드 개발 환경에서는 JDK 20 이상의 버전에서 빌드한 JAR 파일을 사용하면 파일 포맷 에러가 발생하는 경우가 있다. 그럴 경우 JDK 17 이하에서 빌드한 JAR 파일을 사용하기 바란다. 참고로 [바이너리 배포 페이지](https://github.com/bangjunyoung/KoreanTextMatcher/releases/tag/4.0)에 있는 JAR 파일은 JDK 17에서 빌드한 것이다.
 
-## JitPack에서 가져오기
+## 미리 빌드된 바이너리 이용
 
-소스 코드를 직접 빌드하는 대신 미리 빌드된 바이너리를 여러분의 프로젝트로 임포트하는 방법도 있다. 바로 [JitPack](https://jitpack.io) 서비스를 이용하는 것인데,
+소스 코드를 직접 빌드하는 대신 미리 빌드된 바이너리를 [JitPack](https://jitpack.io) 서비스를 이용 여러분의 프로젝트로 임포트하는 방법도 있다.
 아래 라인들을 `build.gradle` 파일에 추가하면 된다:
-
 
 ```groovy
 repositories {
@@ -60,6 +59,8 @@ dependencies {
     implementation 'com.github.bangjunyoung:KoreanTextMatcher:v3.999'
 }
 ```
+
+`v:3.999` 부분을 사용하려는 KoreanTextMatcher의 버전으로 바꿔주면 된다.
 
 ## 프로그래밍
 
