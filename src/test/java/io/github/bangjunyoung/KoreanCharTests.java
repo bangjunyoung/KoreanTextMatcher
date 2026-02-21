@@ -345,20 +345,20 @@ class KoreanCharTests {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> compatChoseongToChoseongTestParameters() {
+    static Stream<Arguments> convertCompatToChoseongTestParameters() {
         return Stream.of(
             arguments('\u3131', '\u1100'),
             arguments('\u314E', '\u1112')
         );
     }
 
-    @ParameterizedTest(name = "compatChoseongToChoseong❨{0}❩ returns {1}")
-    @MethodSource("compatChoseongToChoseongTestParameters")
-    void compatChoseongToChoseongTest(char c, char expected) {
-        assertThat(KoreanChar.compatChoseongToChoseong(c)).isEqualTo(expected);
+    @ParameterizedTest(name = "convertCompatToChoseong❨{0}❩ returns {1}")
+    @MethodSource("convertCompatToChoseongTestParameters")
+    void convertCompatToChoseongTest(char c, char expected) {
+        assertThat(KoreanChar.convertCompatToChoseong(c)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> compatChoseongToChoseongExceptionTestParameters() {
+    static Stream<Arguments> convertCompatToChoseongExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -369,27 +369,27 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "compatChoseongToChoseong❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("compatChoseongToChoseongExceptionTestParameters")
-    void compatChoseongToChoseongExceptionTest(char c) {
-        assertThatThrownBy(() -> KoreanChar.compatChoseongToChoseong(c))
+    @ParameterizedTest(name = "convertCompatToChoseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("convertCompatToChoseongExceptionTestParameters")
+    void convertCompatToChoseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.convertCompatToChoseong(c))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> choseongToCompatChoseongTestParameters() {
+    static Stream<Arguments> convertChoseongToCompatTestParameters() {
         return Stream.of(
             arguments('\u1100', '\u3131'),
             arguments('\u1112', '\u314E')
         );
     }
 
-    @ParameterizedTest(name = "choseongToCompatChoseong❨{0}❩ returns {1}")
-    @MethodSource("choseongToCompatChoseongTestParameters")
-    void choseongToCompatChoseongTest(char c, char expected) {
-        assertThat(KoreanChar.choseongToCompatChoseong(c)).isEqualTo(expected);
+    @ParameterizedTest(name = "convertChoseongToCompat❨{0}❩ returns {1}")
+    @MethodSource("convertChoseongToCompatTestParameters")
+    void convertChoseongToCompatTest(char c, char expected) {
+        assertThat(KoreanChar.convertChoseongToCompat(c)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> choseongToCompatChoseongExceptionTestParameters() {
+    static Stream<Arguments> convertChoseongToCompatExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -400,27 +400,27 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "choseongToCompatChoseong❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("choseongToCompatChoseongExceptionTestParameters")
-    void choseongToCompatChoseongExceptionTest(char c) {
-        assertThatThrownBy(() -> KoreanChar.choseongToCompatChoseong(c))
+    @ParameterizedTest(name = "convertChoseongToCompat❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("convertChoseongToCompatExceptionTestParameters")
+    void convertChoseongToCompatExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.convertChoseongToCompat(c))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> compatJungseongToJungseongTestParameters() {
+    static Stream<Arguments> convertCompatToJungseongTestParameters() {
         return Stream.of(
             arguments('\u314F', '\u1161'),
             arguments('\u3163', '\u1175')
         );
     }
 
-    @ParameterizedTest(name = "compatJungseongToJungseong❨{0}❩ returns {1}")
-    @MethodSource("compatJungseongToJungseongTestParameters")
-    void compatJungseongToJungseongTest(char c, char expected) {
-        assertThat(KoreanChar.compatJungseongToJungseong(c)).isEqualTo(expected);
+    @ParameterizedTest(name = "convertCompatToJungseong❨{0}❩ returns {1}")
+    @MethodSource("convertCompatToJungseongTestParameters")
+    void convertCompatToJungseongTest(char c, char expected) {
+        assertThat(KoreanChar.convertCompatToJungseong(c)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> compatJungseongToJungseongExceptionTestParameters() {
+    static Stream<Arguments> convertCompatToJungseongExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -431,27 +431,27 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "compatJungseongToJungseong❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("compatJungseongToJungseongExceptionTestParameters")
-    void compatJungseongToJungseongExceptionTest(char c) {
-        assertThatThrownBy(() -> KoreanChar.compatJungseongToJungseong(c))
+    @ParameterizedTest(name = "convertCompatToJungseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("convertCompatToJungseongExceptionTestParameters")
+    void convertCompatToJungseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.convertCompatToJungseong(c))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> jungseongToCompatJungseongTestParameters() {
+    static Stream<Arguments> convertJungseongToCompatTestParameters() {
         return Stream.of(
             arguments('\u1161', '\u314F'),
             arguments('\u1175', '\u3163')
         );
     }
 
-    @ParameterizedTest(name = "jungseongToCompatJungseong❨{0}❩ returns {1}")
-    @MethodSource("jungseongToCompatJungseongTestParameters")
-    void jungseongToCompatJungseongTest(char c, char expected) {
-        assertThat(KoreanChar.jungseongToCompatJungseong(c)).isEqualTo(expected);
+    @ParameterizedTest(name = "convertJungseongToCompat❨{0}❩ returns {1}")
+    @MethodSource("convertJungseongToCompatTestParameters")
+    void convertJungseongToCompatTest(char c, char expected) {
+        assertThat(KoreanChar.convertJungseongToCompat(c)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> jungseongToCompatJungseongExceptionTestParameters() {
+    static Stream<Arguments> convertJungseongToCompatExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -462,14 +462,14 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "jungseongToCompatJungseong❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("jungseongToCompatJungseongExceptionTestParameters")
-    void jungseongToCompatJungseongExceptionTest(char c) {
-        assertThatThrownBy(() -> KoreanChar.jungseongToCompatJungseong(c))
+    @ParameterizedTest(name = "convertJungseongToCompat❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("convertJungseongToCompatExceptionTestParameters")
+    void convertJungseongToCompatExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.convertJungseongToCompat(c))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> compatJongseongToJongseongTestParameters() {
+    static Stream<Arguments> convertCompatToJongseongTestParameters() {
         return Stream.of(
             arguments('\u0000', '\u0000'),
             arguments('\u3131', '\u11A8'),
@@ -478,13 +478,13 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "compatJongseongToJongseong❨{0}❩ returns {1}")
-    @MethodSource("compatJongseongToJongseongTestParameters")
-    void compatJongseongToJongseongTest(char c, char expected) {
-        assertThat(KoreanChar.compatJongseongToJongseong(c)).isEqualTo(expected);
+    @ParameterizedTest(name = "convertCompatToJongseong❨{0}❩ returns {1}")
+    @MethodSource("convertCompatToJongseongTestParameters")
+    void convertCompatToJongseongTest(char c, char expected) {
+        assertThat(KoreanChar.convertCompatToJongseong(c)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> compatJongseongToJongseongExceptionTestParameters() {
+    static Stream<Arguments> convertCompatToJongseongExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -494,14 +494,14 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "compatJongseongToJongseong❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("compatJongseongToJongseongExceptionTestParameters")
-    void compatJongseongToJongseongExceptionTest(char c) {
-        assertThatThrownBy(() -> KoreanChar.compatJongseongToJongseong(c))
+    @ParameterizedTest(name = "convertCompatToJongseong❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("convertCompatToJongseongExceptionTestParameters")
+    void convertCompatToJongseongExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.convertCompatToJongseong(c))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    static Stream<Arguments> jongseongToCompatJongseongTestParameters() {
+    static Stream<Arguments> convertJongseongToCompatTestParameters() {
         return Stream.of(
             arguments('\u0000', '\u0000'),
             arguments('\u11A8', '\u3131'),
@@ -510,13 +510,13 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "jongseongToCompatJongseong❨{0}❩ returns {1}")
-    @MethodSource("jongseongToCompatJongseongTestParameters")
-    void jongseongToCompatJongseongTest(char c, char expected) {
-        assertThat(KoreanChar.jongseongToCompatJongseong(c)).isEqualTo(expected);
+    @ParameterizedTest(name = "convertJongseongToCompat❨{0}❩ returns {1}")
+    @MethodSource("convertJongseongToCompatTestParameters")
+    void convertJongseongToCompatTest(char c, char expected) {
+        assertThat(KoreanChar.convertJongseongToCompat(c)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> jongseongToCompatJongseongExceptionTestParameters() {
+    static Stream<Arguments> convertJongseongToCompatExceptionTestParameters() {
         return Stream.of(
             arguments('A'),
             arguments('1'),
@@ -526,10 +526,10 @@ class KoreanCharTests {
         );
     }
 
-    @ParameterizedTest(name = "jongseongToCompatJongseong❨{0}❩ throws IllegalArgumentException")
-    @MethodSource("jongseongToCompatJongseongExceptionTestParameters")
-    void jongseongToCompatJongseongExceptionTest(char c) {
-        assertThatThrownBy(() -> KoreanChar.jongseongToCompatJongseong(c))
+    @ParameterizedTest(name = "convertJongseongToCompat❨{0}❩ throws IllegalArgumentException")
+    @MethodSource("convertJongseongToCompatExceptionTestParameters")
+    void convertJongseongToCompatExceptionTest(char c) {
+        assertThatThrownBy(() -> KoreanChar.convertJongseongToCompat(c))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

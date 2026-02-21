@@ -277,7 +277,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code c}가
      *         Unicode Hangul Compatibility Jamo 초성 문자가 아닐 때.
      */
-    public static char compatChoseongToChoseong(char c) {
+    public static char convertCompatToChoseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_CHOSEONG, c);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(c));
@@ -293,7 +293,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code c}가
      *         Unicode Hangul Compatibility Jamo 중성 문자가 아닐 때.
      */
-    public static char compatJungseongToJungseong(char c) {
+    public static char convertCompatToJungseong(char c) {
         final int index = (int)c - 0x314F;
         if (index < 0 || index >= JUNGSEONG_COUNT)
             throw new IllegalArgumentException(String.valueOf(c));
@@ -309,7 +309,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code c}가
      *         Unicode Hangul Compatibility Jamo 종성 문자가 아닐 때.
      */
-    public static char compatJongseongToJongseong(char c) {
+    public static char convertCompatToJongseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_JONGSEONG, c);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(c));
@@ -325,7 +325,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code c}가
      *         Unicode Hangul Jamo 초성 문자가 아닐 때.
      */
-    public static char choseongToCompatChoseong(char c) {
+    public static char convertChoseongToCompat(char c) {
         if (!isChoseong(c))
             throw new IllegalArgumentException(String.valueOf(c));
 
@@ -340,7 +340,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code c}가
      *         Unicode Hangul Jamo 중성 문자가 아닐 때.
      */
-    public static char jungseongToCompatJungseong(char c) {
+    public static char convertJungseongToCompat(char c) {
         if (!isJungseong(c))
             throw new IllegalArgumentException(String.valueOf(c));
 
@@ -356,7 +356,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code c}가
      *         Unicode Hangul Jamo 종성 문자가 아닐 때.
      */
-    public static char jongseongToCompatJongseong(char c) {
+    public static char convertJongseongToCompat(char c) {
         if (c == '\u0000')
             return '\u0000';
         if (!isJongseong(c))

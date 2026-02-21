@@ -43,7 +43,7 @@ package io.github.bangjunyoung;
  * <p>
  * 매칭에 사용할 자모로 Unicode Hangul Jamo와 Hangul Compatibility Jamo를 모두
  * 지원한다.
- * 
+ *
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
 public class KoreanCharApproxMatcher {
@@ -70,7 +70,7 @@ public class KoreanCharApproxMatcher {
         else if (KoreanChar.isCompatChoseong(c))
             return KoreanChar.splitJamo(c);
         else if (KoreanChar.isChoseong(c))
-            return KoreanChar.splitJamo(KoreanChar.choseongToCompatChoseong(c));
+            return KoreanChar.splitJamo(KoreanChar.convertChoseongToCompat(c));
         else
             return String.valueOf(c);
     }
