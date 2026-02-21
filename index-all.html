@@ -51,22 +51,6 @@ loadScripts(document, 'script');</script>
 <a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:V">V</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
-<dt><a href="io/github/bangjunyoung/KoreanChar.html#choseongToCompatChoseong(char)" class="member-name-link">choseongToCompatChoseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
-<dd>
-<div class="block">Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.</div>
-</dd>
-<dt><a href="io/github/bangjunyoung/KoreanChar.html#compatChoseongToChoseong(char)" class="member-name-link">compatChoseongToChoseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
-<dd>
-<div class="block">Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.</div>
-</dd>
-<dt><a href="io/github/bangjunyoung/KoreanChar.html#compatJongseongToJongseong(char)" class="member-name-link">compatJongseongToJongseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
-<dd>
-<div class="block">Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.</div>
-</dd>
-<dt><a href="io/github/bangjunyoung/KoreanChar.html#compatJungseongToJungseong(char)" class="member-name-link">compatJungseongToJungseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
-<dd>
-<div class="block">Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.</div>
-</dd>
 <dt><a href="io/github/bangjunyoung/KoreanChar.html#compose(char,char)" class="member-name-link">compose(char, char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
 <dd>
 <div class="block">주어진 초성, 중성을 조합하여 종성이 없는 한글 음절을 만든다.</div>
@@ -82,6 +66,30 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/github/bangjunyoung/KoreanChar.html#compose(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">compose(String, String, String)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
 <dd>
 <div class="block">주어진 초성, 중성, 종성을 조합하여 한글 음절을 만든다.</div>
+</dd>
+<dt><a href="io/github/bangjunyoung/KoreanChar.html#convertChoseongToCompat(char)" class="member-name-link">convertChoseongToCompat(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
+<dd>
+<div class="block">Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.</div>
+</dd>
+<dt><a href="io/github/bangjunyoung/KoreanChar.html#convertCompatToChoseong(char)" class="member-name-link">convertCompatToChoseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
+<dd>
+<div class="block">Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.</div>
+</dd>
+<dt><a href="io/github/bangjunyoung/KoreanChar.html#convertCompatToJongseong(char)" class="member-name-link">convertCompatToJongseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
+<dd>
+<div class="block">Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.</div>
+</dd>
+<dt><a href="io/github/bangjunyoung/KoreanChar.html#convertCompatToJungseong(char)" class="member-name-link">convertCompatToJungseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
+<dd>
+<div class="block">Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.</div>
+</dd>
+<dt><a href="io/github/bangjunyoung/KoreanChar.html#convertJongseongToCompat(char)" class="member-name-link">convertJongseongToCompat(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
+<dd>
+<div class="block">Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.</div>
+</dd>
+<dt><a href="io/github/bangjunyoung/KoreanChar.html#convertJungseongToCompat(char)" class="member-name-link">convertJungseongToCompat(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
+<dd>
+<div class="block">Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:D">D</h2>
@@ -179,14 +187,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/github/bangjunyoung/KoreanChar.html#joinJamo(java.lang.String)" class="member-name-link">joinJamo(String)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
 <dd>
 <div class="block">주어진 자모를 복자모로 결합한다.</div>
-</dd>
-<dt><a href="io/github/bangjunyoung/KoreanChar.html#jongseongToCompatJongseong(char)" class="member-name-link">jongseongToCompatJongseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
-<dd>
-<div class="block">Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.</div>
-</dd>
-<dt><a href="io/github/bangjunyoung/KoreanChar.html#jungseongToCompatJungseong(char)" class="member-name-link">jungseongToCompatJungseong(char)</a> - Static method in class io.github.bangjunyoung.<a href="io/github/bangjunyoung/KoreanChar.html" title="class in io.github.bangjunyoung">KoreanChar</a></dt>
-<dd>
-<div class="block">Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:K">K</h2>

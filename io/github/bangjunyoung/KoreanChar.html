@@ -96,26 +96,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#choseongToCompatChoseong(char)" class="member-name-link">choseongToCompatChoseong</a><wbr>(char&nbsp;c)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compatChoseongToChoseong(char)" class="member-name-link">compatChoseongToChoseong</a><wbr>(char&nbsp;c)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compatJongseongToJongseong(char)" class="member-name-link">compatJongseongToJongseong</a><wbr>(char&nbsp;c)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compatJungseongToJungseong(char)" class="member-name-link">compatJungseongToJungseong</a><wbr>(char&nbsp;c)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compose(char,char)" class="member-name-link">compose</a><wbr>(char&nbsp;choseong,
  char&nbsp;jungseong)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -140,6 +120,36 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;jongseong)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">주어진 초성, 중성, 종성을 조합하여 한글 음절을 만든다.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convertChoseongToCompat(char)" class="member-name-link">convertChoseongToCompat</a><wbr>(char&nbsp;c)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convertCompatToChoseong(char)" class="member-name-link">convertCompatToChoseong</a><wbr>(char&nbsp;c)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convertCompatToJongseong(char)" class="member-name-link">convertCompatToJongseong</a><wbr>(char&nbsp;c)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convertCompatToJungseong(char)" class="member-name-link">convertCompatToJungseong</a><wbr>(char&nbsp;c)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convertJongseongToCompat(char)" class="member-name-link">convertJongseongToCompat</a><wbr>(char&nbsp;c)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convertJungseongToCompat(char)" class="member-name-link">convertJungseongToCompat</a><wbr>(char&nbsp;c)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#decompose(char)" class="member-name-link">decompose</a><wbr>(char&nbsp;syllable)</code></div>
@@ -220,16 +230,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#joinJamo(java.lang.String)" class="member-name-link">joinJamo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;jamo)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">주어진 자모를 복자모로 결합한다.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#jongseongToCompatJongseong(char)" class="member-name-link">jongseongToCompatJongseong</a><wbr>(char&nbsp;c)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#jungseongToCompatJungseong(char)" class="member-name-link">jungseongToCompatJungseong</a><wbr>(char&nbsp;c)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#splitJamo(char)" class="member-name-link">splitJamo</a><wbr>(char&nbsp;jamo)</code></div>
@@ -441,9 +441,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="compatChoseongToChoseong(char)">
-<h3>compatChoseongToChoseong</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">compatChoseongToChoseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
+<section class="detail" id="convertCompatToChoseong(char)">
+<h3>convertCompatToChoseong</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">convertCompatToChoseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
 <div class="block">Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -457,9 +457,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="compatJungseongToJungseong(char)">
-<h3>compatJungseongToJungseong</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">compatJungseongToJungseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
+<section class="detail" id="convertCompatToJungseong(char)">
+<h3>convertCompatToJungseong</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">convertCompatToJungseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
 <div class="block">Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -473,9 +473,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="compatJongseongToJongseong(char)">
-<h3>compatJongseongToJongseong</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">compatJongseongToJongseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
+<section class="detail" id="convertCompatToJongseong(char)">
+<h3>convertCompatToJongseong</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">convertCompatToJongseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
 <div class="block">Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -489,9 +489,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="choseongToCompatChoseong(char)">
-<h3>choseongToCompatChoseong</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">choseongToCompatChoseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
+<section class="detail" id="convertChoseongToCompat(char)">
+<h3>convertChoseongToCompat</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">convertChoseongToCompat</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
 <div class="block">Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -505,9 +505,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="jungseongToCompatJungseong(char)">
-<h3>jungseongToCompatJungseong</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">jungseongToCompatJungseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
+<section class="detail" id="convertJungseongToCompat(char)">
+<h3>convertJungseongToCompat</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">convertJungseongToCompat</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
 <div class="block">Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -521,9 +521,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="jongseongToCompatJongseong(char)">
-<h3>jongseongToCompatJongseong</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">jongseongToCompatJongseong</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
+<section class="detail" id="convertJongseongToCompat(char)">
+<h3>convertJongseongToCompat</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char</span>&nbsp;<span class="element-name">convertJongseongToCompat</span><wbr><span class="parameters">(char&nbsp;c)</span></div>
 <div class="block">Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
