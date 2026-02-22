@@ -502,6 +502,14 @@ public final class KoreanChar {
             return new String[] { choseong, jungseong, jongseong };
     }
 
+    /**
+     * 주어진 한글 음절을 Unicode Hangul Jamo로 분해하여 버퍼에 저장한다.
+     *
+     * @param syllable 분해할 한글 음절.
+     * @param buffer 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해되어 있다.
+     * @return 분해한 단자모의 총 개수. 현대 한글 음절의 경우 최대값은 6이다.
+     * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
+     */
     public static int decompose(char syllable, StringBuilder buffer) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
@@ -541,6 +549,14 @@ public final class KoreanChar {
             return new String[] { choseong, jungseong, jongseong };
     }
 
+    /**
+     * 주어진 한글 음절을 Unicode Hangul Compatibility Jamo로 분해하여 버퍼에 저장한다.
+     *
+     * @param syllable 분해할 한글 음절.
+     * @param buffer 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해되어 있다.
+     * @return 분해한 단자모의 총 개수. 현대 한글 음절의 경우 최대값은 6이다.
+     * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
+     */
     public static int decomposeToCompat(char syllable, StringBuilder buffer) {
         if (!isSyllable(syllable))
             throw new IllegalArgumentException(String.valueOf(syllable));
