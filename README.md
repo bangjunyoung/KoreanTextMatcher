@@ -93,4 +93,6 @@ if (match.success()) {
 }
 ```
 
-자세한 API 사용법은 [위키 페이지](https://github.com/bangjunyoung/KoreanTextMatcher/wiki) 참조.
+## API 레퍼런스
+
+자세한 API 용법은 [Javadoc 페이지](http://bangjunyoung.github.io/KoreanTextMatcher/) 참조.
