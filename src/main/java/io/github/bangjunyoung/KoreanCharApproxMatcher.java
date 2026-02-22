@@ -41,7 +41,7 @@ package io.github.bangjunyoung;
  * {@code '밝'}은 {@code '발'}에 부합하지 않는다. 즉, 자모의 개수가 더 많은 음절에
  * 대해 자모의 개수가 더 적은 음절을 비교하는 쪽으로 매칭이 이루어져야 한다는 뜻이다.
  * <p>
- * 매칭에 사용할 자모로 Unicode Hangul Jamo와 Hangul Compatibility Jamo를 모두
+ * 매칭에 사용할 자모로 한글 자모 (U+1100 ~)와 한글 호환 자모 (U+3131 ~)를 모두
  * 지원한다.
  *
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;

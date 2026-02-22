@@ -30,7 +30,7 @@ import java.util.Arrays;
 /**
  * 한글 처리에 필요한 다양한 종류의 도우미 함수들을 담고 있는 클래스.
  *
- * Unicode Hangul Jamo와 Unicode Hangul Compatibility Jamo를 모두 지원한다.
+ * 한글 자모 (U+1100 ~)와 한글 호환 자모 (U+3131 ~)를 모두 지원한다.
  *
  * 이 클래스는 인스턴스 생성이 불가능하다.
  *
@@ -114,10 +114,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 문자가 Unicode Hangul Jamo 초성인지 검사한다.
+     * 주어진 문자가 한글 자모 초성인지 검사한다.
      *
      * @param c 검사할 문자
-     * @return {@code c}가 Unicode Hangul Jamo 초성이면 {@code true},
+     * @return {@code c}가 한글 자모 초성이면 {@code true},
      *         아니면 {@code false}.
      */
     public static boolean isChoseong(char c) {
@@ -125,10 +125,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 문자가 Unicode Hangul Jamo 중성인지 검사한다.
+     * 주어진 문자가 한글 자모 중성인지 검사한다.
      *
      * @param c 검사할 문자
-     * @return {@code c}가 Unicode Hangul Jamo 중성이면 {@code true},
+     * @return {@code c}가 한글 자모 중성이면 {@code true},
      *         아니면 {@code false}.
      */
     public static boolean isJungseong(char c) {
@@ -136,10 +136,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 문자가 Unicode Hangul Jamo 종성인지 검사한다.
+     * 주어진 문자가 한글 자모 종성인지 검사한다.
      *
      * @param c 검사할 문자
-     * @return {@code c}가 Unicode Hangul Jamo 종성이면 {@code true},
+     * @return {@code c}가 한글 자모 종성이면 {@code true},
      *         아니면 {@code false}.
      */
     public static boolean isJongseong(char c) {
@@ -147,10 +147,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 문자가 Unicode Hangul Compatibility Jamo 초성인지 검사한다.
+     * 주어진 문자가 한글 호환 자모 초성인지 검사한다.
      *
      * @param c 검사할 문자
-     * @return {@code c}가 Unicode Hangul Compatibility Jamo 초성이면
+     * @return {@code c}가 한글 호환 자모 초성이면
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatChoseong(char c) {
@@ -159,10 +159,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 문자가 Unicode Hangul Compatibility Jamo 중성인지 검사한다.
+     * 주어진 문자가 한글 호환 자모 중성인지 검사한다.
      *
      * @param c 검사할 문자
-     * @return {@code c}가 Unicode Hangul Compatibility Jamo 중성이면
+     * @return {@code c}가 한글 호환 자모 중성이면
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatJungseong(char c) {
@@ -170,10 +170,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 문자가 Unicode Hangul Compatibility Jamo 종성인지 검사한다.
+     * 주어진 문자가 한글 호환 자모 종성인지 검사한다.
      *
      * @param c 검사할 문자
-     * @return {@code c}가 Unicode Hangul Compatibility Jamo 종성이면
+     * @return {@code c}가 한글 호환 자모 종성이면
      *         {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatJongseong(char c) {
@@ -182,10 +182,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절로부터 Unicode Hangul Jamo 초성을 추출한다.
+     * 주어진 한글 음절로부터 한글 자모 초성을 추출한다.
      *
      * @param syllable 초성을 추출할 한글 음절
-     * @return Unicode Hangul Jamo 초성.
+     * @return 한글 자모 초성.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getChoseong(char syllable) {
@@ -196,10 +196,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절로부터 Unicode Hangul Jamo 중성을 추출한다.
+     * 주어진 한글 음절로부터 한글 자모 중성을 추출한다.
      *
      * @param syllable 중성을 추출할 한글 음절
-     * @return Unicode Hangul Jamo 중성.
+     * @return 한글 자모 중성.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getJungseong(char syllable) {
@@ -210,10 +210,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절로부터 Unicode Hangul Jamo 종성을 추출한다.
+     * 주어진 한글 음절로부터 한글 자모 종성을 추출한다.
      *
      * @param syllable 종성을 추출할 한글 음절
-     * @return Unicode Hangul Jamo 종성. 종성이 없으면 '\u0000'를 반환한다.
+     * @return 한글 자모 종성. 종성이 없으면 '\u0000'를 반환한다.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getJongseong(char syllable) {
@@ -228,10 +228,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 초성을 추출한다.
+     * 주어진 한글 음절로부터 한글 호환 자모 초성을 추출한다.
      *
      * @param syllable 초성을 추출할 한글 음절
-     * @return Unicode Hangul Compatibility Jamo 초성.
+     * @return 한글 호환 자모 초성.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatChoseong(char syllable) {
@@ -242,10 +242,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 중성을 추출한다.
+     * 주어진 한글 음절로부터 한글 호환 자모 중성을 추출한다.
      *
      * @param syllable 중성을 추출할 한글 음절
-     * @return Unicode Hangul Compatibility Jamo 중성.
+     * @return 한글 호환 자모 중성.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatJungseong(char syllable) {
@@ -256,10 +256,10 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절로부터 Unicode Hangul Compatibility Jamo 종성을 추출한다.
+     * 주어진 한글 음절로부터 한글 호환 자모 종성을 추출한다.
      *
      * @param syllable 종성을 추출할 한글 음절
-     * @return Unicode Hangul Compatibility Jamo 종성. 종성이 없으면 '\u0000'를 반환한다.
+     * @return 한글 호환 자모 종성. 종성이 없으면 '\u0000'를 반환한다.
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatJongseong(char syllable) {
@@ -270,12 +270,12 @@ public final class KoreanChar {
     }
 
     /**
-     * Unicode Hangul Compatibility Jamo 초성 문자를 Unicode Hangul Jamo 초성 문자로 변환한다.
+     * 한글 호환 자모 초성 문자를 한글 자모 초성 문자로 변환한다.
      *
-     * @param c 변환할 Unicode Hangul Compatibility Jamo 초성 문자.
-     * @return 변환된 Unicode Hangul Jamo 초성 문자.
+     * @param c 변환할 한글 호환 자모 초성 문자.
+     * @return 변환된 한글 자모 초성 문자.
      * @throws IllegalArgumentException 주어진 {@code c}가
-     *         Unicode Hangul Compatibility Jamo 초성 문자가 아닐 때.
+     *         한글 호환 자모 초성 문자가 아닐 때.
      */
     public static char convertCompatToChoseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_CHOSEONG, c);
@@ -286,12 +286,12 @@ public final class KoreanChar {
     }
 
     /**
-     * Unicode Hangul Compatibility Jamo 중성 문자를 Unicode Hangul Jamo 중성 문자로 변환한다.
+     * 한글 호환 자모 중성 문자를 한글 자모 중성 문자로 변환한다.
      *
-     * @param c 변환할 Unicode Hangul Compatibility Jamo 중성 문자.
-     * @return 변환된 Unicode Hangul Jamo 중성 문자.
+     * @param c 변환할 한글 호환 자모 중성 문자.
+     * @return 변환된 한글 자모 중성 문자.
      * @throws IllegalArgumentException 주어진 {@code c}가
-     *         Unicode Hangul Compatibility Jamo 중성 문자가 아닐 때.
+     *         한글 호환 자모 중성 문자가 아닐 때.
      */
     public static char convertCompatToJungseong(char c) {
         final int index = (int)c - 0x314F;
@@ -302,12 +302,12 @@ public final class KoreanChar {
     }
 
     /**
-     * Unicode Hangul Compatibility Jamo 종성 문자를 Unicode Hangul Jamo 종성 문자로 변환한다.
+     * 한글 호환 자모 종성 문자를 한글 자모 종성 문자로 변환한다.
      *
-     * @param c 변환할 Unicode Hangul Compatibility Jamo 종성 문자.
-     * @return 변환된 Unicode Hangul Jamo 종성 문자. 종성이 없는 경우 '\u0000'를 반환한다.
+     * @param c 변환할 한글 호환 자모 종성 문자.
+     * @return 변환된 한글 자모 종성 문자. 종성이 없는 경우 '\u0000'를 반환한다.
      * @throws IllegalArgumentException 주어진 {@code c}가
-     *         Unicode Hangul Compatibility Jamo 종성 문자가 아닐 때.
+     *         한글 호환 자모 종성 문자가 아닐 때.
      */
     public static char convertCompatToJongseong(char c) {
         final int index = Arrays.binarySearch(COMPAT_JONGSEONG, c);
@@ -318,12 +318,12 @@ public final class KoreanChar {
     }
 
     /**
-     * Unicode Hangul Jamo 초성 문자를 Unicode Hangul Compatibility Jamo 초성 문자로 변환한다.
+     * 한글 자모 초성 문자를 한글 호환 자모 초성 문자로 변환한다.
      *
-     * @param c 변환할 Unicode Hangul Jamo 초성 문자.
-     * @return 변환된 Unicode Hangul Compatibility Jamo 초성 문자.
+     * @param c 변환할 한글 자모 초성 문자.
+     * @return 변환된 한글 호환 자모 초성 문자.
      * @throws IllegalArgumentException 주어진 {@code c}가
-     *         Unicode Hangul Jamo 초성 문자가 아닐 때.
+     *         한글 자모 초성 문자가 아닐 때.
      */
     public static char convertChoseongToCompat(char c) {
         if (!isChoseong(c))
@@ -333,12 +333,12 @@ public final class KoreanChar {
     }
 
     /**
-     * Unicode Hangul Jamo 중성 문자를 Unicode Hangul Compatibility Jamo 중성 문자로 변환한다.
+     * 한글 자모 중성 문자를 한글 호환 자모 중성 문자로 변환한다.
      *
-     * @param c 변환할 Unicode Hangul Jamo 중성 문자.
-     * @return 변환된 Unicode Hangul Compatibility Jamo 중성 문자.
+     * @param c 변환할 한글 자모 중성 문자.
+     * @return 변환된 한글 호환 자모 중성 문자.
      * @throws IllegalArgumentException 주어진 {@code c}가
-     *         Unicode Hangul Jamo 중성 문자가 아닐 때.
+     *         한글 자모 중성 문자가 아닐 때.
      */
     public static char convertJungseongToCompat(char c) {
         if (!isJungseong(c))
@@ -348,13 +348,13 @@ public final class KoreanChar {
     }
 
     /**
-     * Unicode Hangul Jamo 종성 문자를 Unicode Hangul Compatibility Jamo 종성 문자로 변환한다.
+     * 한글 자모 종성 문자를 한글 호환 자모 종성 문자로 변환한다.
      *
-     * @param c 변환할 Unicode Hangul Jamo 종성 문자.
-     * @return 변환된 Unicode Hangul Compatibility Jamo 종성 문자. 종성이 없는 경우
+     * @param c 변환할 한글 자모 종성 문자.
+     * @return 변환된 한글 호환 자모 종성 문자. 종성이 없는 경우
      *         '\u0000'를 반환한다.
      * @throws IllegalArgumentException 주어진 {@code c}가
-     *         Unicode Hangul Jamo 종성 문자가 아닐 때.
+     *         한글 자모 종성 문자가 아닐 때.
      */
     public static char convertJongseongToCompat(char c) {
         if (c == '\u0000')
@@ -417,10 +417,8 @@ public final class KoreanChar {
     /**
      * 주어진 초성, 중성을 조합하여 종성이 없는 한글 음절을 만든다.
      *
-     * @param choseong 조합할 초성. Unicode Hangul Jamo 초성 문자 또는
-     *     Unicode Hangul Compatibility Jamo 초성 문자여야 한다.
-     * @param jungseong 조합할 중성. Unicode Hangul Jamo 중성 문자 또는
-     *     Unicode Hangul Compatibility Jamo 중성 문자여야 한다.
+     * @param choseong 조합할 초성. 한글 자모 초성 문자 또는 한글 호환 자모 초성 문자여야 한다.
+     * @param jungseong 조합할 중성. 한글 자모 중성 문자 또는 한글 호환 자모 중성 문자여야 한다.
      * @return 조합된 한글 음절. 종성이 없는 음절이 만들어진다.
      * @throws IllegalArgumentException 초성, 중성 중 하나라도 유효하지 않은 경우.
      */
@@ -431,12 +429,9 @@ public final class KoreanChar {
     /**
      * 주어진 초성, 중성, 종성을 조합하여 한글 음절을 만든다.
      *
-     * @param choseong 조합할 초성. Unicode Hangul Jamo 초성 문자 또는
-     *     Unicode Hangul Compatibility Jamo 초성 문자여야 한다.
-     * @param jungseong 조합할 중성. Unicode Hangul Jamo 중성 문자 또는
-     *     Unicode Hangul Compatibility Jamo 중성 문자여야 한다.
-     * @param jongseong 조합할 종성. Unicode Hangul Jamo 종성 문자 또는
-     *     Unicode Hangul Compatibility Jamo 종성 문자여야 한다.
+     * @param choseong 조합할 초성. 한글 자모 초성 문자 또는 한글 호환 자모 초성 문자여야 한다.
+     * @param jungseong 조합할 중성. 한글 자모 중성 문자 또는 한글 호환 자모 중성 문자여야 한다.
+     * @param jongseong 조합할 종성. 한글 자모 종성 문자 또는 한글 호환 자모 종성 문자여야 한다.
      *     종성이 없는 경우는 '\u0000'을 넣거나, 이 매개변수를 아예 생략할 수 있다.
      * @return 조합된 한글 음절.
      * @throws IllegalArgumentException 초성, 중성, 종성 중 하나라도 유효하지 않은 경우.
@@ -480,7 +475,7 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절을 Unicode Hangul Jamo 초성, 중성, 종성으로 분해한다.
+     * 주어진 한글 음절을 한글 자모 초성, 중성, 종성으로 분해한다.
      *
      * @param syllable 분해할 한글 음절.
      * @return 초성, 중성, 종성으로 분해된 문자열 배열. 각 초성, 중성, 종성은
@@ -503,7 +498,7 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절을 Unicode Hangul Jamo로 분해하여 버퍼에 저장한다.
+     * 주어진 한글 음절을 한글 자모로 분해하여 버퍼에 저장한다.
      *
      * @param syllable 분해할 한글 음절.
      * @param buffer 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해되어 있다.
@@ -527,7 +522,7 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절을 Unicode Hangul Compatibility Jamo 초성, 중성, 종성으로 분해한다.
+     * 주어진 한글 음절을 한글 호환 자모 초성, 중성, 종성으로 분해한다.
      *
      * @param syllable 분해할 한글 음절.
      * @return 초성, 중성, 종성으로 분해된 문자열 배열. 각 초성, 중성, 종성은
@@ -550,7 +545,7 @@ public final class KoreanChar {
     }
 
     /**
-     * 주어진 한글 음절을 Unicode Hangul Compatibility Jamo로 분해하여 버퍼에 저장한다.
+     * 주어진 한글 음절을 한글 호환 자모로 분해하여 버퍼에 저장한다.
      *
      * @param syllable 분해할 한글 음절.
      * @param buffer 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해되어 있다.
