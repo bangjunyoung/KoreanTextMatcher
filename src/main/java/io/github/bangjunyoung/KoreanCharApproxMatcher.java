@@ -61,7 +61,10 @@ public class KoreanCharApproxMatcher {
      * @return 매칭이 성공하면 {@code true}, 실패하면 {@code false}.
      */
     public static boolean isMatch(char t, char p) {
-        return decompose(t).startsWith(decompose(p));
+        if (t == p)
+            return true;
+        else
+            return decompose(t).startsWith(decompose(p));
     }
 
     private static String decompose(char c) {
