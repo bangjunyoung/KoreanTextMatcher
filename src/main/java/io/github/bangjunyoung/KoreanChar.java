@@ -502,6 +502,22 @@ public final class KoreanChar {
             return new String[] { choseong, jungseong, jongseong };
     }
 
+    public static int decompose(char syllable, StringBuilder buffer) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        buffer.setLength(0);
+
+        buffer.append(splitJamo(getChoseong(syllable)));
+        buffer.append(splitJamo(getJungseong(syllable)));
+
+        final char jongseong = getJongseong(syllable);
+        if (jongseong != '\u0000')
+            buffer.append(splitJamo(jongseong));
+
+        return buffer.length();
+    }
+
     /**
      * 주어진 한글 음절을 Unicode Hangul Compatibility Jamo 초성, 중성, 종성으로 분해한다.
      *
@@ -523,6 +539,22 @@ public final class KoreanChar {
             return new String[] { choseong, jungseong };
         else
             return new String[] { choseong, jungseong, jongseong };
+    }
+
+    public static int decomposeToCompat(char syllable, StringBuilder buffer) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException(String.valueOf(syllable));
+
+        buffer.setLength(0);
+
+        buffer.append(splitJamo(getCompatChoseong(syllable)));
+        buffer.append(splitJamo(getCompatJungseong(syllable)));
+
+        final char jongseong = getCompatJongseong(syllable);
+        if (jongseong != '\u0000')
+            buffer.append(splitJamo(jongseong));
+
+        return buffer.length();
     }
 
     static String splitTrailingConsonant(char syllable) {

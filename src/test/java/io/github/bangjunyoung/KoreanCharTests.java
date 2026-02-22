@@ -762,6 +762,84 @@ class KoreanCharTests {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    static Stream<Arguments> decomposeZeroAllocTestParameters() {
+        return Stream.of(
+            arguments('하', "\u1112\u1161" /* ㅎㅏ */),
+            arguments('늘', "\u1102\u1173\u11AF" /* ㄴㅡㄹ */),
+            arguments('밝', "\u1107\u1161\u11AF\u11A8" /* ㅂㅏㄹㄱ */),
+            arguments('꿄', "\u1100\u1100\u116E\u11AF\u11BA" /* ㄱㄱㅜㄹㅅ */),
+            arguments('쒏', "\u1109\u1109\u116E\u1165\u11AF\u11C2" /* ㅅㅅㅜㅓㄹㅎ */)
+        );
+    }
+
+    @ParameterizedTest(name = "decompose❨{0}, buffer❩")
+    @MethodSource("decomposeZeroAllocTestParameters")
+    void decomposeZeroAllocTest(char syllable, String expected) {
+        StringBuilder buffer = new StringBuilder(6);
+        int length = KoreanChar.decompose(syllable, buffer);
+
+        assertThat(length).isEqualTo(expected.length());
+        assertThat(buffer.toString()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> decomposeZeroAllocExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "decompose❨{0}, buffer❩ throws IllegalArgumentException")
+    @MethodSource("decomposeZeroAllocExceptionTestParameters")
+    void decomposeZeroAllocExceptionTest(char syllable) {
+        StringBuilder buffer = new StringBuilder(6);
+        assertThatThrownBy(() -> KoreanChar.decompose(syllable, buffer))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    static Stream<Arguments> decomposeToCompatZeroAllocTestParameters() {
+        return Stream.of(
+            arguments('하', "\u314E\u314F" /* ㅎㅏ */),
+            arguments('늘', "\u3134\u3161\u3139" /* ㄴㅡㄹ */),
+            arguments('밝', "\u3142\u314F\u3139\u3131" /* ㅂㅏㄹㄱ */),
+            arguments('꿄', "\u3131\u3131\u315C\u3139\u3145" /* ㄱㄱㅜㄹㅅ */),
+            arguments('쒏', "\u3145\u3145\u315C\u3153\u3139\u314E" /* ㅅㅅㅜㅓㄹㅎ */)
+        );
+    }
+
+    @ParameterizedTest(name = "decomposeToCompat❨{0}, buffer❩")
+    @MethodSource("decomposeToCompatZeroAllocTestParameters")
+    void decomposeToCompatZeroAllocTest(char syllable, String expected) {
+        StringBuilder buffer = new StringBuilder(6);
+        int length = KoreanChar.decomposeToCompat(syllable, buffer);
+
+        assertThat(length).isEqualTo(expected.length());
+        assertThat(buffer.toString()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> decomposeToCompatZeroAllocExceptionTestParameters() {
+        return Stream.of(
+            arguments('A'),
+            arguments('1'),
+            arguments(' '),
+            arguments('!'),
+            arguments('漢'),
+            arguments('\u0000')
+        );
+    }
+
+    @ParameterizedTest(name = "decomposeToCompat❨{0}, buffer❩ throws IllegalArgumentException")
+    @MethodSource("decomposeToCompatZeroAllocExceptionTestParameters") // 예외 파라미터 재사용
+    void decomposeToCompatZeroAllocExceptionTest(char syllable) {
+        StringBuilder buffer = new StringBuilder(6);
+        assertThatThrownBy(() -> KoreanChar.decomposeToCompat(syllable, buffer))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
     static Stream<Arguments> splitTrailingConsonantTestParameters() {
         return Stream.of(
             arguments('가', "가"),
