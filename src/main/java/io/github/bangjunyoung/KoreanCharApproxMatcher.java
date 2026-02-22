@@ -49,6 +49,11 @@ package io.github.bangjunyoung;
 public class KoreanCharApproxMatcher {
     private KoreanCharApproxMatcher() {} // Can never be instantiated.
 
+    private static final ThreadLocal<StringBuilder> BUFFER_T_HOLDER =
+        ThreadLocal.withInitial(() -> new StringBuilder(6));
+    private static final ThreadLocal<StringBuilder> BUFFER_P_HOLDER =
+        ThreadLocal.withInitial(() -> new StringBuilder(6));
+
     /**
      * 주어진 두 문자를 음절 근사 매칭으로 비교한다.
      *
@@ -63,18 +68,36 @@ public class KoreanCharApproxMatcher {
     public static boolean isMatch(char t, char p) {
         if (t == p)
             return true;
-        else
-            return decompose(t).startsWith(decompose(p));
+
+        final StringBuilder bufferT = BUFFER_T_HOLDER.get();
+        final StringBuilder bufferP = BUFFER_P_HOLDER.get();
+
+        final int lengthT = decompose(t, bufferT);
+        final int lengthP = decompose(p, bufferP);
+
+        if (lengthT < lengthP)
+            return false;
+
+        for (int i = 0; i < lengthP; i++) {
+            if (bufferT.charAt(i) != bufferP.charAt(i))
+                return false;
+        }
+
+        return true;
     }
 
-    private static String decompose(char c) {
+    private static int decompose(char c, StringBuilder buffer) {
+        buffer.setLength(0);
+
         if (KoreanChar.isSyllable(c))
-            return String.join("", KoreanChar.decomposeToCompat(c));
+            KoreanChar.decomposeToCompat(c, buffer);
         else if (KoreanChar.isCompatChoseong(c))
-            return KoreanChar.splitJamo(c);
+            buffer.append(KoreanChar.splitJamo(c));
         else if (KoreanChar.isChoseong(c))
-            return KoreanChar.splitJamo(KoreanChar.convertChoseongToCompat(c));
+            buffer.append(KoreanChar.splitJamo(KoreanChar.convertChoseongToCompat(c)));
         else
-            return String.valueOf(c);
+            buffer.append(c);
+
+        return buffer.length();
     }
 }
