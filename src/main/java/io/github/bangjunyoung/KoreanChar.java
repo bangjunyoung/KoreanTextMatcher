@@ -614,7 +614,7 @@ public final class KoreanChar {
             if (0 <= index && index < CHOSEONG_COUNT)
                 return index;
             else
-                throw new IllegalArgumentException("Not a choseong: " + String.valueOf(c));
+                throw new IllegalArgumentException("Not a choseong: " + c);
         }
     }
 
@@ -627,7 +627,7 @@ public final class KoreanChar {
             if (0 <= index && index < JUNGSEONG_COUNT)
                 return index;
             else
-                throw new IllegalArgumentException("Not a jungseong: " + String.valueOf(c));
+                throw new IllegalArgumentException("Not a jungseong: " + c);
         }
     }
 
@@ -640,7 +640,7 @@ public final class KoreanChar {
             if (0 < index && index < JONGSEONG_COUNT)
                 return index;
             else
-                throw new IllegalArgumentException("Not a jongseong: " + String.valueOf(c));
+                throw new IllegalArgumentException("Not a jongseong: " + c);
         }
     }
 }
