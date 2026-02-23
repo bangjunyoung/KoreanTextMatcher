@@ -54,7 +54,7 @@ public final class KoreanTextMatcher {
 
     private final String _pattern;
     private final String _splitPattern;
-    private final boolean _foundStartAnchor, _foundEndAnchor;
+    private final boolean _hasStartAnchor, _hasEndAnchor;
 
     /**
      * {@link KoreanTextMatcher} 클래스의 새 인스턴스를 초기화한다.
@@ -70,12 +70,12 @@ public final class KoreanTextMatcher {
             throw new IllegalArgumentException("pattern: null");
 
         if (pattern.length() == 0) {
-            _foundStartAnchor = _foundEndAnchor = false;
+            _hasStartAnchor = _hasEndAnchor = false;
             _pattern = pattern;
             _splitPattern = null;
         } else {
-            _foundStartAnchor = pattern.charAt(0) == '^';
-            _foundEndAnchor = pattern.charAt(pattern.length() - 1) == '$';
+            _hasStartAnchor = pattern.charAt(0) == '^';
+            _hasEndAnchor = pattern.charAt(pattern.length() - 1) == '$';
             _pattern = stripAnchors(pattern);
 
             String split = null;
@@ -281,29 +281,27 @@ public final class KoreanTextMatcher {
     }
 
     private String stripAnchors(String pattern) {
-        if (!_foundStartAnchor && !_foundEndAnchor)
+        if (!_hasStartAnchor && !_hasEndAnchor)
             return pattern;
 
-        int startIndex = _foundStartAnchor ? 1 : 0;
-        int length = pattern.length() - (_foundStartAnchor ? 1 : 0) - (_foundEndAnchor ? 1 : 0);
+        int startIndex = _hasStartAnchor ? 1 : 0;
+        int length = pattern.length() - (_hasStartAnchor ? 1 : 0) - (_hasEndAnchor ? 1 : 0);
         return pattern.substring(startIndex, startIndex + length);
     }
 
     private long getTextRange(String text, int hintLength, int startIndex) {
-        final boolean trimStart = _foundEndAnchor, trimEnd = _foundStartAnchor;
-
         int length = text.length() - startIndex;
 
         if (length < hintLength)
             return -1;
 
-        if (trimStart && trimEnd) {
+        if (_hasStartAnchor && _hasEndAnchor) {
             if (text.length() != hintLength)
                 return -1;
-        } else if (trimStart) {
+        } else if (_hasEndAnchor) {
             startIndex = text.length() - hintLength;
             length = hintLength;
-        } else if (trimEnd) {
+        } else if (_hasStartAnchor) {
             if (startIndex != 0)
                 return -1;
             length = hintLength;
