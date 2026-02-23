@@ -205,22 +205,22 @@ public final class KoreanTextMatcher {
 
         final int patternLength = _pattern.length();
         final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
-        final int commonLength = patternLength - 1;
 
         outerLoop:
         for (int i = startIndex; i < startIndex + length - patternLength + 1; i++) {
-            for (int j = 0; j < commonLength; j++) {
-                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _pattern.charAt(j)))
-                    continue outerLoop;
+            for (int j = 0; j < patternLength; j++) {
+                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _pattern.charAt(j))) {
+                    if (j == patternLength - 1
+                        && _splitPattern != null
+                        && i + splitPatternLength <= startIndex + length
+                        && KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _splitPattern.charAt(j))
+                        && KoreanCharApproxMatcher.isMatch(text.charAt(i + j + 1), _splitPattern.charAt(j + 1)))
+                        return new KoreanTextMatch(this, text, i, splitPatternLength);
+                    else
+                        continue outerLoop;
+                }
             }
-
-            if (KoreanCharApproxMatcher.isMatch(text.charAt(i + commonLength), _pattern.charAt(commonLength)))
-                return new KoreanTextMatch(this, text, i, patternLength);
-
-            if (_splitPattern != null && i + splitPatternLength <= startIndex + length)
-                if (KoreanCharApproxMatcher.isMatch(text.charAt(i + commonLength), _splitPattern.charAt(commonLength)) &&
-                    KoreanCharApproxMatcher.isMatch(text.charAt(i + commonLength + 1), _splitPattern.charAt(commonLength + 1)))
-                    return new KoreanTextMatch(this, text, i, splitPatternLength);
+            return new KoreanTextMatch(this, text, i, patternLength);
         }
         return KoreanTextMatch.EMPTY;
     }
