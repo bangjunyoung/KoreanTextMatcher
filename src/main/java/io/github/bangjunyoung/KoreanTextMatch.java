@@ -27,7 +27,7 @@ package io.github.bangjunyoung;
 
 /**
  * {@link KoreanTextMatcher} 매칭 결과를 담고 있는 클래스.
- * 
+ *
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
 public final class KoreanTextMatch {
@@ -64,7 +64,7 @@ public final class KoreanTextMatch {
 
     /**
      * 매치가 성공했는지 여부를 조사한다.
-     * 
+     *
      * @return 성공했으면 {@code true}, 아니면 {@code false}.
      */
     public boolean success() {
@@ -73,7 +73,7 @@ public final class KoreanTextMatch {
 
     /**
      * 매치의 시작 위치를 구한다.
-     * 
+     *
      * @return 검색 대상 문자열 내 패턴의 시작 위치
      */
     public int index() {
@@ -82,7 +82,7 @@ public final class KoreanTextMatch {
 
     /**
      * 매치의 길이를 구한다.
-     * 
+     *
      * @return 검색 대상 문자열 내 매치의 길이
      */
     public int length() {
@@ -91,7 +91,7 @@ public final class KoreanTextMatch {
 
     /**
      * 매치 문자열을 구한다.
-     * 
+     *
      * @return 검색 대상 문자열 내 실제 매치
      */
     public String value() {
