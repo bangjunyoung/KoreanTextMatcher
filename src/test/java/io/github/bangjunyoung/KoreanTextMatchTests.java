@@ -26,16 +26,35 @@
 package io.github.bangjunyoung;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class KoreanTextMatchTests {
+
+    static Stream<Arguments> constructorExceptionTestParameters() {
+        return Stream.of(
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(null, "", 0, 0), "matcher = null"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), null, 0, 0), "text = null"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", -1, 0), "startIndex < 0"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 0, -1), "length < 0"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 1, 0), "startIndex > text.length❨ ❩"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 0, 1), "startIndex + length > text.length❨ ❩")
+        );
+    }
+
+    @ParameterizedTest(name = "new KoreanTextMatch❨ ❩ with {1} throws IllegalArgumentException")
+    @MethodSource("constructorExceptionTestParameters")
+    void constructorExceptionTest(ThrowingCallable func, String description) {
+        assertThatThrownBy(func).isInstanceOf(IllegalArgumentException.class);
+    }
 
     static Stream<Arguments> matchTestParameters() {
         return Stream.of(

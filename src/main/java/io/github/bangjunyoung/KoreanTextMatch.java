@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Bang Jun-young
+ * Copyright 2014, 2026 Bang Jun-young
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,6 +55,19 @@ public final class KoreanTextMatch {
     }
 
     KoreanTextMatch(KoreanTextMatcher matcher, String text, int startIndex, int length) {
+        if (matcher == null)
+            throw new IllegalArgumentException("matcher: null");
+        if (text == null)
+            throw new IllegalArgumentException("text: null");
+        if (startIndex < 0)
+            throw new IllegalArgumentException("startIndex: " + startIndex + " < 0");
+        if (length < 0)
+            throw new IllegalArgumentException("length: " + length + " < 0");
+        if (startIndex > text.length()
+            || startIndex + length > text.length())
+            throw new IllegalArgumentException(
+                String.format("startIndex + length: %d > text.length(): %d", startIndex + length, text.length()));
+
         _matcher = matcher;
         _text = text;
         _value = text.substring(startIndex, startIndex + length);
