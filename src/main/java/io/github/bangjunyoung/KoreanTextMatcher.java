@@ -285,7 +285,7 @@ public final class KoreanTextMatcher {
      * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이 {@code null}일 때.
      */
     public static boolean isMatch(String text, String pattern, MatchingOptions... options) {
-        return match(text, pattern, options).success();
+        return isMatch(text, pattern, toEnumSet(options));
     }
 
     /**
@@ -361,7 +361,7 @@ public final class KoreanTextMatcher {
      *         {@code null}일 때.
      */
     public static Iterable<KoreanTextMatch> matches(String text, String pattern, MatchingOptions... options) {
-        return new KoreanTextMatcher(pattern, options).matches(text);
+        return matches(text, pattern, toEnumSet(options));
     }
 
     /**
