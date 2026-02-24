@@ -133,7 +133,7 @@ public final class KoreanTextMatcher {
         //
         // Optimization: narrow the range of text to be matched for pattern.
         //
-        final long textRange = getTextRange(text, _pattern.length(), startIndex);
+        final long textRange = getTextRange(text, startIndex, _pattern.length());
         if (textRange == -1)
             return KoreanTextMatch.EMPTY;
         // textRange is a tuple of (int startIndex, int length).
@@ -197,17 +197,21 @@ public final class KoreanTextMatcher {
         };
     }
 
-    private KoreanTextMatch match(String text, int startIndex, int length) {
+    private KoreanTextMatch match(final String text, final int startIndex, final int length) {
         if (_pattern.length() == 0)
             return new KoreanTextMatch(this, text, startIndex, 0);
 
         final int patternLength = _pattern.length();
         final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
+        final int endIndex = startIndex + length - patternLength + 1;
 
         outerLoop:
-        for (int i = startIndex; i < startIndex + length - patternLength + 1; i++) {
+        for (int i = startIndex; i < endIndex; i++) {
             for (int j = 0; j < patternLength; j++) {
-                if (!KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _pattern.charAt(j))) {
+                final char textChar = text.charAt(i + j);
+                final char patternChar = _pattern.charAt(j);
+
+                if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
                     if (j == patternLength - 1
                         && _splitPattern != null
                         && i + splitPatternLength <= startIndex + length
@@ -218,8 +222,10 @@ public final class KoreanTextMatcher {
                         continue outerLoop;
                 }
             }
+
             return new KoreanTextMatch(this, text, i, patternLength);
         }
+
         return KoreanTextMatch.EMPTY;
     }
 
@@ -287,8 +293,9 @@ public final class KoreanTextMatcher {
         return pattern.substring(startIndex, startIndex + length);
     }
 
-    private long getTextRange(String text, int hintLength, int startIndex) {
-        int length = text.length() - startIndex;
+    private long getTextRange(String text, final int hintIndex, final int hintLength) {
+        int startIndex = hintIndex;
+        int length = text.length() - hintIndex;
 
         if (length < hintLength)
             return -1;
@@ -300,7 +307,7 @@ public final class KoreanTextMatcher {
             startIndex = text.length() - hintLength;
             length = hintLength;
         } else if (_hasStartAnchor) {
-            if (startIndex != 0)
+            if (hintIndex != 0)
                 return -1;
             length = hintLength;
         }
