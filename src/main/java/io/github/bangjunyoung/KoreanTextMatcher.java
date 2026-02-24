@@ -139,8 +139,6 @@ public final class KoreanTextMatcher {
         // textRange is a tuple of (int startIndex, int length).
         final int startIndexOpt = (int)(textRange >> 32);
         final int length = (int)(textRange & 0xFFFFFFF);
-        if (length == 0)
-            return new KoreanTextMatch(this, text, 0, 0);
 
         return match(text, startIndexOpt, length);
     }
@@ -201,7 +199,7 @@ public final class KoreanTextMatcher {
 
     private KoreanTextMatch match(String text, int startIndex, int length) {
         if (_pattern.length() == 0)
-            return new KoreanTextMatch(this, text, 0, 0);
+            return new KoreanTextMatch(this, text, startIndex, 0);
 
         final int patternLength = _pattern.length();
         final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;

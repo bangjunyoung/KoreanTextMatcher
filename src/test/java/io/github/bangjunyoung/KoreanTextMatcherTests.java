@@ -82,10 +82,14 @@ class KoreanTextMatcherTests {
 
     static Stream<Arguments> isMatchTestParameters() {
         return Stream.of(
+            arguments("", "", true),
+            arguments("", "^", true),
+            arguments("", "$", true),
             arguments("", "^$", true),
             arguments("하늘", "", true),
             arguments("하늘", "^", true),
             arguments("하늘", "$", true),
+            arguments("하늘", "^$", false),
             arguments("하늘", "하늘", true),
             arguments(" 하늘", "하늘", true),
             arguments("하늘 ", "하늘", true),
@@ -114,7 +118,6 @@ class KoreanTextMatcherTests {
             arguments("하늘", "^ㅎ느", true),
             arguments("하늘", "ㅎ느$", true),
             arguments("하늘", "^ㅎ느$", true),
-            arguments("하늘", "^$", false),
             arguments("하늘", "ㅎㄴㅎㄴ", false),
             arguments("하 늘", "하늘", false),
             arguments(" 하 늘", "하늘", false),
