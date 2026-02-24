@@ -25,6 +25,8 @@
 
 package io.github.bangjunyoung;
 
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Iterator;
 
 /**
@@ -56,6 +58,19 @@ public final class KoreanTextMatcher {
     private final String _splitPattern;
     private final boolean _hasStartAnchor, _hasEndAnchor;
 
+    private final EnumSet<MatchingOptions> _options;
+
+    public enum MatchingOptions {
+        Dubeolsik;
+    }
+
+    private static EnumSet<MatchingOptions> toEnumSet(MatchingOptions[] options) {
+        if (options == null || options.length == 0)
+            return EnumSet.noneOf(MatchingOptions.class);
+
+        return EnumSet.copyOf(Arrays.asList(options));
+    }
+
     /**
      * {@link KoreanTextMatcher} 클래스의 새 인스턴스를 초기화한다.
      *
@@ -63,11 +78,28 @@ public final class KoreanTextMatcher {
      * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
      *
      * @param pattern 검색할 패턴
+     * @param options 검색 옵션
      * @throws IllegalArgumentException {@code pattern}이 {@code null}일 때.
      */
-    public KoreanTextMatcher(String pattern) {
+    public KoreanTextMatcher(String pattern, MatchingOptions... options) {
+        this(pattern, toEnumSet(options));
+    }
+
+    /**
+     * {@link KoreanTextMatcher} 클래스의 새 인스턴스를 초기화한다.
+     *
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
+     *
+     * @param pattern 검색할 패턴
+     * @param options 검색 옵션
+     * @throws IllegalArgumentException {@code pattern}이 {@code null}일 때.
+     */
+    public KoreanTextMatcher(String pattern, EnumSet<MatchingOptions> options) {
         if (pattern == null)
             throw new IllegalArgumentException("pattern: null");
+
+        _options = options;
 
         if (pattern.length() == 0) {
             _hasStartAnchor = _hasEndAnchor = false;
@@ -79,7 +111,8 @@ public final class KoreanTextMatcher {
             _pattern = stripAnchors(pattern);
 
             String split = null;
-            if (_pattern.length() > 0) {
+            if (options.contains(MatchingOptions.Dubeolsik)
+                && _pattern.length() > 0) {
                 char last = _pattern.charAt(_pattern.length() - 1);
                 if (KoreanChar.isSyllable(last) && KoreanChar.getJongseong(last) != '\0') {
                     String lastSplit = KoreanChar.splitTrailingConsonant(last);
@@ -212,7 +245,8 @@ public final class KoreanTextMatcher {
                 final char patternChar = _pattern.charAt(j);
 
                 if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
-                    if (j == patternLength - 1
+                    if (_options.contains(MatchingOptions.Dubeolsik)
+                        && j == patternLength - 1
                         && _splitPattern != null
                         && i + splitPatternLength <= startIndex + length
                         && KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _splitPattern.charAt(j))
@@ -237,13 +271,48 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
-     * @return {@code text} 내에 {@code pattern}이 존재하면 {@code true},
-     *         그렇지 않으면 {@code false}.
-     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이
-     *         {@code null}일 때.
+     * @param options 검색 옵션
+     * @return {@code text} 내에 {@code pattern}이 존재하면 {@code true}, 그렇지 않으면 {@code false}.
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이 {@code null}일 때.
      */
-    public static boolean isMatch(String text, String pattern) {
-        return match(text, pattern).success();
+    public static boolean isMatch(String text, String pattern, MatchingOptions... options) {
+        return match(text, pattern, options).success();
+    }
+
+    /**
+     * 주어진 {@code text} 내에 주어진 {@code pattern}이 존재하는지 여부를 조사한다.
+     *
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
+     *
+     * @param text 검색 대상 문자열
+     * @param pattern 검색할 패턴
+     * @param options 검색 옵션
+     * @return {@code text} 내에 {@code pattern}이 존재하면 {@code true}, 그렇지 않으면 {@code false}.
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이 {@code null}일 때.
+     */
+    public static boolean isMatch(String text, String pattern, EnumSet<MatchingOptions> options) {
+        return match(text, pattern, options).success();
+    }
+
+   /**
+     * 주어진 {@code text} 내에서 주어진 {@code pattern}의 첫번째 출현을 찾는다.
+     *
+     * 모든 출현을 찾으려면 {@link #matches(String, String)}를 사용한다.
+     *
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
+     *
+     * @param text 검색 대상 문자열
+     * @param pattern 검색할 패턴
+     * @param options 검색 옵션
+     * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
+     *         {@link KoreanTextMatch#success()}가 {@code true}일 때만 유효하다.
+     *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이 {@code null}일 때.
+     */
+    public static KoreanTextMatch match(String text, String pattern, MatchingOptions... options) {
+        return match(text, pattern, toEnumSet(options));
     }
 
     /**
@@ -256,14 +325,15 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
+     * @param options 검색 옵션
      * @return 검색 결과를 담은 {@link KoreanTextMatch} 인스턴스.
      *         {@link KoreanTextMatch#success()}가 {@code true}일 때만 유효하다.
      *         검색이 실패하면 {@link KoreanTextMatch#EMPTY}를 리턴한다.
      * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이
      *         {@code null}일 때.
      */
-    public static KoreanTextMatch match(String text, String pattern) {
-        return new KoreanTextMatcher(pattern).match(text);
+    public static KoreanTextMatch match(String text, String pattern, EnumSet<MatchingOptions> options) {
+        return new KoreanTextMatcher(pattern, options).match(text);
     }
 
     /**
@@ -276,12 +346,31 @@ public final class KoreanTextMatcher {
      *
      * @param text 검색 대상 문자열
      * @param pattern 검색할 패턴
+     * @param options 검색 옵션
      * @return 검색 결과를 담은 {@code Iterable<KoreanTextMatch>} 인스턴스.
      * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이
      *         {@code null}일 때.
      */
-    public static Iterable<KoreanTextMatch> matches(String text, String pattern) {
-        return new KoreanTextMatcher(pattern).matches(text);
+    public static Iterable<KoreanTextMatch> matches(String text, String pattern, MatchingOptions... options) {
+        return new KoreanTextMatcher(pattern, options).matches(text);
+    }
+
+    /**
+     * 주어진 {@code text} 내에서 주어진 {@code pattern}의 모든 출현을 찾는다.
+     *
+     * 첫번째 출현만 찾으려면 {@link #match(String, String)}를 사용한다.
+     *
+     * 정규식 앵커 {@code ^}와 {@code $}를 사용하여 {@code pattern}의 위치를
+     * 검색 대상 문자열의 시작과 끝으로 한정할 수 있다.
+     *
+     * @param text 검색 대상 문자열
+     * @param pattern 검색할 패턴
+     * @param options 검색 옵션
+     * @return 검색 결과를 담은 {@code Iterable<KoreanTextMatch>} 인스턴스.
+     * @throws IllegalArgumentException {@code text} 또는 {@code pattern}이 {@code null}일 때.
+     */
+    public static Iterable<KoreanTextMatch> matches(String text, String pattern, EnumSet<MatchingOptions> options) {
+        return new KoreanTextMatcher(pattern, options).matches(text);
     }
 
     private String stripAnchors(String pattern) {

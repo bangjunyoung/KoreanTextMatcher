@@ -29,12 +29,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import java.util.EnumSet;
 import java.util.stream.Stream;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import io.github.bangjunyoung.KoreanTextMatcher.MatchingOptions;
 
 class KoreanTextMatcherTests {
 
@@ -52,28 +55,41 @@ class KoreanTextMatcherTests {
 
     static Stream<Arguments> matchesTestParameters() {
         return Stream.of(
-            // Hangul Compatibility Jamo
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎㄹ", 0),
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "하늘", 1),
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎ늘", 2),
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎ느", 3),
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎㄴ", 4),
-            // Hangul Jamo
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒᄅ", 0),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "하늘", 1),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒ늘", 2),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒ느", 3),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒᄂ", 4),
+            arguments("", "", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("", "^", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("", "$", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("", "^$", EnumSet.noneOf(MatchingOptions.class), 1),
 
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "한", 2)
+            arguments("가나다", "", EnumSet.noneOf(MatchingOptions.class), 4),
+            arguments("가나다", "^", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("가나다", "$", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("가나다", "^$", EnumSet.noneOf(MatchingOptions.class), 0),
+
+            // Hangul Compatibility Jamo
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎㄹ", EnumSet.noneOf(MatchingOptions.class), 0),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "하늘", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎ늘", EnumSet.noneOf(MatchingOptions.class), 2),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎ느", EnumSet.noneOf(MatchingOptions.class), 3),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "ㅎㄴ", EnumSet.noneOf(MatchingOptions.class), 4),
+            // Hangul Jamo
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒᄅ", EnumSet.noneOf(MatchingOptions.class), 0),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "하늘", EnumSet.noneOf(MatchingOptions.class), 1),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒ늘", EnumSet.noneOf(MatchingOptions.class), 2),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒ느", EnumSet.noneOf(MatchingOptions.class), 3),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒᄂ", EnumSet.noneOf(MatchingOptions.class), 4),
+
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ㅎ", EnumSet.of(MatchingOptions.Dubeolsik), 4),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "하", EnumSet.of(MatchingOptions.Dubeolsik), 2),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "한", EnumSet.of(MatchingOptions.Dubeolsik), 2),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "학", EnumSet.of(MatchingOptions.Dubeolsik), 0)
         );
     }
 
-    @ParameterizedTest(name = "matches❨{0}, {1}❩ returns {2}")
+    @ParameterizedTest(name = "matches❨{0}, {1}, {2}❩ returns {3}")
     @MethodSource("matchesTestParameters")
-    void matchesTest(String text, String pattern, int expectedMatchCount) {
+    void matchesTest(String text, String pattern, EnumSet<MatchingOptions> options, int expectedMatchCount) {
         int count = 0;
-        for (KoreanTextMatch match : KoreanTextMatcher.matches(text, pattern)) {
+        for (KoreanTextMatch match : KoreanTextMatcher.matches(text, pattern, options.toArray(MatchingOptions[]::new))) {
             count++;
             assertThat(text).contains(match.value());
         }
@@ -129,9 +145,7 @@ class KoreanTextMatcherTests {
             arguments("하늘 ", "하늘$", false),
             arguments(" 하늘 ", "하늘$", false),
             arguments(" 하늘", "^하늘$", false),
-            arguments("하늘 ", "^하늘$", false),
-            arguments("하늘", "한", true),
-            arguments("바람", "발", true)
+            arguments("하늘 ", "^하늘$", false)
         );
     }
 
