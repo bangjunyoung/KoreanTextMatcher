@@ -155,19 +155,10 @@ class KoreanTextMatcherTests {
         return Stream.of(
             arguments((ThrowingCallable) () -> KoreanTextMatcher.match(null, ""), "text = null"),
             arguments((ThrowingCallable) () -> KoreanTextMatcher.match("", null), "pattern = null"),
-            arguments((ThrowingCallable) () -> {
-                KoreanTextMatcher matcher = new KoreanTextMatcher("");
-                matcher.match(null);
-            }, "text = null"),
-            arguments((ThrowingCallable) () -> {
-                KoreanTextMatcher matcher = new KoreanTextMatcher("");
-                matcher.match("", -1);
-            }, "startIndex < 0"),
-            arguments((ThrowingCallable) () -> {
-                String text = "";
-                KoreanTextMatcher matcher = new KoreanTextMatcher("");
-                matcher.match(text, text.length() + 1);
-            }, "startIndex > text.length❨ ❩")
+            arguments((ThrowingCallable) () -> new KoreanTextMatcher("").match(null), "text = null"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatcher(null).match(""), "pattern = null"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatcher("").match("", -1), "startIndex < 0"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatcher("").match("", 1), "startIndex > text.length❨ ❩")
         );
     }
 
@@ -179,10 +170,7 @@ class KoreanTextMatcherTests {
 
     static Stream<Arguments> matchesExceptionTestParameters() {
         return Stream.of(
-            arguments((ThrowingCallable) () -> {
-                Iterable<KoreanTextMatch> matches = KoreanTextMatcher.matches("", "");
-                matches.iterator().remove();
-            })
+            arguments((ThrowingCallable) () -> KoreanTextMatcher.matches("", "").iterator().remove())
         );
     }
 
