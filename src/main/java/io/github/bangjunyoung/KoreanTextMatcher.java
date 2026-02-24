@@ -61,7 +61,8 @@ public final class KoreanTextMatcher {
     private final EnumSet<MatchingOptions> _options;
 
     public enum MatchingOptions {
-        Dubeolsik;
+        Dubeolsik,
+        IgnoreCase;
     }
 
     private static EnumSet<MatchingOptions> toEnumSet(MatchingOptions[] options) {
@@ -244,7 +245,15 @@ public final class KoreanTextMatcher {
                 final char textChar = text.charAt(i + j);
                 final char patternChar = _pattern.charAt(j);
 
-                if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
+                if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
+                    if (_options.contains(MatchingOptions.IgnoreCase)) {
+                        if ((textChar | 0x20) != (patternChar | 0x20))
+                            continue outerLoop;
+                    } else {
+                        if (textChar != patternChar)
+                            continue outerLoop;
+                    }
+                } else if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
                     if (_options.contains(MatchingOptions.Dubeolsik)
                         && j == patternLength - 1
                         && _splitPattern != null
@@ -401,5 +410,10 @@ public final class KoreanTextMatcher {
             length = hintLength;
         }
         return (long)startIndex << 32 | length;
+    }
+
+    public static boolean isLatinAlphabet(char c) {
+        char lower = (char)(c | 0x20);
+        return lower >= 'a' && lower <= 'z';
     }
 }

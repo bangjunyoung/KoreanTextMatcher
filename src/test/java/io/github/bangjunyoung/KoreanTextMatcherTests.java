@@ -155,6 +155,25 @@ class KoreanTextMatcherTests {
         assertThat(KoreanTextMatcher.isMatch(text, pattern)).isEqualTo(expectedResult);
     }
 
+    static Stream<Arguments> isMatchIgnoreCaseTestParameters() {
+        return Stream.of(
+            arguments("ABC", "ABC", EnumSet.noneOf(MatchingOptions.class), true),
+            arguments("ABC", "abc", EnumSet.noneOf(MatchingOptions.class), false),
+            arguments("ABC", "ab1", EnumSet.noneOf(MatchingOptions.class), false),
+            arguments("AB1", "abc", EnumSet.noneOf(MatchingOptions.class), false),
+            arguments("ABC", "abc", EnumSet.of(MatchingOptions.IgnoreCase), true),
+            arguments("ABC", "abz", EnumSet.of(MatchingOptions.IgnoreCase), false),
+            arguments("ABC", "ab1", EnumSet.of(MatchingOptions.IgnoreCase), false),
+            arguments("AB1", "ab1", EnumSet.of(MatchingOptions.IgnoreCase), true)
+        );
+    }
+
+    @ParameterizedTest(name = "isMatch❨{0}, {1}, {2}❩ returns {3}")
+    @MethodSource("isMatchIgnoreCaseTestParameters")
+    void isMatchIgnoreCaseTest(String text, String pattern, EnumSet<MatchingOptions> options, boolean expectedResult) {
+        assertThat(KoreanTextMatcher.isMatch(text, pattern, options.toArray(MatchingOptions[]::new))).isEqualTo(expectedResult);
+    }
+
     static Stream<Arguments> isMatchExceptionTestParameters() {
         return Stream.of(
             arguments((ThrowingCallable) () -> KoreanTextMatcher.isMatch(null, ""), "text = null"),
