@@ -422,7 +422,7 @@ public final class KoreanTextMatcher {
         return (long)startIndex << 32 | length;
     }
 
-    public static boolean isLatinAlphabet(char c) {
+    private static boolean isLatinAlphabet(char c) {
         char lower = (char)(c | 0x20);
         return lower >= 'a' && lower <= 'z';
     }
