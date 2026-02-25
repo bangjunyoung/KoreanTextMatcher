@@ -78,6 +78,11 @@ class KoreanTextMatcherTests {
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒ느", EnumSet.noneOf(MatchingOptions.class), 3),
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒᄂ", EnumSet.noneOf(MatchingOptions.class), 4),
 
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "", EnumSet.of(MatchingOptions.Dubeolsik), 12),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "^", EnumSet.of(MatchingOptions.Dubeolsik), 1),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "^한", EnumSet.of(MatchingOptions.Dubeolsik), 1),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "^한", EnumSet.of(MatchingOptions.Default), 0),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "$", EnumSet.of(MatchingOptions.Dubeolsik), 1),
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ㅎ", EnumSet.of(MatchingOptions.Dubeolsik), 4),
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "하", EnumSet.of(MatchingOptions.Dubeolsik), 2),
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "한", EnumSet.of(MatchingOptions.Dubeolsik), 2),

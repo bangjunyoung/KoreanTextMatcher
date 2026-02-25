@@ -414,7 +414,12 @@ public final class KoreanTextMatcher {
         } else if (_hasStartAnchor) {
             if (hintIndex != 0)
                 return -1;
-            length = hintLength;
+
+            if (_options.contains(MatchingOptions.Dubeolsik)
+                && _splitPattern != null)
+                length = hintLength + 1;
+            else
+                length = hintLength;
         }
         return (long)startIndex << 32 | length;
     }
