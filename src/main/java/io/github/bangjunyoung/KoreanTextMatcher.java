@@ -60,8 +60,14 @@ public final class KoreanTextMatcher {
 
     private final EnumSet<MatchingOptions> _options;
 
+    /**
+     * 검색 옵션.
+     */
     public enum MatchingOptions {
+        /** 두벌식 키보드에서 한글을 입력할 때 발생하는 도깨비불 현상을 감지하고 처리한다. */
         Dubeolsik,
+
+        /** 영문 매칭할 때 대소문자를 구분하지 않는다. */
         IgnoreCase;
     }
 
