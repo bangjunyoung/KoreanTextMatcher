@@ -174,14 +174,11 @@ public final class KoreanTextMatcher {
         //
         // Optimization: narrow the range of text to be matched for pattern.
         //
-        final long textRange = getTextRange(text, startIndex, _pattern.length());
-        if (textRange == -1)
+        final SearchRange range = getSearchRange(text, startIndex, _pattern.length());
+        if (range == null)
             return KoreanTextMatch.EMPTY;
-        // textRange is a tuple of (int startIndex, int length).
-        final int startIndexOpt = (int)(textRange >> 32);
-        final int length = (int)(textRange & 0xFFFFFFF);
 
-        return match(text, startIndexOpt, length);
+        return match(text, range.startIndex(), range.length());
     }
 
     /**
@@ -396,22 +393,24 @@ public final class KoreanTextMatcher {
         return pattern.substring(startIndex, startIndex + length);
     }
 
-    private long getTextRange(String text, final int hintIndex, final int hintLength) {
+    private record SearchRange(int startIndex, int length) {}
+
+    private SearchRange getSearchRange(String text, final int hintIndex, final int hintLength) {
         int startIndex = hintIndex;
         int length = text.length() - hintIndex;
 
         if (length < hintLength)
-            return -1;
+            return null;
 
         if (_hasStartAnchor && _hasEndAnchor) {
             if (text.length() != hintLength)
-                return -1;
+                return null;
         } else if (_hasEndAnchor) {
             startIndex = text.length() - hintLength;
             length = hintLength;
         } else if (_hasStartAnchor) {
             if (hintIndex != 0)
-                return -1;
+                return null;
 
             if (_options.contains(MatchingOptions.Dubeolsik)
                 && _splitPattern != null)
@@ -419,7 +418,7 @@ public final class KoreanTextMatcher {
             else
                 length = hintLength;
         }
-        return (long)startIndex << 32 | length;
+        return new SearchRange(startIndex, length);
     }
 
     private static boolean isLatinAlphabet(char c) {
