@@ -192,6 +192,33 @@ class KoreanTextMatcherTests {
         assertThatThrownBy(func).isInstanceOf(IllegalArgumentException.class);
     }
 
+        static Stream<Arguments> matchTestParameters() {
+        return Stream.of(
+            arguments("", "", MatchingOptions.Dubeolsik, true, 0, 0),
+            arguments("", "^", MatchingOptions.Dubeolsik, true, 0, 0),
+            arguments("", "$", MatchingOptions.Dubeolsik, true, 0, 0),
+            arguments("", "^$", MatchingOptions.Dubeolsik, true, 0, 0),
+            arguments("하늘", "", MatchingOptions.Dubeolsik, true, 0, 0),
+            arguments("하늘", "^", MatchingOptions.Dubeolsik, true, 0, 0),
+            arguments("하늘", "$", MatchingOptions.Dubeolsik, true, 2, 0),
+            arguments("하늘", "^$", MatchingOptions.Dubeolsik, false, 0, 0),
+            arguments("하늘", "ㅎ", MatchingOptions.Dubeolsik, true, 0, 1),
+            arguments("하늘", "하", MatchingOptions.Dubeolsik, true, 0, 1),
+            arguments("하늘", "한", MatchingOptions.Dubeolsik, true, 0, 2),
+            arguments("하늘", "한", MatchingOptions.Default, false, 0, 0),
+            arguments("하늘", "한강", MatchingOptions.Dubeolsik, false, 0, 0)
+        );
+    }
+
+    @ParameterizedTest(name = "static match❨{0}, {1}❩")
+    @MethodSource("matchTestParameters")
+    void matchTest(String text, String pattern, MatchingOptions option, boolean expectedSuccess, int expectedIndex, int expectedLength) {
+        KoreanTextMatch match = KoreanTextMatcher.match(text, pattern, new MatchingOptions[] {option});
+        assertThat(match.success()).isEqualTo(expectedSuccess);
+        assertThat(match.index()).isEqualTo(expectedIndex);
+        assertThat(match.length()).isEqualTo(expectedLength);
+    }
+
     static Stream<Arguments> matchExceptionTestParameters() {
         return Stream.of(
             arguments((ThrowingCallable) () -> KoreanTextMatcher.match(null, ""), "text = null"),
