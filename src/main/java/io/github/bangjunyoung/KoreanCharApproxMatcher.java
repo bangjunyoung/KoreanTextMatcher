@@ -49,9 +49,9 @@ package io.github.bangjunyoung;
 public class KoreanCharApproxMatcher {
     private KoreanCharApproxMatcher() {} // Can never be instantiated.
 
-    private static final ThreadLocal<StringBuilder> BUFFER_T_HOLDER =
+    private static final ThreadLocal<StringBuilder> T_BUFFER_HOLDER =
         ThreadLocal.withInitial(() -> new StringBuilder(6));
-    private static final ThreadLocal<StringBuilder> BUFFER_P_HOLDER =
+    private static final ThreadLocal<StringBuilder> P_BUFFER_HOLDER =
         ThreadLocal.withInitial(() -> new StringBuilder(6));
 
     /**
@@ -69,17 +69,17 @@ public class KoreanCharApproxMatcher {
         if (t == p)
             return true;
 
-        final StringBuilder bufferT = BUFFER_T_HOLDER.get();
-        final StringBuilder bufferP = BUFFER_P_HOLDER.get();
+        final StringBuilder tBuffer = T_BUFFER_HOLDER.get();
+        final StringBuilder pBbuffer = P_BUFFER_HOLDER.get();
 
-        final int lengthT = decompose(t, bufferT);
-        final int lengthP = decompose(p, bufferP);
+        final int tLength = decompose(t, tBuffer);
+        final int pLength = decompose(p, pBbuffer);
 
-        if (lengthT < lengthP)
+        if (tLength < pLength)
             return false;
 
-        for (int i = 0; i < lengthP; i++) {
-            if (bufferT.charAt(i) != bufferP.charAt(i))
+        for (int i = 0; i < pLength; i++) {
+            if (tBuffer.charAt(i) != pBbuffer.charAt(i))
                 return false;
         }
 
