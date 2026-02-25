@@ -72,7 +72,7 @@ public final class KoreanTextMatcher {
     }
 
     private static EnumSet<MatchingOptions> toEnumSet(MatchingOptions[] options) {
-        if (options == null || options.length == 0)
+        if (options.length == 0)
             return EnumSet.noneOf(MatchingOptions.class);
 
         return EnumSet.copyOf(Arrays.asList(options));
@@ -123,9 +123,7 @@ public final class KoreanTextMatcher {
                 char last = _pattern.charAt(_pattern.length() - 1);
                 if (KoreanChar.isSyllable(last) && KoreanChar.getJongseong(last) != '\0') {
                     String lastSplit = KoreanChar.splitTrailingConsonant(last);
-                    if (lastSplit.length() == 2) {
-                        split = _pattern.substring(0, _pattern.length() - 1) + lastSplit;
-                    }
+                    split = _pattern.substring(0, _pattern.length() - 1) + lastSplit;
                 }
             }
             _splitPattern = split;
