@@ -64,6 +64,9 @@ public final class KoreanTextMatcher {
      * 검색 옵션.
      */
     public enum MatchingOptions {
+        /** 기본 옵션. 테스트 코드내 자리 채우는 용도로 사용. */
+        Default,
+
         /** 두벌식 키보드에서 한글을 입력할 때 발생하는 도깨비불 현상을 감지하고 처리한다. */
         Dubeolsik,
 
