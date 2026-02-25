@@ -253,13 +253,11 @@ public final class KoreanTextMatcher {
                 final char patternChar = _pattern.charAt(j);
 
                 if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
-                    if (_options.contains(MatchingOptions.IgnoreCase)) {
-                        if ((textChar | 0x20) != (patternChar | 0x20))
-                            continue outerLoop;
-                    } else {
-                        if (textChar != patternChar)
-                            continue outerLoop;
-                    }
+                    boolean isMatch = _options.contains(MatchingOptions.IgnoreCase)
+                        ? (textChar | 0x20) == (patternChar | 0x20)
+                        : textChar == patternChar;
+                    if (!isMatch)
+                        continue outerLoop;
                 } else if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
                     if (_options.contains(MatchingOptions.Dubeolsik)
                         && j == patternLength - 1
