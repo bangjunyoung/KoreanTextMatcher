@@ -575,18 +575,15 @@ public final class KoreanChar {
     }
 
     private static int getChoseongIndex(char syllable) {
-        final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
-        return sylIndex / (JUNGSEONG_COUNT * JONGSEONG_COUNT);
+        return (syllable - HANGUL_SYLLABLES_BASE) / (JUNGSEONG_COUNT * JONGSEONG_COUNT);
     }
 
     private static int getJungseongIndex(char syllable) {
-        final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
-        return sylIndex % (JUNGSEONG_COUNT * JONGSEONG_COUNT) / JONGSEONG_COUNT;
+        return (syllable - HANGUL_SYLLABLES_BASE) % (JUNGSEONG_COUNT * JONGSEONG_COUNT) / JONGSEONG_COUNT;
     }
 
     private static int getJongseongIndex(char syllable) {
-        final int sylIndex = syllable - HANGUL_SYLLABLES_BASE;
-        return sylIndex % JONGSEONG_COUNT;
+        return (syllable - HANGUL_SYLLABLES_BASE) % JONGSEONG_COUNT;
     }
 
     private static int choseongToIndex(char c) {
