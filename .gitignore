@@ -28,3 +28,5 @@ out/
 # Visual Studio & Code
 .vs/
 .vscode/
+
+.DS_Store
