@@ -294,16 +294,16 @@ public final class KoreanTextMatcher {
             if (isWhitespace(text.charAt(i)))
                 continue;
 
-            int totalWhitespaceCount = 0;
+            int whitespaceCount = 0;
             boolean dubeolsikMatchingMode = false;
             for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
-                while (isWhitespace(text.charAt(i + totalWhitespaceCount + j))) {
-                    totalWhitespaceCount++;
-                    if (i + totalWhitespaceCount + j == startIndex + length)
+                while (isWhitespace(text.charAt(i + whitespaceCount + j))) {
+                    whitespaceCount++;
+                    if (i + whitespaceCount + j == startIndex + length)
                         break outerLoop;
                 }
 
-                final char textChar = text.charAt(i + totalWhitespaceCount + j);
+                final char textChar = text.charAt(i + whitespaceCount + j);
                 final char patternChar = dubeolsikMatchingMode ? _splitPattern.charAt(j) : _pattern.charAt(j);
 
                 if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
@@ -322,10 +322,10 @@ public final class KoreanTextMatcher {
                     else
                         continue outerLoop;
                 } else if (dubeolsikMatchingMode)
-                    return new KoreanTextMatch(this, text, i, splitPatternLength + totalWhitespaceCount);
+                    return new KoreanTextMatch(this, text, i, splitPatternLength + whitespaceCount);
             }
 
-            return new KoreanTextMatch(this, text, i, patternLength + totalWhitespaceCount);
+            return new KoreanTextMatch(this, text, i, patternLength + whitespaceCount);
         }
 
         return KoreanTextMatch.EMPTY;
