@@ -441,8 +441,7 @@ public final class KoreanTextMatcher {
     }
 
     private static boolean isLatinAlphabet(char c) {
-        char lower = (char)(c | 0x20);
-        return lower >= 'a' && lower <= 'z';
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
     private static boolean isWhitespace(char c) {
