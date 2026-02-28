@@ -181,9 +181,63 @@ public final class KoreanTextMatcher {
         if (range == null)
             return KoreanTextMatch.EMPTY;
 
-        return _options.contains(MatchingOptions.IgnoreWhitespace)
-            ? matchIgnoreWhitespace(text, range.startIndex(), range.length())
-            : match(text, range.startIndex(), range.length());
+        return match(text, range.startIndex(), range.length());
+    }
+
+    private KoreanTextMatch match(final String text, final int startIndex, final int length) {
+        if (_pattern.length() == 0)
+            return new KoreanTextMatch(this, text, startIndex, 0);
+
+        final boolean dubeolsikInput = _options.contains(MatchingOptions.Dubeolsik);
+        final boolean ignoreCase = _options.contains(MatchingOptions.IgnoreCase);
+        final boolean ignoreWhitespace = _options.contains(MatchingOptions.IgnoreWhitespace);
+
+        final int patternLength = _pattern.length();
+        final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
+        final int endIndex = startIndex + length - patternLength + 1;
+
+        outerLoop: for (int i = startIndex; i < endIndex; i++) {
+            if (ignoreWhitespace
+                && isWhitespace(text.charAt(i)))
+                continue;
+
+            int whitespaceCount = 0;
+            boolean dubeolsikMatchingMode = false;
+            for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
+                if (ignoreWhitespace) {
+                    while (isWhitespace(text.charAt(i + whitespaceCount + j))) {
+                        whitespaceCount++;
+                        if (i + whitespaceCount + j == startIndex + length)
+                            break outerLoop;
+                    }
+                }
+
+                final char textChar = text.charAt(i + whitespaceCount + j);
+                final char patternChar = dubeolsikMatchingMode ? _splitPattern.charAt(j) : _pattern.charAt(j);
+
+                if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
+                    final boolean isMatch = ignoreCase
+                        ? (textChar | 0x20) == (patternChar | 0x20)
+                        : textChar == patternChar;
+                    if (!isMatch)
+                        continue outerLoop;
+                } else if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
+                    if (dubeolsikInput
+                        && j == patternLength - 1
+                        && _splitPattern != null
+                        && i + splitPatternLength <= startIndex + length
+                        && KoreanCharApproxMatcher.isMatch(textChar, _splitPattern.charAt(j)))
+                        dubeolsikMatchingMode = true;
+                    else
+                        continue outerLoop;
+                } else if (dubeolsikMatchingMode)
+                    return new KoreanTextMatch(this, text, i, splitPatternLength + whitespaceCount);
+            }
+
+            return new KoreanTextMatch(this, text, i, patternLength + whitespaceCount);
+        }
+
+        return KoreanTextMatch.EMPTY;
     }
 
     /**
@@ -238,97 +292,6 @@ public final class KoreanTextMatcher {
                 };
             }
         };
-    }
-
-    private KoreanTextMatch match(final String text, final int startIndex, final int length) {
-        if (_pattern.length() == 0)
-            return new KoreanTextMatch(this, text, startIndex, 0);
-
-        final int patternLength = _pattern.length();
-        final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
-        final int endIndex = startIndex + length - patternLength + 1;
-
-        outerLoop:
-        for (int i = startIndex; i < endIndex; i++) {
-
-            boolean dubeolsikMatchingMode = false;
-            for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
-                final char textChar = text.charAt(i + j);
-                final char patternChar = dubeolsikMatchingMode ? _splitPattern.charAt(j) : _pattern.charAt(j);
-
-                if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
-                    boolean isMatch = _options.contains(MatchingOptions.IgnoreCase)
-                        ? (textChar | 0x20) == (patternChar | 0x20)
-                        : textChar == patternChar;
-                    if (!isMatch)
-                        continue outerLoop;
-                } else if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
-                    if (_options.contains(MatchingOptions.Dubeolsik)
-                        && j == patternLength - 1
-                        && _splitPattern != null
-                        && i + splitPatternLength <= startIndex + length
-                        && KoreanCharApproxMatcher.isMatch(textChar, _splitPattern.charAt(j)))
-                        dubeolsikMatchingMode = true;
-                    else
-                        continue outerLoop;
-                } else if (dubeolsikMatchingMode)
-                    return new KoreanTextMatch(this, text, i, splitPatternLength);
-            }
-
-            return new KoreanTextMatch(this, text, i, patternLength);
-        }
-
-        return KoreanTextMatch.EMPTY;
-    }
-
-    private KoreanTextMatch matchIgnoreWhitespace(final String text, final int startIndex, final int length) {
-        if (_pattern.length() == 0)
-            return new KoreanTextMatch(this, text, startIndex, 0);
-
-        final int patternLength = _pattern.length();
-        final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
-        final int endIndex = startIndex + length - patternLength + 1;
-
-        outerLoop:
-        for (int i = startIndex; i < endIndex; i++) {
-            if (isWhitespace(text.charAt(i)))
-                continue;
-
-            int whitespaceCount = 0;
-            boolean dubeolsikMatchingMode = false;
-            for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
-                while (isWhitespace(text.charAt(i + whitespaceCount + j))) {
-                    whitespaceCount++;
-                    if (i + whitespaceCount + j == startIndex + length)
-                        break outerLoop;
-                }
-
-                final char textChar = text.charAt(i + whitespaceCount + j);
-                final char patternChar = dubeolsikMatchingMode ? _splitPattern.charAt(j) : _pattern.charAt(j);
-
-                if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
-                    boolean isMatch = _options.contains(MatchingOptions.IgnoreCase)
-                        ? (textChar | 0x20) == (patternChar | 0x20)
-                        : textChar == patternChar;
-                    if (!isMatch)
-                        continue outerLoop;
-                } else if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
-                    if (_options.contains(MatchingOptions.Dubeolsik)
-                        && j == patternLength - 1
-                        && _splitPattern != null
-                        && i + splitPatternLength <= startIndex + length
-                        && KoreanCharApproxMatcher.isMatch(textChar, _splitPattern.charAt(j)))
-                        dubeolsikMatchingMode = true;
-                    else
-                        continue outerLoop;
-                } else if (dubeolsikMatchingMode)
-                    return new KoreanTextMatch(this, text, i, splitPatternLength + whitespaceCount);
-            }
-
-            return new KoreanTextMatch(this, text, i, patternLength + whitespaceCount);
-        }
-
-        return KoreanTextMatch.EMPTY;
     }
 
     /**
