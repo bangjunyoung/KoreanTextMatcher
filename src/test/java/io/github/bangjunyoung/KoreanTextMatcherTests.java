@@ -192,7 +192,7 @@ class KoreanTextMatcherTests {
         assertThatThrownBy(func).isInstanceOf(IllegalArgumentException.class);
     }
 
-        static Stream<Arguments> matchTestParameters() {
+    static Stream<Arguments> matchTestParameters() {
         return Stream.of(
             arguments("", "", MatchingOptions.Dubeolsik, true, 0, 0),
             arguments("", "^", MatchingOptions.Dubeolsik, true, 0, 0),
