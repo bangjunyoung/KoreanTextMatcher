@@ -245,9 +245,11 @@ public final class KoreanTextMatcher {
 
         outerLoop:
         for (int i = startIndex; i < endIndex; i++) {
-            for (int j = 0; j < patternLength; j++) {
+
+            boolean dubeolsikMatchingMode = false;
+            for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
                 final char textChar = text.charAt(i + j);
-                final char patternChar = _pattern.charAt(j);
+                final char patternChar = dubeolsikMatchingMode ? _splitPattern.charAt(j) : _pattern.charAt(j);
 
                 if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
                     boolean isMatch = _options.contains(MatchingOptions.IgnoreCase)
@@ -260,12 +262,12 @@ public final class KoreanTextMatcher {
                         && j == patternLength - 1
                         && _splitPattern != null
                         && i + splitPatternLength <= startIndex + length
-                        && KoreanCharApproxMatcher.isMatch(text.charAt(i + j), _splitPattern.charAt(j))
-                        && KoreanCharApproxMatcher.isMatch(text.charAt(i + j + 1), _splitPattern.charAt(j + 1)))
-                        return new KoreanTextMatch(this, text, i, splitPatternLength);
+                        && KoreanCharApproxMatcher.isMatch(textChar, _splitPattern.charAt(j)))
+                        dubeolsikMatchingMode = true;
                     else
                         continue outerLoop;
-                }
+                } else if (dubeolsikMatchingMode)
+                    return new KoreanTextMatch(this, text, i, splitPatternLength);
             }
 
             return new KoreanTextMatch(this, text, i, patternLength);
