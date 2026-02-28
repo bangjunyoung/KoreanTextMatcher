@@ -68,7 +68,7 @@ public final class KoreanTextMatcher {
         Default,
 
         /** 두벌식 키보드에서 한글을 입력할 때 발생하는 도깨비불 현상을 감지하고 처리한다. */
-        Dubeolsik,
+        DubeolsikInput,
 
         /** 영문 매칭할 때 대소문자를 구분하지 않는다. */
         IgnoreCase,
@@ -124,7 +124,7 @@ public final class KoreanTextMatcher {
             _pattern = stripAnchors(pattern);
 
             String split = null;
-            if (options.contains(MatchingOptions.Dubeolsik)
+            if (options.contains(MatchingOptions.DubeolsikInput)
                 && _pattern.length() > 0) {
                 char last = _pattern.charAt(_pattern.length() - 1);
                 if (KoreanChar.isSyllable(last) && KoreanChar.getJongseong(last) != '\0') {
@@ -188,7 +188,7 @@ public final class KoreanTextMatcher {
         if (_pattern.length() == 0)
             return new KoreanTextMatch(this, text, startIndex, 0);
 
-        final boolean dubeolsikInput = _options.contains(MatchingOptions.Dubeolsik);
+        final boolean dubeolsikInput = _options.contains(MatchingOptions.DubeolsikInput);
         final boolean ignoreCase = _options.contains(MatchingOptions.IgnoreCase);
         final boolean ignoreWhitespace = _options.contains(MatchingOptions.IgnoreWhitespace);
 
@@ -432,7 +432,7 @@ public final class KoreanTextMatcher {
             if (hintIndex != 0)
                 return null;
 
-            length = (_options.contains(MatchingOptions.Dubeolsik)
+            length = (_options.contains(MatchingOptions.DubeolsikInput)
                       && _splitPattern != null)
                 ? hintLength + 1
                 : hintLength;

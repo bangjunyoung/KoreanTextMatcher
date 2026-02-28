@@ -78,15 +78,15 @@ class KoreanTextMatcherTests {
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒ느", EnumSet.noneOf(MatchingOptions.class), 3),
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ᄒᄂ", EnumSet.noneOf(MatchingOptions.class), 4),
 
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "", EnumSet.of(MatchingOptions.Dubeolsik), 12),
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "^", EnumSet.of(MatchingOptions.Dubeolsik), 1),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "^한", EnumSet.of(MatchingOptions.Dubeolsik), 1),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "", EnumSet.of(MatchingOptions.DubeolsikInput), 12),
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "^", EnumSet.of(MatchingOptions.DubeolsikInput), 1),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "^한", EnumSet.of(MatchingOptions.DubeolsikInput), 1),
             arguments("하늘 ᄒ늘 하느 ᄒᄂ", "^한", EnumSet.of(MatchingOptions.Default), 0),
-            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "$", EnumSet.of(MatchingOptions.Dubeolsik), 1),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ㅎ", EnumSet.of(MatchingOptions.Dubeolsik), 4),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "하", EnumSet.of(MatchingOptions.Dubeolsik), 2),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "한", EnumSet.of(MatchingOptions.Dubeolsik), 2),
-            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "학", EnumSet.of(MatchingOptions.Dubeolsik), 0)
+            arguments("하늘 ㅎ늘 하느 ㅎㄴ", "$", EnumSet.of(MatchingOptions.DubeolsikInput), 1),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "ㅎ", EnumSet.of(MatchingOptions.DubeolsikInput), 4),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "하", EnumSet.of(MatchingOptions.DubeolsikInput), 2),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "한", EnumSet.of(MatchingOptions.DubeolsikInput), 2),
+            arguments("하늘 ᄒ늘 하느 ᄒᄂ", "학", EnumSet.of(MatchingOptions.DubeolsikInput), 0)
         );
     }
 
@@ -211,22 +211,22 @@ class KoreanTextMatcherTests {
             arguments(" 바      ", "바닥", MatchingOptions.Default, false, "", 0, 0),
             arguments(" 바          닥", "바닥", MatchingOptions.Default, true, "바          닥", 1, 12),
             arguments("          바닥", "바닥", MatchingOptions.Default, true, "바닥", 10, 2),
-            arguments("아바ㄹ", "아받", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바ㄹ", "받", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바", "받", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바 ㄹ", "받", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바다", "바닥", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바닥", "남은", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바닥", "받", MatchingOptions.Dubeolsik, true, "바닥", 0, 2),
-            arguments("바닥", "남", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바닥", "바ㄹ", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바닥", "ㅂㄷ", MatchingOptions.Dubeolsik, true, "바닥", 0, 2),
-            arguments("바닥 ", "받", MatchingOptions.Dubeolsik, true, "바닥", 0, 2),
-            arguments("바 닥 ", "받", MatchingOptions.Dubeolsik, true, "바 닥", 0, 3),
-            arguments("바닥에 껍질", "바닥엔", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바닥에 ㄴ", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에 ㄴ", 0, 5),
-            arguments("바닥에 ㄹ", "바닥엔", MatchingOptions.Dubeolsik, false, "", 0, 0),
-            arguments("바닥에   ㄴ", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에   ㄴ", 0, 7),
+            arguments("아바ㄹ", "아받", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바ㄹ", "받", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바", "받", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바 ㄹ", "받", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바다", "바닥", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바닥", "남은", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바닥", "받", MatchingOptions.DubeolsikInput, true, "바닥", 0, 2),
+            arguments("바닥", "남", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바닥", "바ㄹ", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바닥", "ㅂㄷ", MatchingOptions.DubeolsikInput, true, "바닥", 0, 2),
+            arguments("바닥 ", "받", MatchingOptions.DubeolsikInput, true, "바닥", 0, 2),
+            arguments("바 닥 ", "받", MatchingOptions.DubeolsikInput, true, "바 닥", 0, 3),
+            arguments("바닥에 껍질", "바닥엔", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바닥에 ㄴ", "바닥엔", MatchingOptions.DubeolsikInput, true, "바닥에 ㄴ", 0, 5),
+            arguments("바닥에 ㄹ", "바닥엔", MatchingOptions.DubeolsikInput, false, "", 0, 0),
+            arguments("바닥에   ㄴ", "바닥엔", MatchingOptions.DubeolsikInput, true, "바닥에   ㄴ", 0, 7),
             arguments("바닥에 남은", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 0, 6),
             arguments("바닥에 남은", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 0, 6),
             arguments("바닥에 남은 ", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 0, 6),
@@ -237,8 +237,8 @@ class KoreanTextMatcherTests {
             arguments("바닥에 남은 차가운 껍질에", "ㅊㄱㅇㄲㅈㅇ", MatchingOptions.Default, true, "차가운 껍질에", 7, 7),
             arguments("바닥에 남은  차가운   껍질에", "ㅊㄱㅇㄲㅈㅇ", MatchingOptions.Default, true, "차가운   껍질에", 8, 9),
             arguments("바닥에 남은 차가운 껍질   ", "ㅊㄱㅇㄲㅈㅇ", MatchingOptions.Default, false, "", 0, 0),
-            arguments("바닥에 남은 차가운 껍질", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에 남", 0, 5),
-            arguments(" 바닥에  남은  차가운", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에  남", 1, 6)
+            arguments("바닥에 남은 차가운 껍질", "바닥엔", MatchingOptions.DubeolsikInput, true, "바닥에 남", 0, 5),
+            arguments(" 바닥에  남은  차가운", "바닥엔", MatchingOptions.DubeolsikInput, true, "바닥에  남", 1, 6)
         );
     }
 
@@ -261,19 +261,19 @@ class KoreanTextMatcherTests {
 
     static Stream<Arguments> matchTestParameters() {
         return Stream.of(
-            arguments("", "", MatchingOptions.Dubeolsik, true, 0, 0),
-            arguments("", "^", MatchingOptions.Dubeolsik, true, 0, 0),
-            arguments("", "$", MatchingOptions.Dubeolsik, true, 0, 0),
-            arguments("", "^$", MatchingOptions.Dubeolsik, true, 0, 0),
-            arguments("하늘", "", MatchingOptions.Dubeolsik, true, 0, 0),
-            arguments("하늘", "^", MatchingOptions.Dubeolsik, true, 0, 0),
-            arguments("하늘", "$", MatchingOptions.Dubeolsik, true, 2, 0),
-            arguments("하늘", "^$", MatchingOptions.Dubeolsik, false, 0, 0),
-            arguments("하늘", "ㅎ", MatchingOptions.Dubeolsik, true, 0, 1),
-            arguments("하늘", "하", MatchingOptions.Dubeolsik, true, 0, 1),
-            arguments("하늘", "한", MatchingOptions.Dubeolsik, true, 0, 2),
+            arguments("", "", MatchingOptions.DubeolsikInput, true, 0, 0),
+            arguments("", "^", MatchingOptions.DubeolsikInput, true, 0, 0),
+            arguments("", "$", MatchingOptions.DubeolsikInput, true, 0, 0),
+            arguments("", "^$", MatchingOptions.DubeolsikInput, true, 0, 0),
+            arguments("하늘", "", MatchingOptions.DubeolsikInput, true, 0, 0),
+            arguments("하늘", "^", MatchingOptions.DubeolsikInput, true, 0, 0),
+            arguments("하늘", "$", MatchingOptions.DubeolsikInput, true, 2, 0),
+            arguments("하늘", "^$", MatchingOptions.DubeolsikInput, false, 0, 0),
+            arguments("하늘", "ㅎ", MatchingOptions.DubeolsikInput, true, 0, 1),
+            arguments("하늘", "하", MatchingOptions.DubeolsikInput, true, 0, 1),
+            arguments("하늘", "한", MatchingOptions.DubeolsikInput, true, 0, 2),
             arguments("하늘", "한", MatchingOptions.Default, false, 0, 0),
-            arguments("하늘", "한강", MatchingOptions.Dubeolsik, false, 0, 0)
+            arguments("하늘", "한강", MatchingOptions.DubeolsikInput, false, 0, 0)
         );
     }
 
