@@ -71,7 +71,10 @@ public final class KoreanTextMatcher {
         Dubeolsik,
 
         /** 영문 매칭할 때 대소문자를 구분하지 않는다. */
-        IgnoreCase;
+        IgnoreCase,
+
+        /** 텍스트 안의 공백을 건너뛰고 매칭한다. */
+        IgnoreWhitespace;
     }
 
     private static EnumSet<MatchingOptions> toEnumSet(MatchingOptions[] options) {
@@ -178,7 +181,9 @@ public final class KoreanTextMatcher {
         if (range == null)
             return KoreanTextMatch.EMPTY;
 
-        return match(text, range.startIndex(), range.length());
+        return _options.contains(MatchingOptions.IgnoreWhitespace)
+            ? matchIgnoreWhitespace(text, range.startIndex(), range.length())
+            : match(text, range.startIndex(), range.length());
     }
 
     /**
@@ -271,6 +276,56 @@ public final class KoreanTextMatcher {
             }
 
             return new KoreanTextMatch(this, text, i, patternLength);
+        }
+
+        return KoreanTextMatch.EMPTY;
+    }
+
+    private KoreanTextMatch matchIgnoreWhitespace(final String text, final int startIndex, final int length) {
+        if (_pattern.length() == 0)
+            return new KoreanTextMatch(this, text, startIndex, 0);
+
+        final int patternLength = _pattern.length();
+        final int splitPatternLength = (_splitPattern != null) ? _splitPattern.length() : 0;
+        final int endIndex = startIndex + length - patternLength + 1;
+
+        outerLoop:
+        for (int i = startIndex; i < endIndex; i++) {
+            if (isWhitespace(text.charAt(i)))
+                continue;
+
+            int totalWhitespaceCount = 0;
+            boolean dubeolsikMatchingMode = false;
+            for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
+                while (isWhitespace(text.charAt(i + totalWhitespaceCount + j))) {
+                    totalWhitespaceCount++;
+                    if (i + totalWhitespaceCount + j == startIndex + length)
+                        break outerLoop;
+                }
+
+                final char textChar = text.charAt(i + totalWhitespaceCount + j);
+                final char patternChar = dubeolsikMatchingMode ? _splitPattern.charAt(j) : _pattern.charAt(j);
+
+                if (isLatinAlphabet(textChar) && isLatinAlphabet(patternChar)) {
+                    boolean isMatch = _options.contains(MatchingOptions.IgnoreCase)
+                        ? (textChar | 0x20) == (patternChar | 0x20)
+                        : textChar == patternChar;
+                    if (!isMatch)
+                        continue outerLoop;
+                } else if (!KoreanCharApproxMatcher.isMatch(textChar, patternChar)) {
+                    if (_options.contains(MatchingOptions.Dubeolsik)
+                        && j == patternLength - 1
+                        && _splitPattern != null
+                        && i + splitPatternLength <= startIndex + length
+                        && KoreanCharApproxMatcher.isMatch(textChar, _splitPattern.charAt(j)))
+                        dubeolsikMatchingMode = true;
+                    else
+                        continue outerLoop;
+                } else if (dubeolsikMatchingMode)
+                    return new KoreanTextMatch(this, text, i, splitPatternLength + totalWhitespaceCount);
+            }
+
+            return new KoreanTextMatch(this, text, i, patternLength + totalWhitespaceCount);
         }
 
         return KoreanTextMatch.EMPTY;
@@ -425,5 +480,9 @@ public final class KoreanTextMatcher {
     private static boolean isLatinAlphabet(char c) {
         char lower = (char)(c | 0x20);
         return lower >= 'a' && lower <= 'z';
+    }
+
+    private static boolean isWhitespace(char c) {
+        return c == ' ' || c == '\t' || c == '\n' || c == '\r';
     }
 }

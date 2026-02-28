@@ -192,6 +192,73 @@ class KoreanTextMatcherTests {
         assertThatThrownBy(func).isInstanceOf(IllegalArgumentException.class);
     }
 
+    static Stream<Arguments> matchIgnoreWhitespaceTestParameters() {
+        return Stream.of(
+            arguments("한글", "A", MatchingOptions.Default, false, "", 0, 0),
+            arguments("Apple", "가", MatchingOptions.Default, false, "", 0, 0),
+            arguments("Apple", "B", MatchingOptions.Default, false, "", 0, 0),
+            arguments("ABC", "ABD", MatchingOptions.Default, false, "", 0, 0),
+            arguments("Tik Tak", "", MatchingOptions.Default, true, "", 0, 0),
+            arguments("Tik Tak", "tak", MatchingOptions.Default, false, "", 0, 0),
+            arguments("Tik Tak", "ta1", MatchingOptions.Default, false, "", 0, 0),
+            arguments("Tik Tak", "tak", MatchingOptions.IgnoreCase, true, "Tak", 4, 3),
+            arguments("Tik Tak", "tikt", MatchingOptions.IgnoreCase, true, "Tik T", 0, 5),
+            arguments(" 저 TV가 내게 약속할 때 ", "tvㄱ내ㄱㅇㅅ", MatchingOptions.Default, false, "", 0, 0),
+            arguments(" 저 TV가 내게 약속할 때 ", "TVㄱ ㄴㄱ", MatchingOptions.Default, false, "TV가 내게", 3, 6),
+            arguments(" 저 TV가 내게 약속할 때 ", "tvㄱ내ㄱㅇㅅ", MatchingOptions.IgnoreCase, true, "TV가 내게 약속", 3, 9),
+            arguments(" 저 TV가\r\n내게\t약속할 때 ", "tvㄱ내ㄱㅇㅅ", MatchingOptions.IgnoreCase, true, "TV가\r\n내게\t약속", 3, 10),
+            arguments(" 바 ", "바닥", MatchingOptions.Default, false, "", 0, 0),
+            arguments(" 바      ", "바닥", MatchingOptions.Default, false, "", 0, 0),
+            arguments(" 바          닥", "바닥", MatchingOptions.Default, true, "바          닥", 1, 12),
+            arguments("          바닥", "바닥", MatchingOptions.Default, true, "바닥", 10, 2),
+            arguments("아바ㄹ", "아받", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바ㄹ", "받", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바", "받", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바 ㄹ", "받", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바다", "바닥", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바닥", "남은", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바닥", "받", MatchingOptions.Dubeolsik, true, "바닥", 0, 2),
+            arguments("바닥", "남", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바닥", "바ㄹ", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바닥", "ㅂㄷ", MatchingOptions.Dubeolsik, true, "바닥", 0, 2),
+            arguments("바닥 ", "받", MatchingOptions.Dubeolsik, true, "바닥", 0, 2),
+            arguments("바 닥 ", "받", MatchingOptions.Dubeolsik, true, "바 닥", 0, 3),
+            arguments("바닥에 껍질", "바닥엔", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바닥에 ㄴ", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에 ㄴ", 0, 5),
+            arguments("바닥에 ㄹ", "바닥엔", MatchingOptions.Dubeolsik, false, "", 0, 0),
+            arguments("바닥에   ㄴ", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에   ㄴ", 0, 7),
+            arguments("바닥에 남은", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 0, 6),
+            arguments("바닥에 남은", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 0, 6),
+            arguments("바닥에 남은 ", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 0, 6),
+            arguments(" 바닥에 남은 ", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 1, 6),
+            arguments("  바닥에 남은  ", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에 남은", 2, 6),
+            arguments(" 바닥에  남은 ", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에  남은", 1, 7),
+            arguments("  바닥에  남은  ", "ㅂㄷㅇㄴㅇ", MatchingOptions.Default, true, "바닥에  남은", 2, 7),
+            arguments("바닥에 남은 차가운 껍질에", "ㅊㄱㅇㄲㅈㅇ", MatchingOptions.Default, true, "차가운 껍질에", 7, 7),
+            arguments("바닥에 남은  차가운   껍질에", "ㅊㄱㅇㄲㅈㅇ", MatchingOptions.Default, true, "차가운   껍질에", 8, 9),
+            arguments("바닥에 남은 차가운 껍질   ", "ㅊㄱㅇㄲㅈㅇ", MatchingOptions.Default, false, "", 0, 0),
+            arguments("바닥에 남은 차가운 껍질", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에 남", 0, 5),
+            arguments(" 바닥에  남은  차가운", "바닥엔", MatchingOptions.Dubeolsik, true, "바닥에  남", 1, 6)
+        );
+    }
+
+    @ParameterizedTest(name = "new KoreanTextMatcher❨{1}❩.match❨{0}❩ returns success={3}, value={4}, index={5}, length={6}")
+    @MethodSource("matchIgnoreWhitespaceTestParameters")
+    void matchIgnoreWhitespaceTest(String text, String pattern, MatchingOptions option,
+            boolean expectedSuccess, String expectedValue, int expectedIndex, int expectedLength) {
+        String message = String.format("text: %s, pattern: %s", text, pattern);
+        KoreanTextMatcher matcher = new KoreanTextMatcher(pattern, MatchingOptions.IgnoreWhitespace, option);
+        KoreanTextMatch match = matcher.match(text);
+        assertThat(match.success()).as(message).isEqualTo(expectedSuccess);
+        if (match.success()) {
+            assertThat(match.value()).as(message).isEqualTo(expectedValue);
+            assertThat(match.index()).as(message).isEqualTo(expectedIndex);
+            assertThat(match.length()).as(message).isEqualTo(expectedLength);
+            assertThat(match.length()).as(message).isEqualTo(match.value().length());
+            assertThat(text).as(message).contains(match.value());
+        }
+    }
+
     static Stream<Arguments> matchTestParameters() {
         return Stream.of(
             arguments("", "", MatchingOptions.Dubeolsik, true, 0, 0),
