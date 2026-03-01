@@ -203,7 +203,7 @@ public final class KoreanTextMatcher {
 
             int whitespaceCount = 0;
             boolean dubeolsikMatchingMode = false;
-            for (int j = 0; j < patternLength + (dubeolsikMatchingMode ? 1 : 0); j++) {
+            for (int j = 0; j < (dubeolsikMatchingMode ? splitPatternLength : patternLength); j++) {
                 if (ignoreWhitespace) {
                     while (isWhitespace(text.charAt(i + whitespaceCount + j))) {
                         whitespaceCount++;
