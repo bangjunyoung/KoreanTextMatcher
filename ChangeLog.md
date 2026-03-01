@@ -9,15 +9,15 @@
 - `KoreanCharApproxMatcher`를 메모리 할당 최소화한 고성능 버전으로 새롭게 구현.
 - `KoreanChar` 타입에 새로 추가된 API:
   - 음절 조합: `compose`
-  - 음절 분해: `decompose`, `decomposeCompat`
+  - 음절 분해: `decompose`, `decomposeToCompat`
   - 음절에서 중성/종성 구하기: `getCompatJungseong`, `getCompatJongseong`, `getJungseong`, `getJongseong`
   - 중성/종성인지 판별하기: `isCompatJungseong`, `isCompatJongseong`, `isJungseong`, `isJongseong`
   - 한글 자모와 한글 호환 자모간 변환: `convertCompatToChoseong`, `convertChoseongToCompat`, `convertJungseongToCompat`, `convertCompatToJungseong`, `convertCompatToJongseong`, `convertJongseongToCompat`
 - ```[BREAKING CHANGE]```: `KoreanCharApproxMatcher.match`를 `isMatch`로 이름 바꿈
-- ```[BREAKING CHANGE]```: `KoreanChar.decomposeIntoCompatJamo`를 삭제하고 `decomposeCompat`으로 대체.
+- ```[BREAKING CHANGE]```: `KoreanChar.decomposeIntoCompatJamo`를 삭제하고 `decomposeToCompat`으로 대체.
 - [JDK](https://developers.redhat.com/products/openjdk) 버전을 17로 상향.
 - [Hamcrest](https://hamcrest.org/) 기반 테스트를 [AssertJ](https://github.com/assertj/assertj-core)로 이전.
-- [Junit](https://junit.org/) 버전을 6으로 상향.
+- [JUnit](https://junit.org/) 버전을 6으로 상향.
 - [Gradle](https://gradle.org) 버전을 8.9로 상향.
 
 ## 3.0 (2019)
