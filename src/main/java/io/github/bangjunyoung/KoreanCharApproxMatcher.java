@@ -46,7 +46,7 @@ package io.github.bangjunyoung;
  *
  * @author 방준영 &lt;bang.junyoung@gmail.com&gt;
  */
-public class KoreanCharApproxMatcher {
+public final class KoreanCharApproxMatcher {
     private KoreanCharApproxMatcher() {} // Can never be instantiated.
 
     private static final ThreadLocal<StringBuilder> T_BUFFER_HOLDER =
