@@ -64,11 +64,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.bangjunyoung:KoreanTextMatcher:v3.999'
+    implementation 'com.github.bangjunyoung:KoreanTextMatcher:v4.0'
 }
 ```
-
-`v:3.999` 부분을 사용하려는 버전으로 바꿔준다.
 
 ## 프로그래밍 예시
 

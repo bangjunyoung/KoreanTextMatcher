@@ -15,7 +15,7 @@ dependencies {
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
-version = '3.99999'
+version = '4.0'
 
 subprojects {
     plugins.withId("java-library") {
