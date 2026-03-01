@@ -127,7 +127,7 @@ public final class KoreanTextMatcher {
             if (options.contains(MatchingOptions.DubeolsikInput)
                 && _pattern.length() > 0) {
                 char last = _pattern.charAt(_pattern.length() - 1);
-                if (KoreanChar.isSyllable(last) && KoreanChar.getJongseong(last) != '\0') {
+                if (KoreanChar.isSyllable(last) && KoreanChar.hasJongseong(last)) {
                     String lastSplit = KoreanChar.splitTrailingConsonant(last);
                     split = _pattern.substring(0, _pattern.length() - 1) + lastSplit;
                 }

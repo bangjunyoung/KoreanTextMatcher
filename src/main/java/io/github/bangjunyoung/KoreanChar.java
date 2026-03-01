@@ -570,6 +570,10 @@ public final class KoreanChar {
             return "" + compose(choseong, jungseong, splitJongseong.charAt(0)) + splitJongseong.charAt(1);
     }
 
+    static boolean hasJongseong(char syllable) {
+        return getJongseongIndex(syllable) != 0;
+    }
+
     private static char removeJongseong(char syllable) {
         return (char)(syllable - getJongseongIndex(syllable));
     }
