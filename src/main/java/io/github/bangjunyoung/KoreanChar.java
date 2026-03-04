@@ -150,8 +150,7 @@ public final class KoreanChar {
      * @return {@code c}가 한글 호환 자모 초성이면 {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatChoseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_CHOSEONG, c);
-        return index >= 0;
+        return Arrays.binarySearch(COMPAT_CHOSEONG, c) >= 0;
     }
 
     /**
@@ -171,8 +170,7 @@ public final class KoreanChar {
      * @return {@code c}가 한글 호환 자모 종성이면 {@code true}, 아니면 {@code false}.
      */
     public static boolean isCompatJongseong(char c) {
-        final int index = Arrays.binarySearch(COMPAT_JONGSEONG, c);
-        return index >= 0;
+        return Arrays.binarySearch(COMPAT_JONGSEONG, c) >= 0;
     }
 
     /**
@@ -218,7 +216,7 @@ public final class KoreanChar {
         if (index == 0)
             return '\u0000';
         else
-            return (char)((int)'ᆨ' + index - 1);
+            return (char)(0x11A8 + index - 1);
     }
 
     /**
@@ -305,7 +303,10 @@ public final class KoreanChar {
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(c));
 
-        return index == 0 ? '\u0000' : (char)(0x11A8 + index - 1);
+        if (index == 0)
+            return '\u0000';
+        else
+            return (char)(0x11A8 + index - 1);
     }
 
     /**
