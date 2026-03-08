@@ -347,6 +347,7 @@ public final class KoreanChar {
     public static char convertJongseongToCompat(char c) {
         if (c == '\u0000')
             return '\u0000';
+
         if (!isJongseong(c))
             throw new IllegalArgumentException(String.valueOf(c));
 
@@ -394,6 +395,7 @@ public final class KoreanChar {
     public static String splitJamo(char jamo) {
         if (jamo == '\u0000')
             return "";
+
         final int index = Arrays.binarySearch(JOINED_JAMOS, jamo);
         if (index < 0)
             throw new IllegalArgumentException(String.valueOf(jamo));
