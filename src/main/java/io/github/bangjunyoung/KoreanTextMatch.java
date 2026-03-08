@@ -119,7 +119,7 @@ public final class KoreanTextMatch {
      *         검색이 실패하면 {@link #EMPTY}를 리턴한다.
      */
     public KoreanTextMatch nextMatch() {
-        if (_text == null)
+        if (!_success)
             return EMPTY;
 
         final int nextIndex = _index + (_value.isEmpty() ? 1 : _value.length());
