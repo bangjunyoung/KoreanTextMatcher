@@ -86,18 +86,18 @@ public final class KoreanCharApproxMatcher {
         return true;
     }
 
-    private static int decompose(char c, StringBuilder buffer) {
-        buffer.setLength(0);
+    private static int decompose(char c, StringBuilder destination) {
+        destination.setLength(0);
 
         if (KoreanChar.isSyllable(c))
-            KoreanChar.decomposeToCompat(c, buffer);
+            KoreanChar.decomposeToCompat(c, destination);
         else if (KoreanChar.isCompatChoseong(c))
-            buffer.append(KoreanChar.splitJamo(c));
+            destination.append(KoreanChar.splitJamo(c));
         else if (KoreanChar.isChoseong(c))
-            buffer.append(KoreanChar.splitJamo(KoreanChar.convertChoseongToCompat(c)));
+            destination.append(KoreanChar.splitJamo(KoreanChar.convertChoseongToCompat(c)));
         else
-            buffer.append(c);
+            destination.append(c);
 
-        return buffer.length();
+        return destination.length();
     }
 }

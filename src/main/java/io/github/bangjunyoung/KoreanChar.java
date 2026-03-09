@@ -482,23 +482,23 @@ public final class KoreanChar {
      * 주어진 한글 음절을 한글 자모로 분해하여 버퍼에 저장한다.
      *
      * @param syllable 분해할 한글 음절.
-     * @param buffer 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해후 저장된다.
+     * @param destination 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해후 저장된다.
      * @return 분해한 단자모의 총 개수. 현대 한글 음절의 경우 최대값은 6이다.
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
-    public static int decompose(char syllable, StringBuilder buffer) {
+    public static int decompose(char syllable, StringBuilder destination) {
         checkIfSyllable(syllable);
 
-        buffer.setLength(0);
+        destination.setLength(0);
 
-        buffer.append(splitJamo(getChoseong(syllable)));
-        buffer.append(splitJamo(getJungseong(syllable)));
+        destination.append(splitJamo(getChoseong(syllable)));
+        destination.append(splitJamo(getJungseong(syllable)));
 
         final char jongseong = getJongseong(syllable);
         if (jongseong != '\u0000')
-            buffer.append(splitJamo(jongseong));
+            destination.append(splitJamo(jongseong));
 
-        return buffer.length();
+        return destination.length();
     }
 
     /**
@@ -526,23 +526,23 @@ public final class KoreanChar {
      * 주어진 한글 음절을 한글 호환 자모로 분해하여 버퍼에 저장한다.
      *
      * @param syllable 분해할 한글 음절.
-     * @param buffer 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해후 저장된다.
+     * @param destination 분해한 초성, 중성, 종성을 저장할 버퍼. 각 초성, 중성, 종성은 단자모로 분해후 저장된다.
      * @return 분해한 단자모의 총 개수. 현대 한글 음절의 경우 최대값은 6이다.
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
-    public static int decomposeToCompat(char syllable, StringBuilder buffer) {
+    public static int decomposeToCompat(char syllable, StringBuilder destination) {
         checkIfSyllable(syllable);
 
-        buffer.setLength(0);
+        destination.setLength(0);
 
-        buffer.append(splitJamo(getCompatChoseong(syllable)));
-        buffer.append(splitJamo(getCompatJungseong(syllable)));
+        destination.append(splitJamo(getCompatChoseong(syllable)));
+        destination.append(splitJamo(getCompatJungseong(syllable)));
 
         final char jongseong = getCompatJongseong(syllable);
         if (jongseong != '\u0000')
-            buffer.append(splitJamo(jongseong));
+            destination.append(splitJamo(jongseong));
 
-        return buffer.length();
+        return destination.length();
     }
 
     static String splitTrailingConsonant(char syllable) {
