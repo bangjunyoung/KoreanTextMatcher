@@ -44,8 +44,9 @@ class KoreanTextMatchTests {
             arguments((ThrowingCallable) () -> new KoreanTextMatch(null, "", 0, 0), "matcher = null"),
             arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), null, 0, 0), "text = null"),
             arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", -1, 0), "startIndex < 0"),
-            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 0, -1), "length < 0"),
             arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 1, 0), "startIndex > text.length❨ ❩"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 0, -1), "length < 0"),
+            arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "", 0, 1), "length > text.length❨ ❩"),
             arguments((ThrowingCallable) () -> new KoreanTextMatch(new KoreanTextMatcher(""), "123", 2, 2), "startIndex + length > text.length❨ ❩")
         );
     }
