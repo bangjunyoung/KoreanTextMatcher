@@ -181,8 +181,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getChoseong(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         return (char)(0x1100 + getChoseongIndex(syllable));
     }
@@ -195,8 +194,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getJungseong(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         return (char)(0x1161 + getJungseongIndex(syllable));
     }
@@ -209,8 +207,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getJongseong(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         final int index = getJongseongIndex(syllable);
         if (index == 0)
@@ -227,8 +224,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatChoseong(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         return COMPAT_CHOSEONG[getChoseongIndex(syllable)];
     }
@@ -241,8 +237,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatJungseong(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         return COMPAT_JUNGSEONG[getJungseongIndex(syllable)];
     }
@@ -255,8 +250,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException {@code syllable}이 한글 음절이 아닐 때.
      */
     public static char getCompatJongseong(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         return COMPAT_JONGSEONG[getJongseongIndex(syllable)];
     }
@@ -472,8 +466,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
     public static String[] decompose(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         final String choseong = splitJamo(getChoseong(syllable));
         final String jungseong = splitJamo(getJungseong(syllable));
@@ -494,8 +487,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
     public static int decompose(char syllable, StringBuilder buffer) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         buffer.setLength(0);
 
@@ -518,8 +510,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
     public static String[] decomposeToCompat(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         final String choseong = splitJamo(getCompatChoseong(syllable));
         final String jungseong = splitJamo(getCompatJungseong(syllable));
@@ -540,8 +531,7 @@ public final class KoreanChar {
      * @throws IllegalArgumentException 주어진 {@code syllable}이 한글 음절이 아닐 때.
      */
     public static int decomposeToCompat(char syllable, StringBuilder buffer) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         buffer.setLength(0);
 
@@ -556,8 +546,7 @@ public final class KoreanChar {
     }
 
     static String splitTrailingConsonant(char syllable) {
-        if (!isSyllable(syllable))
-            throw new IllegalArgumentException(String.valueOf(syllable));
+        checkIfSyllable(syllable);
 
         final char choseong = getChoseong(syllable);
         final char jungseong = getJungseong(syllable);
@@ -630,5 +619,10 @@ public final class KoreanChar {
             else
                 throw new IllegalArgumentException("Not a jongseong: " + c);
         }
+    }
+
+    private static void checkIfSyllable(char syllable) {
+        if (!isSyllable(syllable))
+            throw new IllegalArgumentException("'" + syllable + "' is not a Hangul syllable");
     }
 }
