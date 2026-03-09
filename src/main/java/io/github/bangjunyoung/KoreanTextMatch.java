@@ -59,14 +59,12 @@ public final class KoreanTextMatch {
             throw new IllegalArgumentException("matcher: null");
         if (text == null)
             throw new IllegalArgumentException("text: null");
-        if (startIndex < 0)
-            throw new IllegalArgumentException("startIndex: " + startIndex + " < 0");
-        if (length < 0)
-            throw new IllegalArgumentException("length: " + length + " < 0");
-        if (startIndex > text.length()
-            || startIndex + length > text.length())
-            throw new IllegalArgumentException(
-                String.format("startIndex + length: %d > text.length(): %d", startIndex + length, text.length()));
+        if (startIndex < 0 || startIndex > text.length())
+            throw new IllegalArgumentException("startIndex: " + startIndex + " is out of range 0 .. " + text.length());
+        if (length < 0 || length > text.length())
+            throw new IllegalArgumentException("length: " + length + "  is out of range 0 .. " + text.length());
+        if (startIndex + length > text.length())
+            throw new IllegalArgumentException("startIndex + length: " + (startIndex + length) + " is out of range 0 .. " + text.length());
 
         _matcher = matcher;
         _text = text;
