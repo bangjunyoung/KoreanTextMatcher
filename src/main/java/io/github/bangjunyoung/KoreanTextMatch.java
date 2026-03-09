@@ -119,13 +119,10 @@ public final class KoreanTextMatch {
      *         검색이 실패하면 {@link #EMPTY}를 리턴한다.
      */
     public KoreanTextMatch nextMatch() {
-        if (!_success)
-            return EMPTY;
-
         final int nextIndex = _index + (_value.isEmpty() ? 1 : _value.length());
-        if (nextIndex > _text.length())
+        if (_success && nextIndex <= _text.length())
+            return _matcher.match(_text, nextIndex);
+        else
             return EMPTY;
-
-        return _matcher.match(_text, nextIndex);
     }
 }
