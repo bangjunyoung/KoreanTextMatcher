@@ -168,11 +168,8 @@ public final class KoreanTextMatcher {
     public KoreanTextMatch match(String text, int startIndex) {
         if (text == null)
             throw new IllegalArgumentException("text: null");
-        if (startIndex < 0)
-            throw new IllegalArgumentException("startIndex: " + startIndex + " < 0");
-        if (startIndex > text.length())
-            throw new IllegalArgumentException(
-                String.format("startIndex: %d > text.length(): %d", startIndex, text.length()));
+        if (startIndex < 0 || startIndex > text.length())
+            throw new IllegalArgumentException("startIndex: " + startIndex + " is out of range 0 .. " + text.length());
 
         //
         // Optimization: narrow the range of text to be matched for pattern.
