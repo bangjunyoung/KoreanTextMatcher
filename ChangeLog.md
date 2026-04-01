@@ -1,6 +1,6 @@
 # KoreanTextMatcher 변경 사항
 
-## 4.0 (2026)
+## 4.0 (2026/3/1)
 
 - 초성 검색을 대체하는 한글 음절 근사 매칭 구현.
 - 두벌식 한글 입력시 발생하는 도깨비불 현상을 처리하는 기능 구현(`MatchingOptions.DubeolsikInput`).
@@ -20,13 +20,13 @@
 - [JUnit](https://junit.org/) 버전을 6.0으로 상향.
 - [Gradle](https://gradle.org) 버전을 8.9로 상향.
 
-## 3.0 (2019)
+## 3.0 (2019/8/21)
 
 - ```[BREAKING CHANGE]```: `KoreanChar.xxxCompatibilityChoseong`을 `xxxCompatChoseong`으로 이름 바꿈.
 - ```[BREAKING CHANGE]```: `KoreanTextMatcher.matches`의 리턴 타입을 `List<KoreanTextMatch>`에서 `Iterable<KoreanTextMatch>`로 변경.
 - [Gradle](https://gradle.org) 기반 빌드 지원.
 - [JDK](https://developers.redhat.com/products/openjdk) 11 기반.
 
-## 2.0 (2014)
+## 2.0 (2014/6/21)
 
 - 최초의 공개 버전
