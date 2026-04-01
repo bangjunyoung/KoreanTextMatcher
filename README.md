@@ -28,9 +28,9 @@ KoreanTextMatcher는 문자열 내에서 특정 한글 패턴을 찾아내는 �
 
 빌드에 필요한 도구:
 
-- JDK 17 이상
-- Gradle 8.9 이상
-- JUnit 6.0 이상
+- [JDK](https://developers.redhat.com/products/openjdk) 17 이상
+- [Gradle](https://gradle.org) 8.9 이상
+- [JUnit](https://junit.org) 6.0 이상
 
 필요한 도구들이 모두 설치되었다면 빌드는 매우 쉽다. 최상위 소스 폴더에서 아래 명령을 실행하면 된다:
 
