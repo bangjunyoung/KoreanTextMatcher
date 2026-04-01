@@ -8,7 +8,7 @@
 - 텍스트내 공백을 건너뛰고 매칭하는 기능 구현(`MatchingOptions.IgnoreWhitespace`).
 - `KoreanCharApproxMatcher`를 메모리 할당 최소화한 고성능 버전으로 새롭게 구현.
 - `KoreanChar` 타입에 새로 추가된 API:
-  - 자모를 음절 조합: `compose`
+  - 자모를 음절로 조합: `compose`
   - 음절을 자모로 분해: `decompose`, `decomposeToCompat`
   - 음절에서 중성/종성 구하기: `getCompatJungseong`, `getCompatJongseong`, `getJungseong`, `getJongseong`
   - 중성/종성인지 판별하기: `isCompatJungseong`, `isCompatJongseong`, `isJungseong`, `isJongseong`
